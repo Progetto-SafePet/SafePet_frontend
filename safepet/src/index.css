@@ -1,0 +1,116 @@
+@import "css/_typogrfy.scss";
+@import "css/_color-schema.scss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --clr-primary-10: #121213;;
+  --clr-primary-20: #040405;
+  --clr-primary-40: #05080a;
+  --clr-primary-60: #030202;
+  --clr-primary-400: #eeececf3;
+  --clr-primary-500: #fcf8f8;
+  --clr-primary-600: #fcf9f9;
+
+  --clr-accent-10: #56F6B3;
+
+  --clr-grey-80: #4C5252;
+  --clr-grey-scale: #1F1F1F;
+
+  --clr-white: #FFFFFF;
+  --clr-black: #1B1B19;
+
+  --clr-error-70: #D02020;
+  --clr-success-70: #08B905;
+
+  --clr-focus-light: #C47600;
+  --clr-focus-dark: #F1AB41;
+
+  --fs-heading-xxl: 72px;
+  --lh-heading-xxl: 64px;
+
+  --fs-heading-xl: 52px;
+  --lh-heading-xl: 64px;
+
+  --fs-heading-l: 36px;
+  --lh-heading-l: 44px;
+
+  --fs-heading-m: 28px;
+  --lh-heading-m: 36px;
+
+  --fs-heading-s: 24px;
+  --lh-heading-s: 32px;
+
+  --fs-heading-xs: 20px;
+  --lh-heading-xs: 28px;
+
+  --fs-body-xl: 22px;
+  --lh-body-xl: 30px;
+
+  --fs-body-l: 18px;
+  --lh-body-l: 30px;
+
+  --fs-body-m: 16px;
+  --lh-body-m: 24px;
+
+  --fs-body-s: 14px;
+  --lh-body-s: 20px;
+
+  --fs-body-xs: 12px;
+  --lh-body-xs: 16px;
+
+  --margin: 1.25rem;
+  --gap: 1rem;
+  --max-container-width: 107.5rem;
+  --max-container-width-small: 66.375rem;
+
+  @media (min-width: 768px) {
+    --margin: 1.5rem;
+  }
+
+  @media (min-width: 992px) {
+    --margin: 2.5rem;
+  }
+
+  @media (min-width: 1200px) {
+    --margin: 5rem;
+    --gap: 1.5rem;
+  }
+
+  --conic-gradient: conic-gradient(
+    #FF2E2E,
+    #FF831E,
+    #FCFF51,
+    #58FF57,
+    #575FFF,
+    #D257FF,
+    #FF57E5,
+    #FF1556
+  );
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
