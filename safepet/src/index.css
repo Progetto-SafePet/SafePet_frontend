@@ -9,22 +9,18 @@
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --clr-primary-10: #2B2B2B;
+  --clr-primary-20: #8B5E3C;
+  --clr-primary-40: #F0E6D2;
+  --clr-primary-60: #FFFFFF;
+  --clr-primary-400: #7C9E7A;
+  --clr-primary-500: #F0E6D2;
+  --clr-primary-600: #FFFFFF;
 
-  --clr-primary-10: #121213;;
-  --clr-primary-20: #040405;
-  --clr-primary-40: #05080a;
-  --clr-primary-60: #030202;
-  --clr-primary-400: #eeececf3;
-  --clr-primary-500: #fcf8f8;
-  --clr-primary-600: #fcf9f9;
+  --clr-accent-10: #7C9E7A;
 
-  --clr-accent-10: #56F6B3;
-
-  --clr-grey-80: #4C5252;
-  --clr-grey-scale: #1F1F1F;
-
+  --clr-grey-80: #2B2B2B;
+  --clr-grey-scale: #8B5E3C;
   --clr-white: #FFFFFF;
   --clr-black: #1B1B19;
 
