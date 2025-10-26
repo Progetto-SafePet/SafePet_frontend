@@ -35,9 +35,7 @@ function RegisterPet() {
   const [sesso, setSesso] = useState("F");
   const [foto, setFoto] = useState(null);
 
-  // 🔐 Token statico per test
-  const TOKEN =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWNhLnJvc3NpQG1haWwuY29tIiwiaWF0IjoxNzYxNDcxNzU2LCJleHAiOjE3NjE0NzUzNTYsImVtYWlsIjoibHVjYS5yb3NzaUBtYWlsLmNvbSIsInJvbGUiOiJQUk9QUklFVEFSSU8iLCJpZCI6MX0.o29RBzDNmiDSi_XBde5iC62Blj5UMS9z6W8BMsVG9Ls";
+   const TOKEN = localStorage.getItem("token");
 
   const creaPet = async (e) => {
     e.preventDefault();
@@ -53,7 +51,7 @@ function RegisterPet() {
       const response = await fetch("http://localhost:8080/gestionePet/creaPet", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${TOKEN}`, // ✅ token JWT statico
+          Authorization: `Bearer ${TOKEN}`, 
         },
         body: formData, // multipart
       });

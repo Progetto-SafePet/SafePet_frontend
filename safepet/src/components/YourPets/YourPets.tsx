@@ -4,8 +4,7 @@ import "./YourPets.scss";
 const YourPets = () => {
   const [pets, setPets] = useState([]);
 
-  const TOKEN =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWNhLnJvc3NpQG1haWwuY29tIiwiaWF0IjoxNzYxNDcxNzU2LCJleHAiOjE3NjE0NzUzNTYsImVtYWlsIjoibHVjYS5yb3NzaUBtYWlsLmNvbSIsInJvbGUiOiJQUk9QUklFVEFSSU8iLCJpZCI6MX0.o29RBzDNmiDSi_XBde5iC62Blj5UMS9z6W8BMsVG9Ls";
+ const TOKEN = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchPets = async () => {

@@ -56,7 +56,7 @@ function Navbar() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('authToken', data.token || 'dummyToken');
+        localStorage.setItem('token', data.token || 'dummyToken');
         localStorage.setItem('userEmail', data.email || emailLogin);
         updateUsername(data.email || emailLogin);
         setIsVisibleLogin(false);
