@@ -11,10 +11,17 @@ function Navbar() {
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
   const [isVisibleSignup, setIsVisibleSignup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
-  const [usernameLogin, setUsernameLogin] = useState('');
+  // LOGIN
+  const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
+
+  // SIGNUP
+  const [emailSignup, setEmailSignup] = useState('');
+  const [passwordSignup, setPasswordSignup] = useState('');
+  const [nomeSignup, setNomeSignup] = useState('');
+  const [cognomeSignup, setCognomeSignup] = useState('');
 
   const location = useLocation();
   const { usernameGlobal, updateUsername } = useUser();
@@ -22,7 +29,7 @@ function Navbar() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const toggleDropdown = (menu: string) => {
+  const toggleDropdown = (menu) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
@@ -36,25 +43,55 @@ function Navbar() {
     setIsVisibleSignup(!isVisibleSignup);
   };
 
-  const login = () => {
-    const user = { username: usernameLogin, password: passwordLogin };
-    fetch(`${ENV.ENVIRONMENT}/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    })
-      .then(res => {
-        if (res.ok) {
-          return res.json().then(data => {
-            localStorage.setItem('authToken', data.username);
-            localStorage.setItem('userRole', data.role);
-            localStorage.setItem('userId', data.userId);
-            updateUsername(data.username);
-          });
-        }
-      })
-      .catch(() => {});
-    toggleLogin();
+  // LOGIN FETCH
+  const login = async () => {
+    const credentials = { email: emailLogin, password: passwordLogin };
+
+    try {
+      const response = await fetch('http://localhost:8080/gestioneUtente/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('authToken', data.token || 'dummyToken');
+        localStorage.setItem('userEmail', data.email || emailLogin);
+        updateUsername(data.email || emailLogin);
+        setIsVisibleLogin(false);
+      } else {
+        alert('Credenziali errate o utente non trovato.');
+      }
+    } catch (error) {
+      alert('Errore di connessione al server.');
+    }
+  };
+
+  // SIGNUP FETCH
+  const signup = async () => {
+    const newUser = {
+      email: emailSignup,
+      password: passwordSignup,
+      nome: nomeSignup,
+      cognome: cognomeSignup,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/gestioneUtente/registraUtente', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newUser),
+      });
+
+      if (response.ok) {
+        setIsVisibleSignup(false);
+      } else {
+        alert('Errore durante la registrazione. Verifica i dati e riprova.');
+      }
+    } catch (error) {
+      alert('Errore di connessione al server.');
+    }
   };
 
   const logOut = () => {
@@ -122,29 +159,73 @@ function Navbar() {
             )}
             {usernameGlobal && (
               <>
-                <Link className="button-primary" to="/profile">{usernameGlobal}</Link>
-                <button className="button-primary" onClick={logOut}>Logout</button>
+                <Link className="button-primary" to="/profile"> Profilo </Link>
+                <Link className="button-primary" to="/pet"> I tuoi pet </Link>
+
+                <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
           </nav>
         </div>
       </header>
 
+      {/* LOGIN MODAL */}
       {isVisibleLogin && (
         <div id="login-box" className="login-box">
           <h2>Login</h2>
           <form>
             <div className="user-box">
-              <input id="username" type="text" value={usernameLogin} onChange={(e) => setUsernameLogin(e.target.value)} required />
-              <label>Username</label>
+              <input
+                id="emailLogin"
+                type="email"
+                value={emailLogin}
+                onChange={(e) => setEmailLogin(e.target.value)}
+                required
+              />
+              <label>Email</label>
             </div>
             <div className="user-box">
-              <input id="password" type="password" value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} required />
+              <input
+                id="passwordLogin"
+                type="password"
+                value={passwordLogin}
+                onChange={(e) => setPasswordLogin(e.target.value)}
+                required
+              />
               <label>Password</label>
             </div>
             <div className="side-boxes-login">
               <button type="button" className="button-primary" onClick={login}>Login</button>
               <button type="button" className="button-primary" onClick={toggleLogin}>Chiudi</button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* SIGNUP MODAL */}
+      {isVisibleSignup && (
+        <div id="signup-box" className="login-box">
+          <h2>Registrazione</h2>
+          <form>
+            <div className="user-box">
+              <input type="text" value={nomeSignup} onChange={(e) => setNomeSignup(e.target.value)} required />
+              <label>Nome</label>
+            </div>
+            <div className="user-box">
+              <input type="text" value={cognomeSignup} onChange={(e) => setCognomeSignup(e.target.value)} required />
+              <label>Cognome</label>
+            </div>
+            <div className="user-box">
+              <input type="email" value={emailSignup} onChange={(e) => setEmailSignup(e.target.value)} required />
+              <label>Email</label>
+            </div>
+            <div className="user-box">
+              <input type="password" value={passwordSignup} onChange={(e) => setPasswordSignup(e.target.value)} required />
+              <label>Password</label>
+            </div>
+            <div className="side-boxes-login">
+              <button type="button" className="button-primary" onClick={signup}>Registrati</button>
+              <button type="button" className="button-primary" onClick={toggleSignUp}>Chiudi</button>
             </div>
           </form>
         </div>

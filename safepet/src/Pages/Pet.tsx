@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import PromoCards from "../components/PromoCards/PromoCards";
+import YourPets from "../components/YourPets/YourPets";
 
-function Home() {
+function Pet() {
 
     const promoData = [
         {
@@ -33,24 +34,16 @@ function Home() {
     return (
         <>
             <div className="page-container">
-                <BannerHomepage></BannerHomepage>
                 <div className="page">
                                     
                     <div className='main-container'>
 
-                        <PromoCards cards={promoData} />
+                        <YourPets />
 
                         <Banner 
-                            text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
-                            buttonText="Registrati"
-                            link = "/signup"
-                        >
-                        </Banner>
-
-                         <Banner 
-                            text="Accedi a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
-                            buttonText="Registrati"
-                            link = "/login"
+                            text="Registra il tuo pet per accedere ai vantaggi di SafePet"
+                            buttonText="Registra Pet"
+                            link = "/registerpet"
                         >
                         </Banner>
 
@@ -63,4 +56,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Pet;

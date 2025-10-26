@@ -45,3 +45,56 @@
   gap: 50px;
 }
 
+.register-pet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-inline: 25%;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding-block: 40px;
+  align-items: center;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-inline: 20px;
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    input,
+    select {
+      padding: 10px;
+      height: 30px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+      font-size: 20px;
+
+      &:focus {
+        border-color: var(--clr-primary-20);
+        outline: none;
+      }
+    }
+
+    select {
+      height: 50px;
+    }
+  }
+
+}
+
+.title {
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #333;
+}
