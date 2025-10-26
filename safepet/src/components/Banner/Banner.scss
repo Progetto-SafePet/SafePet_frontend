@@ -1,7 +1,7 @@
 .banner-container {
     min-width: 70%;
     height: 400px;
-    background-color: var(--clr-primary-40);
+    background-color: rgba(139, 94, 60, 0.4);
     border-radius: 10px;
     box-shadow: 0 0 0 3px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
     display: flex;
@@ -16,4 +16,5 @@
     background-position: right bottom;
     background-size: 250px auto;
     padding: 50px;
+    color: var(--clr-primary-10);
 }
