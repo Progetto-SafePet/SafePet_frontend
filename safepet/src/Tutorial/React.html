@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>React & Single Page Application - Tutorial</title>
+
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const list = document.getElementById("toc-list");
+      const headings = document.querySelectorAll("h3");
+
+      headings.forEach((h3, index) => {
+        const id = "section-" + (index + 1);
+        h3.id = id;
+
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+
+        a.href = "#" + id;
+        a.textContent = h3.textContent;
+
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    });
+  </script>
+
+
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+      background: #f9fafb;
+      color: #222;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: #111827;
+    }
+
+    pre {
+      background: #f3f4f6;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    code {
+      font-family: "Fira Code", Consolas, monospace;
+      font-size: 0.95rem;
+    }
+
+    .section {
+      background: #ffffff;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    ul {
+      margin-left: 1.2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e5e7eb;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    .tip {
+      background: #e0f2fe;
+      border-left: 4px solid #0284c7;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    .note {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    .bad {
+      background: #fee2e2;
+      border-left: 4px solid #b91c1c;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    .good {
+      background: #dcfce7;
+      border-left: 4px solid #16a34a;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    .toc {
+      background: #f7f7f7;
+      padding: 16px;
+      border-left: 4px solid #0066cc;
+      margin-bottom: 30px;
+    }
+
+    .toc ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .toc li {
+      margin: 4px 0;
+    }
+
+    .toc a {
+      text-decoration: none;
+      color: #0066cc;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>React & Single Page Application - Tutorial Introduttivo</h1>
+
+  <div id="toc-container" class="toc">
+    <h2>Indice dei capitoli</h2>
+    <ul id="toc-list"></ul>
+  </div>
+
+  <div class="section">
+    <h2>0. Avviare l’applicazione React (SafePet Frontend)</h2>
+    <p>
+      Prima di iniziare con i concetti teorici, è utile vedere come avviare
+      concretamente il progetto <strong>SafePet Frontend</strong>.
+      L’intero setup richiede solo pochi comandi.
+    </p>
+
+    <h3>0.1 Clonare la repository</h3>
+    <p>
+      Per prima cosa clona la repository ufficiale del progetto:
+    </p>
+
+    <pre><code class="language-bash">git clone https://github.com/USERNAME/safepet-frontend.git
+cd safepet-frontend
+</code></pre>
+
+    <h3>0.2 Installare le dipendenze</h3>
+    <p>
+      Una volta dentro la cartella del progetto, installa tutte le dipendenze
+      necessarie tramite <code>npm</code>:
+    </p>
+
+    <pre><code class="language-bash">npm install
+</code></pre>
+
+    <p>
+      Qualsiasi versione recente di <strong>npm</strong> (o <strong>Node.js</strong>) va generalmente bene
+      per far funzionare l’applicazione. React e Vite non richiedono versioni troppo
+      specifiche a meno di funzionalità avanzate.
+    </p>
+
+    <div class="note">
+      ℹ️ Se vuoi gestire più versioni di Node.js sul tuo computer, puoi usare
+      <strong>nvm (Node Version Manager)</strong>, uno strumento che ti permette di
+      installare e cambiare versione al volo con un semplice comando.
+    </div>
+
+    <h3>0.3 Avviare il server di sviluppo</h3>
+    <p>
+      Per avviare l’applicazione React in modalità sviluppo, usa:
+    </p>
+
+    <pre><code class="language-bash">npm run dev
+</code></pre>
+
+    <p>
+      Dopo qualche secondo, vedrai comparire in console l’URL locale, ad esempio:
+    </p>
+
+    <pre><code class="language-text">http://localhost:5173
+</code></pre>
+
+    <p>
+      Aprilo nel browser per visualizzare l’app SafePet in esecuzione.
+    </p>
+
+    <div class="tip">
+      💡 Ogni volta che modifichi i file del progetto, Vite aggiorna automaticamente
+      la pagina grazie all’hot-reload.
+    </div>
+
+    <div class="note">
+      <h3>Cosa sono TypeScript e TSX?</h3>
+      <p>
+        <strong>TypeScript (TS)</strong> è un’estensione di JavaScript che aggiunge il
+        <strong>typing statico</strong> e una struttura più robusta per progetti complessi.
+        Viene compilato in normale JavaScript, quindi può girare ovunque giri JS.
+      </p>
+
+      <p>
+        La differenza principale rispetto a JavaScript è che TypeScript permette di:
+      </p>
+      <ul>
+        <li>dichiarare tipi per variabili, funzioni e oggetti;</li>
+        <li>evitare errori prima dell'esecuzione grazie al type-checking;</li>
+        <li>migliorare la leggibilità e la manutenibilità del codice.</li>
+      </ul>
+
+      <p>
+        I file <strong>.tsx</strong> sono come i file <strong>.ts</strong>, ma consentono
+        anche l’utilizzo del <strong>JSX</strong>, cioè la sintassi simile all’HTML
+        usata per definire componenti React.
+      </p>
+
+      <p>
+        In sintesi:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Estensione</th>
+            <th>Contenuto</th>
+            <th>Quando usarla</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>.ts</strong></td>
+            <td>TypeScript puro</td>
+            <td>Moduli logici, funzioni, servizi</td>
+          </tr>
+          <tr>
+            <td><strong>.tsx</strong></td>
+            <td>TypeScript + JSX</td>
+            <td>Componenti React</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- 1. Node.js e ambiente -->
+  <div class="section">
+    <h2>1. Node.js e ambiente React</h2>
+    <p>
+      <strong>Node.js</strong> è un runtime JavaScript basato sul motore V8 di Chrome che
+      permette di eseguire JavaScript fuori dal browser (lato server o da riga di comando).
+      Nel contesto di React, Node viene usato principalmente per:
+    </p>
+    <ul>
+      <li>installare librerie tramite <code>npm</code> o <code>yarn</code>;</li>
+      <li>eseguire gli strumenti di sviluppo (es. <strong>Vite</strong>, Webpack);</li>
+      <li>avviare il dev-server (<code>npm run dev</code>);</li>
+      <li>generare la build di produzione (<code>npm run build</code>).</li>
+    </ul>
+
+    <p>Esempio di creazione di un nuovo progetto React con Vite:</p>
+    <pre><code class="language-bash"># Creazione di un nuovo progetto React con Vite
+npm create vite@latest my-react-app -- --template react
+
+cd my-react-app
+npm install
+
+# Avvio del server di sviluppo
+npm run dev
+</code></pre>
+
+    <div class="tip">
+      💡 React gira nel browser, ma tutto l’ecosistema di tooling (Vite, bundler, test runner)
+      si appoggia a Node.js.
+    </div>
+  </div>
+
+  <!-- 2. SPA e Link vs a -->
+  <div class="section">
+    <h2>2. Single Page Application (SPA) &amp; uso di &lt;Link&gt; invece di &lt;a&gt;</h2>
+    <p>
+      Una <strong>Single Page Application (SPA)</strong> è un’applicazione web che:
+    </p>
+    <ul>
+      <li>carica inizialmente <strong>una sola pagina HTML</strong>;</li>
+      <li>aggiorna il contenuto in modo dinamico via JavaScript;</li>
+      <li>evita i <strong>full reload</strong> del browser;</li>
+      <li>offre un’esperienza utente più fluida e reattiva.</li>
+    </ul>
+
+    <p>
+      In una SPA React, il routing è gestito lato client: cambiare pagina non significa
+      ricaricare l’HTML dal server, ma dire a React di mostrare un componente “pagina”
+      diverso.
+    </p>
+
+    <h3>2.1 Perché usare &lt;Link&gt; invece di &lt;a&gt;</h3>
+    <p>
+      Il tag HTML classico <code>&lt;a&gt;</code> effettua sempre una richiesta completa al server
+      per la nuova URL, causando:
+    </p>
+    <ul>
+      <li>ricarica totale della pagina;</li>
+      <li>perdita dello stato in memoria (stato React reset);</li>
+      <li>esperienza meno fluida.</li>
+    </ul>
+
+    <p>
+      Con <strong>React Router</strong>, si usa il componente <code>&lt;Link&gt;</code> che intercetta
+      il click e aggiorna solo il contenuto React, senza full reload.
+    </p>
+
+    <pre><code class="language-jsx">import { Link } from "react-router-dom";
+
+function Navbar() {
+  return (
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;Link to="/"&gt;Home&lt;/Link&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;Link to="/tutorial"&gt;Tutorial&lt;/Link&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;Link to="/contatti"&gt;Contatti&lt;/Link&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  );
+}
+</code></pre>
+
+    <div class="tip">
+      💡 <code>&lt;Link&gt;</code> usa l’History API del browser (<code>pushState</code>) per cambiare URL
+      senza ricaricare la pagina, mantenendo lo stato della tua SPA.
+    </div>
+  </div>
+
+  <!-- 3. Componenti React -->
+  <div class="section">
+    <h2>3. Componenti React: cosa sono e come si strutturano</h2>
+    <p>
+      In React, un <strong>componente</strong> è una funzione JavaScript che:
+    </p>
+    <ul>
+      <li>può ricevere parametri (chiamati <strong>props</strong>);</li>
+      <li>usa gli <strong>hook</strong> per gestire stato e ciclo di vita;</li>
+      <li>ritorna <strong>JSX</strong>, una sintassi simile all’HTML;</li>
+      <li>viene esportata per essere riutilizzata in altri file.</li>
+    </ul>
+
+    <h3>3.1 Esempio di componente base</h3>
+    <pre><code class="language-jsx">function MyButton({ label }) {
+  return &lt;button&gt;{label}&lt;/button&gt;;
+}
+
+export default MyButton;
+</code></pre>
+
+    <p>Uso del componente:</p>
+    <pre><code class="language-jsx">import MyButton from "./MyButton";
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;MyButton label="Cliccami" /&gt;
+      &lt;MyButton label="Oppure me" /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="tip">
+      💡 I componenti dovrebbero essere <strong>piccoli</strong>, <strong>riutilizzabili</strong> e
+      fare una cosa sola in modo chiaro.
+    </div>
+  </div>
+
+  <!-- 4. Props -->
+  <div class="section">
+    <h2>4. Props: passare dati ai componenti</h2>
+    <p>
+      Le <strong>props</strong> (properties) sono il meccanismo con cui i componenti
+      <strong>genitori</strong> passano dati ai componenti <strong>figli</strong>.
+    </p>
+    <ul>
+      <li>si passano come attributi JSX;</li>
+      <li>il componente figlio le riceve come argomento;</li>
+      <li>sono <strong>in sola lettura</strong> (il figlio non le modifica);</li>
+      <li>rendono i componenti riutilizzabili e parametrici.</li>
+    </ul>
+
+    <h3>4.1 Esempio di props in azione</h3>
+    <pre><code class="language-jsx">function Welcome({ name }) {
+  return &lt;h2&gt;Ciao, {name}!&lt;/h2&gt;;
+}
+
+export default function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome name="Francesco" /&gt;
+      &lt;Welcome name="Giulia" /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="note">
+      ℹ️ Se hai bisogno di passare funzioni (callback) come props, puoi passare anche
+      funzioni anonime o nomi di funzioni, es. <code>onClick={handleClick}</code>.
+    </div>
+  </div>
+
+  <!-- 5. Hook: useState, useEffect... con esempio counter -->
+  <div class="section">
+    <h2>5. Hook principali di React (useState, useEffect, ...)</h2>
+    <p>
+      Gli <strong>hook</strong> permettono di usare stato e altre funzionalità React
+      dentro i componenti funzionali.
+    </p>
+    <ul>
+      <li><code>useState</code>: gestisce lo stato locale del componente;</li>
+      <li><code>useEffect</code>: esegue effetti collaterali (API call, log, timers...);</li>
+      <li><code>useRef</code>: mantiene un valore persistente senza causare re-render;</li>
+      <li><code>useContext</code>: condivide stato fra componenti senza passare props a cascata.</li>
+    </ul>
+
+    <h3>5.1 Counter senza useState (non funziona)</h3>
+    <div class="bad">
+      <p>
+        Ecco un esempio di <strong>counter sbagliato</strong>, che non usa <code>useState</code>.
+        In apparenza sembra logico, ma la UI non si aggiorna mai.
+      </p>
+      <pre><code class="language-jsx">function CounterWrong() {
+  let count = 0;
+
+  const increment = () =&gt; {
+    count++;
+    console.log("Valore interno:", count);
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Valore: {count}&lt;/p&gt;
+      &lt;button onClick={increment}&gt;Aumenta&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+      <p>
+        Qui la variabile <code>count</code> cambia, ma React non viene informato:
+        nessun re-render ⇒ il valore mostrato resta sempre <code>0</code>.
+      </p>
+    </div>
+
+    <h3>5.2 Counter corretto con useState</h3>
+    <div class="good">
+      <p>
+        Ecco la versione corretta, che usa <code>useState</code> per notificare a React
+        il cambio di stato.
+      </p>
+      <pre><code class="language-jsx">import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Valore: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Aumenta&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+      <p>
+        Ogni volta che chiami <code>setCount</code>, React:
+      </p>
+      <ul>
+        <li>aggiorna il valore interno di <code>count</code>;</li>
+        <li>fa il re-render del componente;</li>
+        <li>ridisegna la UI con il nuovo valore.</li>
+      </ul>
+    </div>
+
+    <h3>5.3 Esempio di useEffect: tutti i diversi trigger</h3>
+    <p>
+      <code>useEffect</code> è uno degli hook più importanti di React, perché permette di gestire
+      comportamenti “esterni” al semplice rendering del componente: chiamate API, logging, timer,
+      sincronizzazione con localStorage, ecc.
+      A seconda del secondo parametro (le <strong>dipendenze</strong>), cambia completamente
+      il momento in cui l’effetto viene eseguito.
+    </p>
+
+    <h4>🔹 1) useEffect SENZA array di dipendenze → eseguito ad ogni render</h4>
+    <p>
+      L’effetto viene eseguito: <strong>al montaggio</strong> e <strong>ad ogni re-render</strong>.
+      Molto raro da usare, perché può generare loop indesiderati.
+    </p>
+
+    <pre><code class="language-jsx">import { useState, useEffect } from "react";
+
+function EffectEveryRender() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Eseguito AD OGNI render");
+  }); // ❌ niente array di dipendenze
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Valore: {count}&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;Aumenta&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="note">
+      ℹ️ Ogni volta che premi il pulsante, il componente si aggiorna → l'effetto si ri-esegue.
+    </div>
+
+
+    <h4>🔹 2) useEffect con array vuoto → eseguito SOLO al montaggio</h4>
+    <p>
+      L’effetto si esegue una sola volta, quando il componente entra in pagina,
+      come il vecchio <code>componentDidMount()</code> delle classi.
+      È l’ideale per inizializzare dati o chiamare API.
+    </p>
+
+    <pre><code class="language-jsx">import { useEffect } from "react";
+
+function EffectOnMount() {
+
+  useEffect(() => {
+    console.log("Eseguito SOLO al montaggio del componente");
+  }, []); // ✅ array vuoto → solo una volta
+
+  return &lt;p&gt;Guarda la console!&lt;/p&gt;;
+}
+</code></pre>
+
+    <div class="tip">
+      💡 Un <code>useEffect</code> con <code>[]</code> è perfetto per fetch iniziali, timer o setup.
+    </div>
+
+
+    <h4>🔹 3) useEffect con dipendenze → eseguito quando cambiano</h4>
+    <p>
+      L’effetto viene eseguito quando cambiano uno o più valori presenti
+      nell’array delle dipendenze.
+    </p>
+
+    <pre><code class="language-jsx">import { useState, useEffect } from "react";
+
+function CounterWithEffect() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Eseguito quando 'count' cambia:", count);
+  }, [count]); // 🎯 trigger: cambia SOLO quando cambia 'count'
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Valore: {count}&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;Aumenta&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="good">
+      👍 In questo caso l’effetto NON si esegue se cambia qualcos’altro nel componente.
+    </div>
+
+
+    <h4>📌 Tabella riepilogativa dei trigger</h4>
+    <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+      <tr style="background:#f3f4f6;">
+        <th style="padding:8px;border:1px solid #ddd;">Sintassi</th>
+        <th style="padding:8px;border:1px solid #ddd;">Quando si attiva</th>
+      </tr>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;"><code>useEffect(fn)</code></td>
+        <td style="padding:8px;border:1px solid #ddd;">Ogni render</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;"><code>useEffect(fn, [])</code></td>
+        <td style="padding:8px;border:1px solid #ddd;">Solo al montaggio</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;border:1px solid #ddd;"><code>useEffect(fn, [dep])</code></td>
+        <td style="padding:8px;border:1px solid #ddd;">Quando cambia <code>dep</code></td>
+      </tr>
+    </table>
+
+    <div class="tip" style="margin-top:1rem;">
+      💡 Buona pratica: metti SEMPRE tutte le dipendenze nel secondo parametro,
+      così React sa quando deve rieseguire l’effetto.
+    </div>
+
+  </div>
+
+  <!-- 6. Pages vs components & struttura progetto -->
+  <div class="section">
+    <h2>6. Pages vs Components e struttura di un progetto React</h2>
+    <p>
+      In un progetto React è utile distinguere tra:
+    </p>
+    <ul>
+      <li><strong>Pages</strong>: rappresentano vere e proprie “pagine” o schermate, mappate su una route (es.
+        <code>/</code>, <code>/tutorial</code>);
+      </li>
+      <li><strong>Components</strong>: pezzi riutilizzabili di UI (bottoni, card, navbar, modali...).</li>
+    </ul>
+
+    <h3>6.1 Struttura tipica delle cartelle</h3>
+    <pre><code class="language-text">src/
+  components/
+    Navbar.jsx
+    PromoCard.jsx
+    Footer.jsx
+  pages/
+    Home.jsx
+    Tutorial.jsx
+    NotFound.jsx
+  services/
+    apiClient.js
+  App.jsx
+  main.jsx
+</code></pre>
+
+    <p>
+      Una <strong>page</strong> spesso compone vari <strong>components</strong> e viene usata
+      dal router come target per una specifica route.
+    </p>
+  </div>
+
+  <!-- 7. Routing con React Router -->
+  <div class="section">
+    <h2>7. Routing con React Router</h2>
+    <p>
+      Per gestire la navigazione in una SPA React si usa tipicamente
+      <strong>React Router</strong>.
+    </p>
+
+    <h3>7.1 Installazione</h3>
+    <pre><code class="language-bash">npm install react-router-dom
+</code></pre>
+
+    <h3>7.2 Configurazione base</h3>
+    <pre><code class="language-jsx">import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Tutorial from "./pages/Tutorial";
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/tutorial" element={&lt;Tutorial /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+
+export default App;
+</code></pre>
+
+    <h3>7.3 Navigazione con Link</h3>
+    <pre><code class="language-jsx">import { Link } from "react-router-dom";
+
+function Navbar() {
+  return (
+    &lt;nav&gt;
+      &lt;Link to="/"&gt;Home&lt;/Link&gt; |{" "}
+      &lt;Link to="/tutorial"&gt;Tutorial&lt;/Link&gt;
+    &lt;/nav&gt;
+  );
+}
+</code></pre>
+  </div>
+
+  <!-- 8. package.json -->
+  <div class="section">
+    <h2>8. Il file package.json</h2>
+    <p>
+      Il file <code>package.json</code> contiene le informazioni principali del progetto
+      Node/React:
+    </p>
+    <ul>
+      <li>nome e versione del progetto;</li>
+      <li><strong>dependencies</strong>: librerie necessarie a runtime (es. <code>react</code>, <code>axios</code>);
+      </li>
+      <li><strong>devDependencies</strong>: strumenti usati solo in sviluppo (es. <code>vite</code>);</li>
+      <li><strong>scripts</strong>: comandi eseguibili con <code>npm run &lt;nome&gt;</code>.</li>
+    </ul>
+
+    <pre><code class="language-json">{
+  "name": "react-tutorial",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "axios": "^1.7.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
+</code></pre>
+
+    <div class="tip">
+      💡 Quando aggiungi una libreria (es. <code>axios</code>), <code>npm install axios</code> aggiorna
+      automaticamente la sezione <code>dependencies</code> del <code>package.json</code>.
+    </div>
+  </div>
+
+  <!-- 9. Stub JSON promoData -->
+  <div class="section">
+    <h2>9. Stub JSON: dati mockati</h2>
+    <p>
+      Prima di avere un backend reale, è comodo <strong>simulare i dati</strong> usando
+      file locali con array di oggetti JavaScript.
+    </p>
+
+    <h3>9.1 Definizione di un mock</h3>
+    <pre><code class="language-js">export const promoData = [
+  {
+    image: "https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1723114015.705158/popular-dogs-hero-1.jpg",
+    tag: "GESTIONE DIGITALE",
+    title: "Libretto sanitario digitale",
+    description:
+      "Con SafePet hai un unico libretto sanitario digitale per ogni animale domestico. Tutte le informazioni veterinarie, i vaccini e le terapie sono centralizzati."
+  },
+  {
+    image: "https://brownvethospital.com/wp-content/uploads/2024/02/when-do-dogs-stop-growing.jpg",
+    tag: "INTEGRAZIONE VETERINARIA",
+    title: "Collaborazione tra veterinari e strutture",
+    description:
+      "SafePet connette cliniche, ambulatori e medici veterinari in un’unica rete digitale."
+  },
+  {
+    image: "https://d3544la1u8djza.cloudfront.net/APHI/Blog/2023/September/small-breeds-hero.jpg",
+    tag: "EMERGENZE INTELLIGENTI",
+    title: "QR Code e interventi rapidi",
+    description:
+      "Ogni animale iscritto dispone di un QR Code identificativo per accedere rapidamente ai dati clinici."
+  }
+];
+</code></pre>
+
+    <h3>9.2 Utilizzo in un componente</h3>
+    <pre><code class="language-jsx">import { promoData } from "../data/promoData";
+
+function PromoCards() {
+  return (
+    &lt;div className="promo-grid"&gt;
+      {promoData.map((promo) =&gt; (
+        &lt;article key={promo.title} className="promo-card"&gt;
+          &lt;img src={promo.image} alt={promo.title} /&gt;
+          &lt;span&gt;{promo.tag}&lt;/span&gt;
+          &lt;h3&gt;{promo.title}&lt;/h3&gt;
+          &lt;p&gt;{promo.description}&lt;/p&gt;
+        &lt;/article&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="note">
+      ℹ️ Quando il backend sarà pronto, potrai sostituire il file mock con una
+      chiamata API reale che restituisce lo stesso formato JSON.
+    </div>
+  </div>
+  <h3>9.3 Comunicazione Padre → Figlio (tramite props)</h3>
+  <p>
+    La comunicazione <strong>dal componente padre verso il figlio</strong> avviene tramite
+    <strong>props</strong>. Questo è esattamente ciò che accade quando passiamo un singolo
+    elemento <code>promo</code> al componente che lo visualizza.
+  </p>
+
+  <p>Esempio: il componente padre passa i dati della card a un componente figlio</p>
+
+  <pre><code class="language-jsx">function PromoList() {
+  return (
+    &lt;div className="promo-grid"&gt;
+      {promoData.map((promo) =&gt; (
+        &lt;PromoCard
+          key={promo.title}
+          image={promo.image}
+          tag={promo.tag}
+          title={promo.title}
+          description={promo.description}
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+function PromoCard({ image, tag, title, description }) {
+  return (
+    &lt;article className="promo-card"&gt;
+      &lt;img src={image} alt={title} /&gt;
+      &lt;span&gt;{tag}&lt;/span&gt;
+      &lt;h3&gt;{title}&lt;/h3&gt;
+      &lt;p&gt;{description}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+</code></pre>
+
+  <div class="tip">
+    💡 I dati scorrono sempre <strong>dall’alto verso il basso</strong>: il padre controlla cosa vede il figlio.
+  </div>
+
+
+  <h3>9.4 Comunicazione Figlio → Padre (tramite callback)</h3>
+  <p>
+    La comunicazione <strong>dal figlio verso il padre</strong> avviene tramite una
+    <strong>funzione passata come prop</strong>.
+    Il figlio chiama quella funzione per inviare informazioni al padre.
+  </p>
+
+  <p>Esempio: il padre vuole sapere quando l’utente clicca su una card</p>
+
+  <pre><code class="language-jsx">function PromoList() {
+  const handlePromoClick = (title) =&gt; {
+    alert("Hai cliccato sulla promo: " + title);
+  };
+
+  return (
+    &lt;div className="promo-grid"&gt;
+      {promoData.map((promo) =&gt; (
+        &lt;PromoCard
+          key={promo.title}
+          promo={promo}
+          onClickPromo={handlePromoClick}
+        /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+function PromoCard({ promo, onClickPromo }) {
+  return (
+    &lt;article
+      className="promo-card"
+      onClick={() =&gt; onClickPromo(promo.title)}
+    &gt;
+      &lt;img src={promo.image} alt={promo.title} /&gt;
+      &lt;span&gt;{promo.tag}&lt;/span&gt;
+      &lt;h3&gt;{promo.title}&lt;/h3&gt;
+      &lt;p&gt;{promo.description}&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}
+</code></pre>
+
+  <div class="good">
+    👍 Il figlio non “comanda” il padre: si limita a <strong>notificare eventi</strong>.
+    Il padre decide cosa fare (es. aprire un popup, cambiare pagina, registrare un log).
+  </div>
+
+
+  <h3>9.5 Integrazione: lista dinamica + interazione padre-figlio</h3>
+  <p>
+    Unendo i due concetti, possiamo costruire liste dinamiche come quelle di
+    <code>promoData</code> e far reagire il componente padre agli eventi generati dalle card.
+  </p>
+
+  <pre><code class="language-jsx">function PromoInteractiveList() {
+  const [selectedPromo, setSelectedPromo] = useState(null);
+
+  return (
+    &lt;section&gt;
+      &lt;h2&gt;Promozioni&lt;/h2&gt;
+
+      {promoData.map((promo) =&gt; (
+        &lt;PromoCard
+          key={promo.title}
+          promo={promo}
+          onClickPromo={() =&gt; setSelectedPromo(promo)}
+        /&gt;
+      ))}
+
+      {selectedPromo && (
+        &lt;div className="promo-detail"&gt;
+          &lt;h3&gt;Hai selezionato: {selectedPromo.title}&lt;/h3&gt;
+          &lt;p&gt;{selectedPromo.description}&lt;/p&gt;
+        &lt;/div&gt;
+      )}
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+
+  <div class="note">
+    ℹ️ Questo pattern è estremamente comune in React:
+    <strong>lista → card → evento → aggiornamento stato del padre → UI aggiornata</strong>.
+  </div>
+
+
+  <!-- 10. Chiamate API: fetch vs Axios -->
+  <div class="section">
+    <h2>10. Chiamate API: fetch nativo vs Axios</h2>
+    <p>
+      Per comunicare con un backend REST, in React puoi usare:
+    </p>
+    <ul>
+      <li><strong>fetch</strong>: API nativa del browser;</li>
+      <li><strong>Axios</strong>: libreria esterna, più comoda e potente.</li>
+    </ul>
+
+    <h3>10.1 Esempio con fetch</h3>
+    <pre><code class="language-jsx">import { useEffect, useState } from "react";
+
+function PetsWithFetch() {
+  const [pets, setPets] = useState([]);
+
+  useEffect(() =&gt; {
+    fetch("https://api.example.com/pets")
+      .then((res) =&gt; {
+        if (!res.ok) throw new Error("Errore nella risposta");
+        return res.json();
+      })
+      .then((data) =&gt; setPets(data))
+      .catch((error) =&gt; console.error("Errore API", error));
+  }, []);
+
+  return &lt;pre&gt;{JSON.stringify(pets, null, 2)}&lt;/pre&gt;;
+}
+</code></pre>
+
+    <h3>10.2 Esempio con Axios</h3>
+    <p>Installazione:</p>
+    <pre><code class="language-bash">npm install axios
+</code></pre>
+
+    <pre><code class="language-jsx">import { useEffect, useState } from "react";
+import axios from "axios";
+
+function PetsWithAxios() {
+  const [pets, setPets] = useState([]);
+
+  useEffect(() =&gt; {
+    axios
+      .get("https://api.example.com/pets")
+      .then((res) =&gt; setPets(res.data))
+      .catch((error) =&gt; console.error("Errore API", error));
+  }, []);
+
+  return &lt;pre&gt;{JSON.stringify(pets, null, 2)}&lt;/pre&gt;;
+}
+</code></pre>
+
+    <div class="tip">
+      💡 Axios semplifica la gestione degli errori, del JSON e degli header.
+      Per questo spesso viene preferito a <code>fetch</code> nei progetti reali.
+    </div>
+  </div>
+
+  <!-- 11. Esempio end-to-end -->
+  <div class="section">
+    <h2>11. Esempio end-to-end: mini SPA React</h2>
+    <p>
+      Mettiamo tutto insieme in un piccolo esempio: una SPA con due pagine
+      (<code>Home</code> e <code>Tutorial</code>), routing, hook e mock data.
+    </p>
+
+    <h3>11.1 App.jsx</h3>
+    <pre><code class="language-jsx">import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Tutorial from "./pages/Tutorial";
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;header&gt;
+        &lt;nav&gt;
+          &lt;Link to="/"&gt;Home&lt;/Link&gt; |{" "}
+          &lt;Link to="/tutorial"&gt;Tutorial React&lt;/Link&gt;
+        &lt;/nav&gt;
+      &lt;/header&gt;
+
+      &lt;main&gt;
+        &lt;Routes&gt;
+          &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+          &lt;Route path="/tutorial" element={&lt;Tutorial /&gt;} /&gt;
+        &lt;/Routes&gt;
+      &lt;/main&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+
+export default App;
+</code></pre>
+
+    <h3>11.2 Home.jsx</h3>
+    <pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;section&gt;
+      &lt;h1&gt;Benvenuto in SafePet&lt;/h1&gt;
+      &lt;p&gt;Questa è una semplice Single Page Application costruita con React.&lt;/p&gt;
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+
+    <h3>11.3 Tutorial.jsx (con FAQ in stile accordion)</h3>
+    <p>
+      Questa è la pagina che può contenere gli accordion FAQ/Hook che hai costruito
+      nel tuo progetto React, spiegando passo passo Node, SPA, componenti e hook.
+    </p>
+
+    <pre><code class="language-jsx">import TutorialFaq from "../components/TutorialFaq";
+
+export default function Tutorial() {
+  return (
+    &lt;section&gt;
+      &lt;h1&gt;Tutorial React&lt;/h1&gt;
+      &lt;TutorialFaq /&gt;
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+
+    <h3>11.4 Diagramma dei livelli React</h3>
+    <pre><code>   [Browser / Utente]
+            |
+            v
+         [React]
+            |
+            v
+      [Componenti UI]
+            |
+            v
+     [Service / API client]
+            |
+            v
+        [Backend REST]
+            |
+            v
+         [Database]
+</code></pre>
+
+    <ul>
+      <li><strong>React</strong>: gestisce il rendering delle pagine e dei componenti.</li>
+      <li><strong>Componenti UI</strong>: mostrano dati e interagiscono con l’utente.</li>
+      <li><strong>Service/API client</strong>: esegue le chiamate HTTP (Axios/fetch).</li>
+      <li><strong>Backend REST</strong>: espone API che restituiscono JSON.</li>
+      <li><strong>Database</strong>: memorizza i dati in modo persistente.</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>12. Visualizzazione Condizionale e Rendering di Liste in React</h2>
+    <p>
+      React offre strumenti semplici ed espressivi per gestire la visualizzazione dinamica
+      della UI. Due concetti fondamentali sono:
+    </p>
+    <ul>
+      <li><strong>Rendering condizionale</strong>: mostrare o nascondere parti della UI in base a uno stato o una
+        condizione.</li>
+      <li><strong>Rendering di liste</strong>: generare automaticamente elementi ripetuti a partire da array o strutture
+        dati.</li>
+    </ul>
+
+    <!-- Visualizzazione Condizionale -->
+    <h3>12.1 Visualizzazione Condizionale</h3>
+    <p>
+      Il rendering condizionale permette di mostrare componenti solo quando una certa condizione è vera.
+      React supporta diverse sintassi, tutte basate su JavaScript.
+    </p>
+
+    <h4>12.1.1 Esempio con operatore ternario</h4>
+    <pre><code class="language-jsx">import { useState } from "react";
+
+function LoginStatus() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  return (
+    &lt;div&gt;
+      {loggedIn ? (
+        &lt;p&gt;Benvenuto, utente!&lt;/p&gt;
+      ) : (
+        &lt;p&gt;Non sei autenticato.&lt;/p&gt;
+      )}
+
+      &lt;button onClick={() =&gt; setLoggedIn(!loggedIn)}&gt;
+        {loggedIn ? "Logout" : "Login"}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <h4>12.1.2 Esempio con && (render se vero)</h4>
+    <p>Mostra un elemento <strong>solo se</strong> la condizione è vera.</p>
+
+    <pre><code class="language-jsx">function Cart({ items }) {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Carrello&lt;/h2&gt;
+      
+      {items.length === 0 && &lt;p&gt;Il carrello è vuoto.&lt;/p&gt;}
+
+      {items.length &gt; 0 && (
+        &lt;p&gt;Hai {items.length} articoli nel carrello.&lt;/p&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <div class="tip">
+      💡 Il pattern con <code>&amp;&amp;</code> è molto usato per mostrare messaggi, badge o elementi opzionali.
+    </div>
+
+    <!-- Liste -->
+    <h3>12.2 Rendering di Liste</h3>
+    <p>
+      Per generare liste in React si usa <code>Array.map()</code>, restituendo un elemento JSX per ogni voce dell’array.
+      Ogni elemento deve avere una prop <strong>key</strong> unica, per permettere a React di ottimizzare i re-render.
+    </p>
+
+    <h4>12.2.1 Esempio base</h4>
+    <pre><code class="language-jsx">const users = ["Francesco", "Giulia", "Marco"];
+
+function UserList() {
+  return (
+    &lt;ul&gt;
+      {users.map((name) =&gt; (
+        &lt;li key={name}&gt;{name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+
+    <h4>12.2.2 Liste di oggetti</h4>
+    <pre><code class="language-jsx">const pets = [
+  { id: 1, name: "Buddy", type: "Cane" },
+  { id: 2, name: "Micia", type: "Gatto" },
+];
+
+function PetList() {
+  return (
+    &lt;div&gt;
+      {pets.map((pet) =&gt; (
+        &lt;div key={pet.id}&gt;
+          &lt;h4&gt;{pet.name}&lt;/h4&gt;
+          &lt;p&gt;Specie: {pet.type}&lt;/p&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+    <h4>12.2.3 Rendering di liste combinato con condizionale</h4>
+    <pre><code class="language-jsx">function PromoList({ promoData }) {
+  return (
+    &lt;section&gt;
+      &lt;h2&gt;Promozioni Attive&lt;/h2&gt;
+
+      {promoData.length === 0 ? (
+        &lt;p&gt;Nessuna promozione disponibile.&lt;/p&gt;
+      ) : (
+        &lt;div className="promo-grid"&gt;
+          {promoData.map((promo) =&gt; (
+            &lt;article key={promo.title}&gt;
+              &lt;img src={promo.image} alt={promo.title} /&gt;
+              &lt;h3&gt;{promo.title}&lt;/h3&gt;
+              &lt;p&gt;{promo.description}&lt;/p&gt;
+            &lt;/article&gt;
+          ))}
+        &lt;/div&gt;
+      )}
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+
+    <div class="note">
+      ℹ️ Il rendering condizionale + <code>map()</code> è uno dei pattern più importanti
+      nello sviluppo di UI dinamiche con React.
+    </div>
+
+  </div>
+  <h3>13. Gestione dell’autenticazione con Context e Protected Routes</h3>
+
+  <p>
+    Nel progetto SafePet, l’accesso alle pagine e ai servizi è regolato tramite un sistema di
+    autenticazione basato su <strong>React Context</strong> e <strong>route protette</strong>.
+    Questo approccio consente di gestire globalmente lo stato dell’utente, le sue informazioni,
+    il token e soprattutto il <strong>ruolo</strong> (es. USER, ADMIN).
+  </p>
+
+  <p>
+    L’architettura si basa su tre componenti chiave:
+  </p>
+
+  <ul>
+    <li><strong>UserContext</strong>: mantiene email, token e ruolo dell’utente loggato.</li>
+    <li><strong>ProtectedRoute</strong>: protegge l’accesso a pagine sensibili.</li>
+    <li><strong>React Router</strong>: combina le route con la logica dei ruoli.</li>
+  </ul>
+
+  <hr />
+
+  <h4>13.1 UserContext – Stato globale dell’utente</h4>
+
+  <p>
+    Lo <strong>UserContext</strong> gestisce tutte le informazioni essenziali dell’utente dopo il login,
+    rendendole disponibili all’intera applicazione senza dover passare proprietà manualmente.
+    In SafePet viene usato per memorizzare:
+  </p>
+
+  <ul>
+    <li>email dell’utente</li>
+    <li>ruolo (USER / ADMIN)</li>
+    <li>metodi <em>updateUser</em> e <em>logout</em></li>
+  </ul>
+
+  <pre><code class="language-jsx">import { createContext, useContext, useState, useEffect } from "react";
+
+const UserContext = createContext({
+  username: "",
+  role: "",
+  updateUser: () =&gt; {},
+  logout: () =&gt; {},
+});
+
+export function UserProvider({ children }) {
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
+
+  useEffect(() =&gt; {
+    const savedUsername = localStorage.getItem("userEmail");
+    const savedRole = localStorage.getItem("userRole");
+    if (savedUsername) setUsername(savedUsername);
+    if (savedRole) setRole(savedRole);
+  }, []);
+
+  const updateUser = (email, role) =&gt; {
+    setUsername(email);
+    setRole(role);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userRole", role);
+  };
+
+  const logout = () =&gt; {
+    setUsername("");
+    setRole("");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+  };
+
+  return (
+    &lt;UserContext.Provider value={{ username, role, updateUser, logout }}&gt;
+      {children}
+    &lt;/UserContext.Provider&gt;
+  );
+}
+
+export const useUser = () =&gt; useContext(UserContext);</code></pre>
+
+  <div class="note">
+    ℹ️ Il Context consente di gestire un vero “stato globale” condiviso tra
+    Navbar, Router e componenti protetti.
+  </div>
+
+  <hr />
+
+  <h4>13.2 ProtectedRoute – Protezione delle pagine</h4>
+
+  <p>
+    Una <strong>ProtectedRoute</strong> verifica che l’utente sia autenticato e, se richiesto, che possieda
+    il ruolo necessario per accedere a una determinata pagina.
+  </p>
+
+  <p>
+    Questo permette scenari come:
+  </p>
+
+  <ul>
+    <li>accesso negato agli utenti non loggati</li>
+    <li>accesso riservato ad amministratori</li>
+    <li>pagine disponibili solo a utenti registrati</li>
+  </ul>
+
+  <pre><code class="language-jsx">import { Navigate } from "react-router-dom";
+import { useUser } from "./UserProvider";
+
+export default function ProtectedRoute({ children, allowedRoles }) {
+  const { username, role } = useUser();
+
+  if (!username) return &lt;Navigate to="/login" replace /&gt;;
+
+  if (allowedRoles && !allowedRoles.includes(role))
+    return &lt;Navigate to="/unauthorized" replace /&gt;;
+
+  return children;
+}</code></pre>
+
+  <div class="note">
+    🔐 Una rotta è protetta quando richiede che l’utente soddisfi requisiti di accesso.
+  </div>
+
+  <hr />
+
+  <h4>13.3 Definizione dei percorsi protetti nel Router</h4>
+
+  <p>
+    Si avvolgono i componenti all’interno di <code>&lt;ProtectedRoute&gt;</code>
+    specificando eventualmente il ruolo richiesto.
+  </p>
+
+  <pre><code class="language-jsx">import ProtectedRoute from "./ProtectedRoute";
+
+&lt;Routes&gt;
+  &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+
+  &lt;Route
+    path="/pet"
+    element={
+      &lt;ProtectedRoute allowedRoles={["USER", "ADMIN"]}&gt;
+        &lt;Pet /&gt;
+      &lt;/ProtectedRoute&gt;
+    }
+  /&gt;
+
+  &lt;Route
+    path="/registerpet"
+    element={
+      &lt;ProtectedRoute allowedRoles={["ADMIN"]}&gt;
+        &lt;RegisterPet /&gt;
+      &lt;/ProtectedRoute&gt;
+    }
+  /&gt;
+
+  &lt;Route path="/unauthorized" element={&lt;h2&gt;Accesso negato&lt;/h2&gt;} /&gt;
+&lt;/Routes&gt;</code></pre>
+
+  <hr />
+
+  <h4>13.4 Funzionamento completo del sistema di autenticazione</h4>
+
+  <p>Il flusso operativo è il seguente:</p>
+
+  <ol>
+    <li>L’utente effettua il login tramite Navbar.</li>
+    <li>Il backend restituisce <code>email</code>, <code>token</code> e <code>role</code>.</li>
+    <li>La Navbar invoca: <code>updateUser(email, role)</code>.</li>
+    <li>Il Context salva dati in memoria e nel <code>localStorage</code>.</li>
+    <li>Una rotta protetta verifica:
+      <ul>
+        <li>se l’utente è loggato</li>
+        <li>se ha il ruolo richiesto</li>
+      </ul>
+    </li>
+    <li>Se i requisiti non sono soddisfatti → redirezione.</li>
+    <li>Se tutto è valido → contenuto visibile.</li>
+  </ol>
+
+  <hr />
+
+  <h4>13.5 Mappatura dei ruoli nel progetto SafePet</h4>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Pagina</th>
+        <th>Accesso</th>
+        <th>Ruoli ammessi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>/</td>
+        <td>Pubblica</td>
+        <td>Tutti</td>
+      </tr>
+      <tr>
+        <td>/pet</td>
+        <td>Utente autenticato</td>
+        <td>USER, ADMIN</td>
+      </tr>
+      <tr>
+        <td>/registerpet</td>
+        <td>Funzionalità veterinaria</td>
+        <td>ADMIN</td>
+      </tr>
+      <tr>
+        <td>/profile</td>
+        <td>Utente autenticato</td>
+        <td>USER, ADMIN</td>
+      </tr>
+      <tr>
+        <td>/admin</td>
+        <td>Sezione riservata</td>
+        <td>ADMIN</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    🔎 Il ruolo influisce sia sulla visibilità delle pagine sia sui link presenti nella Navbar.
+  </div>
+
+  <hr />
+
+  <h4>13.6 Integrazione con la Navbar</h4>
+
+  <p>
+    La Navbar può mostrare link differenti in base al ruolo dell’utente.
+  </p>
+
+  <pre><code class="language-jsx">{username && (
+  &lt;Link to="/profile"&gt;Profilo&lt;/Link&gt;
+)}
+
+{role === "ADMIN" && (
+  &lt;Link to="/admin"&gt;Admin Panel&lt;/Link&gt;
+)}
+
+{!username && (
+  &lt;button&gt;Login&lt;/button&gt;
+)}</code></pre>
+
+  <div class="note">
+    💡 Il Context permette alla Navbar di reagire automaticamente al login/logout
+    senza alcuna logica aggiuntiva nei componenti.
+  </div>
+
+
+</body>
+
+</html>

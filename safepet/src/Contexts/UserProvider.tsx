@@ -2,12 +2,16 @@ import React, { createContext, useState, useContext, useEffect, ReactNode } from
 
 type UserContextType = {
   usernameGlobal: string;
-  updateUsername: (newUsername: string) => void;
+  role: string;
+  updateUser: (username: string, role: string) => void;
+  logout: () => void;
 };
 
 const UserContext = createContext<UserContextType>({
   usernameGlobal: '',
-  updateUsername: () => {},
+  role: '',
+  updateUser: () => {},
+  logout: () => {},
 });
 
 type UserProviderProps = {
@@ -16,21 +20,31 @@ type UserProviderProps = {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [usernameGlobal, setUsernameGlobal] = useState('');
+  const [role, setRole] = useState('');
 
   useEffect(() => {
-    const savedUsername = localStorage.getItem('authToken');
-    if (savedUsername) {
-      setUsernameGlobal(savedUsername);
-    }
+    const savedUsername = localStorage.getItem('authUsername');
+    const savedRole = localStorage.getItem('authRole');
+    if (savedUsername) setUsernameGlobal(savedUsername);
+    if (savedRole) setRole(savedRole);
   }, []);
 
-  const updateUsername = (newUsername: string) => {
-    setUsernameGlobal(newUsername);
-    localStorage.setItem('authToken', newUsername);
+  const updateUser = (username: string, role: string) => {
+    setUsernameGlobal(username);
+    setRole(role);
+    localStorage.setItem('authUsername', username);
+    localStorage.setItem('authRole', role);
+  };
+
+  const logout = () => {
+    setUsernameGlobal('');
+    setRole('');
+    localStorage.removeItem('authUsername');
+    localStorage.removeItem('authRole');
   };
 
   return (
-    <UserContext.Provider value={{ usernameGlobal, updateUsername }}>
+    <UserContext.Provider value={{ usernameGlobal, role, updateUser, logout }}>
       {children}
     </UserContext.Provider>
   );

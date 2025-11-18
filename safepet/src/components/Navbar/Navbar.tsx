@@ -24,7 +24,7 @@ function Navbar() {
   const [cognomeSignup, setCognomeSignup] = useState('');
 
   const location = useLocation();
-  const { usernameGlobal, updateUsername } = useUser();
+  const { usernameGlobal, updateUser } = useUser();
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -57,8 +57,11 @@ function Navbar() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token || 'dummyToken');
-        localStorage.setItem('userEmail', data.email || emailLogin);
-        updateUsername(data.email || emailLogin);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userEmail', data.email);
+        localStorage.setItem('userRole', "USER"); //TODO
+
+        updateUser(data.email, "USER");
         setIsVisibleLogin(false);
       } else {
         alert('Credenziali errate o utente non trovato.');
@@ -95,8 +98,10 @@ function Navbar() {
   };
 
   const logOut = () => {
-    updateUsername('');
-    localStorage.clear();
+    updateUser('', '');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
     navigate('/');
   };
 
