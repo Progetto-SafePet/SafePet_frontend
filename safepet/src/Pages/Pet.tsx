@@ -43,7 +43,7 @@ function Pet() {
                         <Banner 
                             text="Registra il tuo pet per accedere ai vantaggi di SafePet"
                             buttonText="Registra Pet"
-                            link = "/registerpet"
+                            link = "/registerPet"
                         >
                         </Banner>
 

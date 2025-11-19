@@ -6,7 +6,7 @@ import Home from './Pages/Home';
 import Footer from './components/Footer/Footer';
 import { UserProvider } from './Contexts/UserProvider'; 
 import Pet from './Pages/Pet';
-import RegisterPet from './Pages/RegisterPet';
+import RegisterPet from './Pages/RegisterPet2';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Route 
             path="/pet" 
             element={
-              <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
+              <ProtectedRoute allowedRoles={["PROPRIETARIO", "ADMIN"]}>
                 <Pet />
               </ProtectedRoute>
             }
@@ -30,16 +30,16 @@ function App() {
           <Route 
             path="/petAdmin" 
             element={
-              <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
+              <ProtectedRoute allowedRoles={["PROPRIETARIO", "ADMIN"]}>
                 <Pet />
               </ProtectedRoute>
             }
           />
 
           <Route 
-            path="/registerpet" 
+            path="/registerPet" 
             element={
-              <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <ProtectedRoute allowedRoles={["PROPRIETARIO"]}>
                 <RegisterPet />
               </ProtectedRoute>
             }

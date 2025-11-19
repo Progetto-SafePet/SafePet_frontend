@@ -20,13 +20,13 @@ const YourPets = () => {
           const data = await response.json();
           setPets(data);
         } else if (response.status === 401) {
-          alert("Token non valido o scaduto.");
+          console.log("Token non valido o scaduto.");
         } else {
-          alert("Errore durante il recupero dei tuoi animali.");
+          console.log("Errore durante il recupero dei tuoi animali.");
         }
       } catch (error) {
         console.error("Errore di connessione:", error);
-        alert("Errore di connessione al server.");
+        console.log("Errore di connessione al server.");
       }
     };
 

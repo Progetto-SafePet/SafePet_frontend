@@ -59,15 +59,15 @@ function Navbar() {
         localStorage.setItem('token', data.token || 'dummyToken');
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userRole', "USER"); //TODO
+        localStorage.setItem('userRole', "PROPRIETARIO"); //TODO
 
-        updateUser(data.email, "USER");
+        updateUser(data.email, "PROPRIETARIO");
         setIsVisibleLogin(false);
       } else {
-        alert('Credenziali errate o utente non trovato.');
+        console.log('Credenziali errate o utente non trovato.');
       }
     } catch (error) {
-      alert('Errore di connessione al server.');
+      console.log('Errore di connessione al server.');
     }
   };
 
@@ -90,10 +90,10 @@ function Navbar() {
       if (response.ok) {
         setIsVisibleSignup(false);
       } else {
-        alert('Errore durante la registrazione. Verifica i dati e riprova.');
+        console.log('Errore durante la registrazione. Verifica i dati e riprova.');
       }
     } catch (error) {
-      alert('Errore di connessione al server.');
+      console.log('Errore di connessione al server.');
     }
   };
 

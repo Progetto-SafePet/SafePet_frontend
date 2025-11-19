@@ -30,12 +30,17 @@ function RegisterPet() {
   ];
 
   const [nome, setNome] = useState("");
-  const [razza, setRazza] = useState("");
-  const [microchip, setMicrochip] = useState("");
   const [sesso, setSesso] = useState("F");
+  const [specie, setSpecie] = useState("");
+  const [razza, setRazza] = useState("");
+  const [dataNascita, setDataNascita] = useState("");
+  const [peso, setPeso] = useState(0.0);
+  const [coloreMantello, setColoreMantello] = useState("Nero");
+  const [microchip, setMicrochip] = useState("");
+  const [isSterilizzato, setIsSterilizzato] = useState(false);
   const [foto, setFoto] = useState(null);
 
-   const TOKEN = localStorage.getItem("token");
+  const TOKEN = localStorage.getItem("token");
 
   const creaPet = async (e) => {
     e.preventDefault();
@@ -45,7 +50,14 @@ function RegisterPet() {
     formData.append("razza", razza);
     formData.append("microchip", microchip);
     formData.append("sesso", sesso);
+    formData.append("specie", specie);
+    formData.append("dataNascita", dataNascita);
+    formData.append("coloreMantello", coloreMantello);
+    formData.append("sterilizzato", isSterilizzato ? "true" : "false");
+    formData.append("peso", peso);
     formData.append("foto", foto);
+
+    console.log(coloreMantello)
 
     try {
       const response = await fetch("http://localhost:8080/gestionePet/creaPet", {
@@ -53,12 +65,12 @@ function RegisterPet() {
         headers: {
           Authorization: `Bearer ${TOKEN}`, 
         },
-        body: formData, // multipart
+        body: formData, 
       });
 
       if (response.ok) {
         const data = await response.json();
-        alert(`Animale "${data.nome}" registrato con successo!`);
+        console.log(`Animale "${data.nome}" registrato con successo!`);
         console.log("Pet creato:", data);
 
         setNome("");
@@ -68,89 +80,136 @@ function RegisterPet() {
         setFoto(null);
         e.target.reset();
       } else if (response.status === 401) {
-        alert("Token non valido o scaduto.");
+        console.log("Token non valido o scaduto.");
       } else {
-        alert("Errore durante la registrazione del pet.");
+        console.log("Errore durante la registrazione del pet.");
       }
     } catch (error) {
-      alert("Errore di connessione al server.");
+      console.log("Errore di connessione al server.");
       console.error(error);
     }
-  };
+  }
 
   return (
-    <div className="page-container">
-      <div className="page">
-        <div className="main-container">
-          <h2 className="title">Registra il tuo animale</h2>
+      <>
+         <div className="page-container">
+          <div className="page">
+            <div className="main-container">
+              <h2 className="title">Registra il tuo animale</h2>
 
-          <form
-            className="register-pet-form"
-            onSubmit={creaPet}
-            encType="multipart/form-data"
-          >
-            <div className="form-group">
-              <label>Nome</label>
-              <input
-                type="text"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Razza</label>
-              <input
-                type="text"
-                value={razza}
-                onChange={(e) => setRazza(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Microchip</label>
-              <input
-                type="text"
-                value={microchip}
-                onChange={(e) => setMicrochip(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Sesso</label>
-              <select
-                value={sesso}
-                onChange={(e) => setSesso(e.target.value)}
-                required
+              <form
+                className="register-pet-form"
+                onSubmit={creaPet}
+                encType="multipart/form-data"
               >
-                <option value="M">Maschio</option>
-                <option value="F">Femmina</option>
-              </select>
+                <div className="form-group">
+                  <label>Nome</label>
+                  <input
+                    type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Sesso</label>
+                  <select
+                    value={sesso}
+                    onChange={(e) => setSesso(e.target.value)}
+                    required
+                  >
+                    <option value="M">Maschio</option>
+                    <option value="F">Femmina</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Colore Mantello</label>
+                  <select
+                    value={coloreMantello}
+                    onChange={(e) => setColoreMantello(e.target.value)}
+                    required
+                  >
+                    <option value="Nero">Nero</option>
+                    <option value="Marrone">Marrone</option>
+                    <option value="Blu">Blu</option>
+                    <option value="Bianco">Bianco</option>
+                    <option value="Grigio">Grigio</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Specie</label>
+                  <input
+                    type="text"
+                    value={specie}
+                    onChange={(e) => setSpecie(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Razza</label>
+                  <input
+                    type="text"
+                    value={razza}
+                    onChange={(e) => setRazza(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Microchip</label>
+                  <input
+                    type="text"
+                    value={microchip}
+                    onChange={(e) => setMicrochip(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Data di nasciata</label>
+                  <input
+                    type="date"
+                    value={dataNascita}
+                    onChange={(e) => setDataNascita(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Sterilizzato</label>
+                  <input
+                    type="checkbox"
+                    checked={isSterilizzato}
+                    onChange={(e) => setIsSterilizzato(e.target.checked)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Foto</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setFoto(e.target.files[0])}
+                    required
+                  />
+                </div>
+
+                <button type="submit" className="button-primary">
+                  Registra Pet
+                </button>
+              </form>
+
+              <PromoCards cards={promoData} />
             </div>
-
-            <div className="form-group">
-              <label>Foto</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setFoto(e.target.files[0])}
-                required
-              />
-            </div>
-
-            <button type="submit" className="button-primary">
-              Registra Pet
-            </button>
-          </form>
-
-          <PromoCards cards={promoData} />
+          </div>
         </div>
-      </div>
-    </div>
+      </>
   );
+
 }
 
 export default RegisterPet;
