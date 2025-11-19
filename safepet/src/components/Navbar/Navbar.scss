@@ -299,3 +299,9 @@ input#birthDate {
 .menu-item:hover .dropdown {
     display: flex;
 }
+
+@media (max-width: 768px) {
+    .login-box {
+        width: 90%;
+    }
+}
