@@ -10,7 +10,7 @@ type Props = {
 export default function ProtectedRoute({ children, allowedRoles }: Props) {
   const { usernameGlobal, role } = useUser();
 
-  if (!usernameGlobal) return <Navigate to="/login" replace />;
+  if (!usernameGlobal) return <Navigate to="/" replace />;
 
   if (allowedRoles && !allowedRoles.includes(role))
     return <Navigate to="/unauthorized" replace />;
