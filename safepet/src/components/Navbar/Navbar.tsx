@@ -59,9 +59,9 @@ function Navbar() {
         localStorage.setItem('token', data.token || 'dummyToken');
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userRole', "USER"); //TODO
+        localStorage.setItem('userRole', data.role); //TODO
 
-        updateUser(data.email, "USER");
+        updateUser(data.email, data.role);
         setIsVisibleLogin(false);
       } else {
         alert('Credenziali errate o utente non trovato.');
