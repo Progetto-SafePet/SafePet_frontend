@@ -6,7 +6,7 @@ import Home from './Pages/Home';
 import Footer from './components/Footer/Footer';
 import { UserProvider } from './Contexts/UserProvider'; 
 import Pet from './Pages/Pet';
-import RegisterPet from './Pages/RegisterPet2';
+import RegisterPet from './Pages/RegisterPet';
 import ProtectedRoute from './ProtectedRoute';
 
 function App() {
