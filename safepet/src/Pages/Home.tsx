@@ -47,15 +47,8 @@ function Home() {
                         >
                         </Banner>
 
-                         <Banner 
-                            text="Accedi a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
-                            buttonText="Registrati"
-                            link = "/login"
-                        >
-                        </Banner>
-
                     </div>
-                    
+
                 </div>
             </div>
         </>
