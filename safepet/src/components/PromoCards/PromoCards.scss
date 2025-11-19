@@ -13,6 +13,8 @@
   flex-direction: column;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  max-width: 400px;
+  max-height: 500px;
 }
 
 .promo-card:hover {
@@ -28,8 +30,9 @@
 
 .promo-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 180px;      
+  object-fit: contain;  
+  border-radius: 10px;
 }
 
 .promo-content {
