@@ -55,8 +55,8 @@ const YourPets = () => {
               <span className="promo-tag">{pet.sesso === "M" ? "Maschio" : "Femmina"}</span>
               <h3 className="promo-title">{pet.nome}</h3>
               <p className="promo-description">
-                <strong>Razza:</strong> {pet.razza} <br />
-                <strong>Microchip:</strong> {pet.microchip}
+                    <strong>Specie:</strong> {pet.specie} <br />
+                    <strong>Peso:</strong> {pet.peso} <br />
               </p>
             </div>
           </div>
