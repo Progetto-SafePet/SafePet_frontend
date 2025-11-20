@@ -1,9 +1,12 @@
+import { useUser } from "../Contexts/UserProvider";
 import { useContext, useEffect, useState } from "react";
 import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import PromoCards from "../components/PromoCards/PromoCards";
 
 function Home() {
+
+    const { usernameGlobal } = useUser();
 
     const promoData = [
         {
@@ -39,14 +42,14 @@ function Home() {
                     <div className='main-container'>
 
                         <PromoCards cards={promoData} />
-
-                        <Banner 
-                            text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
-                            buttonText="Registrati"
-                            link = "/signup"
-                        >
-                        </Banner>
-
+                        {!usernameGlobal && (
+                            <Banner
+                                text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
+                                buttonText="Registrati"
+                                link = "/signup"
+                            />
+                            </Banner>
+                         )}
                     </div>
 
                 </div>
