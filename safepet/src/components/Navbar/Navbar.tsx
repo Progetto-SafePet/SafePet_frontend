@@ -136,10 +136,11 @@ function Navbar() {
               <span>Servizi <FontAwesomeIcon icon={faChevronDown} /></span>
               {openDropdown === 'servizi' && (
                 <div className="dropdown">
-                  <Link to="/emergenze">Gestione emergenze</Link>
-                  <Link to="/prenotazioni">Prenotazioni veterinarie</Link>
-                  <Link to="/libretto">Libretto sanitario digitale</Link>
-                  <Link to="/mappa">Mappa veterinari</Link>
+                    <Link to="/elencoVet">Elenco veterinari</Link>
+                    <Link to="/emergenze">Gestione emergenze</Link>
+                    <Link to="/prenotazioni">Prenotazioni veterinarie</Link>
+                    <Link to="/libretto">Libretto sanitario digitale</Link>
+                    <Link to="/mappa">Mappa veterinari</Link>
                 </div>
               )}
             </div>
