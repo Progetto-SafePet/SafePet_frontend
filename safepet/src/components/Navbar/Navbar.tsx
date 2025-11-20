@@ -11,7 +11,7 @@ function Navbar() {
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
   const [isVisibleSignup, setIsVisibleSignup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // LOGIN
   const [emailLogin, setEmailLogin] = useState('');
@@ -20,8 +20,13 @@ function Navbar() {
   // SIGNUP
   const [emailSignup, setEmailSignup] = useState('');
   const [passwordSignup, setPasswordSignup] = useState('');
+  const [confermaPasswordSignup, setConfermaPasswordSignup] = useState('');
   const [nomeSignup, setNomeSignup] = useState('');
   const [cognomeSignup, setCognomeSignup] = useState('');
+  const [numeroTelefonoSignup, setNumeroTelefonoSignup] = useState('');
+  const [dataNascitaSignup, setDataNascitaSignup] = useState('');
+  const [indirizzoDomicilioSignup, setIndirizzoDomicilioSignup] = useState('');
+  const [genereSignup, setGenereSignup] = useState('');
 
   const location = useLocation();
   const { usernameGlobal, updateUser } = useUser();
@@ -29,7 +34,7 @@ function Navbar() {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const toggleDropdown = (menu) => {
+  const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
@@ -76,8 +81,13 @@ function Navbar() {
     const newUser = {
       email: emailSignup,
       password: passwordSignup,
+      confermaPassword: confermaPasswordSignup,
       nome: nomeSignup,
       cognome: cognomeSignup,
+      numeroTelefono: numeroTelefonoSignup,
+      dataNascita: dataNascitaSignup,
+      indirizzoDomicilio: indirizzoDomicilioSignup,
+      genere: genereSignup,
     };
 
     try {
@@ -227,6 +237,31 @@ function Navbar() {
             <div className="user-box">
               <input type="password" value={passwordSignup} onChange={(e) => setPasswordSignup(e.target.value)} required />
               <label>Password</label>
+            </div>
+            <div className="user-box">
+              <input type="password" value={confermaPasswordSignup} onChange={(e) => setConfermaPasswordSignup(e.target.value)} required />
+              <label>Conferma Password</label>
+            </div>
+            <div className="user-box">
+              <input type="tel" value={numeroTelefonoSignup} onChange={(e) => setNumeroTelefonoSignup(e.target.value)} required pattern="\d{10}" placeholder="10 cifre" />
+              <label>Numero di Telefono</label>
+            </div>
+            <div className="user-box">
+              <input type="date" value={dataNascitaSignup} onChange={(e) => setDataNascitaSignup(e.target.value)} required />
+              <label>Data di Nascita</label>
+            </div>
+            <div className="user-box">
+              <input type="text" value={indirizzoDomicilioSignup} onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)} required />
+              <label>Indirizzo di Domicilio</label>
+            </div>
+            <div className="user-box">
+              <select value={genereSignup} onChange={(e) => setGenereSignup(e.target.value)} required>
+                <option value="">Seleziona genere</option>
+                <option value="M">Maschio</option>
+                <option value="F">Femmina</option>
+                <option value="A">Altro</option>
+              </select>
+              <label>Genere</label>
             </div>
             <div className="side-boxes-login">
               <button type="button" className="button-primary" onClick={signup}>Registrati</button>
