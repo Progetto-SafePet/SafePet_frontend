@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./ElencoVet.scss";
 
+const StarRating = ({ rating }) => {
+    const maxStars = 5;
+
+    return (
+        <div className="star-rating">
+            {Array.from({ length: maxStars }, (_, i) => (
+                <span
+                    key={i}
+                    className={i < rating ? "star filled" : "star"}
+                >
+                    ★
+                </span>
+            ))}
+        </div>
+    );
+};
+
+
 const ElencoVet = () => {
     const [Veterinari, setVeterinari] = useState([]);
 
     useEffect(() => {
         const fetchVet = async () => {
             try {
-                const response = await fetch("http://localhost:8080/reportCliniche/visualizzaElencoVeterinari", {
+                const response = await fetch("http://localhost:8080/reportCliniche/elencoVeterinari", {
                     method: "GET",
                 });
 
@@ -27,6 +45,10 @@ const ElencoVet = () => {
     }, []);
 
     return (
+        <>
+            <div className = "title">
+                <h3>Lista veterinari</h3>
+            </div>
         <div className="promo-container">
             {Veterinari.length === 0 ? (
                 <p className="no-vet">Nessun veterinari.</p>
@@ -38,17 +60,21 @@ const ElencoVet = () => {
                         </div>
 
                         <div className="promo-content">
-                            <h3 className="promo-title">{vet.nomeVeterinario} {vet.cognomeVeterinario}</h3>
-                            <p className="promo-description">
-                                {vet.nomeClinica} <br />
-                                {vet.indirizzoClinica} <br />
-                                {vet.telefonoClinica} <br />
-                            </p>
+                            <h1 className="promo-title">{vet.nomeVeterinario} {vet.cognomeVeterinario}</h1>
+                            <div className="promo-description">
+                                <StarRating rating={Math.round(vet.mediaRecensioni)} />
+                                <div className={"nome-clinica"}>
+                                    {vet.nomeClinica} <br />
+                                </div>
+                                {vet.indirizzoClinica.replace(" - ", "\n")} <br />
+                                <strong>Telefono: </strong>{vet.telefonoClinica} <br />
+                            </div>
                         </div>
                     </div>
                 ))
             )}
         </div>
+            </>
     );
 };
 
