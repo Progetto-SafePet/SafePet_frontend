@@ -87,8 +87,8 @@ function RegisterPet() {
         // Peso
         if (peso !== "") {
             const nPeso = Number(peso);
-            if (nPeso < 0 || nPeso > 100)
-                newErrors.peso = "Il peso deve essere compreso tra 0.0 e 100.0";
+            if (nPeso < 0.1 || nPeso > 100)
+                newErrors.peso = "Il peso deve essere compreso tra 0.1 e 100.0";
         }
 
         // Colore mantello
