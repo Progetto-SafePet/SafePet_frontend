@@ -1,5 +1,4 @@
 import { useUser } from "../Contexts/UserProvider";
-import { useContext, useEffect, useState } from "react";
 import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
@@ -67,7 +66,6 @@ function Home() {
                 </div>
             </div>
         </>
-
     )
 }
 

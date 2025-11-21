@@ -1,7 +1,7 @@
 import React from "react";
 import "./PromoCard.scss"
 
-interface PromoCardProps {
+export interface PromoCardProps {
     title: string;
     image: string;
     tag: string;
