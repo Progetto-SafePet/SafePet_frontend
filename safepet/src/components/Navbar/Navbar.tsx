@@ -14,7 +14,7 @@ function Navbar() {
 
   // LOGIN
   const [emailLogin, setEmailLogin] = useState('');
-  const [passwordLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
 
   // SIGNUP
   const [emailSignup, setEmailSignup] = useState('');
@@ -216,6 +216,16 @@ function Navbar() {
             <div className="user-box">
               <input id="emailLogin" type="email" value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} required />
               <label>Email</label>
+            </div>
+            <div className="user-box">
+              <input
+                id="passwordLogin"
+                type="password"
+                value={passwordLogin}
+                onChange={(e) => setPasswordLogin(e.target.value)}
+                required
+              />
+              <label>Password</label>
             </div>
             <div className="side-boxes-login">
               <button type="button" className="button-primary" onClick={login}>Login</button>
