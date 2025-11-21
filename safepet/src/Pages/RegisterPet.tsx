@@ -104,7 +104,7 @@ function RegisterPet() {
         <div className="page-container">
             <div className="page">
                 <div className="main-container">
-                    <h2 className="title">Registra il tuo animale</h2>
+                    <h2 className="title">Registra il tuo pet</h2>
 
                     <form
                         className="register-pet-form"
