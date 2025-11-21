@@ -8,6 +8,7 @@ import { UserProvider } from './Contexts/UserProvider';
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ProtectedRoute from './ProtectedRoute';
+import { CONSTANTS } from './constants';
 
 function App() {
 
@@ -21,25 +22,17 @@ function App() {
           <Route 
             path="/pet" 
             element={
-              <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
                 <Pet />
               </ProtectedRoute>
             }
           />
 
-          <Route 
-            path="/petAdmin" 
-            element={
-              <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
-                <Pet />
-              </ProtectedRoute>
-            }
-          />
 
           <Route 
             path="/registerpet" 
             element={
-              <ProtectedRoute allowedRoles={["ADMIN"]}>
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
                 <RegisterPet />
               </ProtectedRoute>
             }
