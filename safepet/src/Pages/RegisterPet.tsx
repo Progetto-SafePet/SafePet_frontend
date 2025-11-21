@@ -1,7 +1,12 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import PromoCards from "../components/PromoCards/PromoCards";
 
 function RegisterPet() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
   const promoData = [
     {
       image:
