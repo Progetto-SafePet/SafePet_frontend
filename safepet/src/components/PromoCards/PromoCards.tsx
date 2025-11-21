@@ -1,17 +1,23 @@
 import React from "react";
-import "../Carousel/PromoCard/PromoCard.tsx"
 import "./PromoCards.scss";
-import PromoCard from "../Carousel/PromoCard/PromoCard";
 
-const PromoCards = ({ cards = []}) => {
+const PromoCards = ({ cards = [] }) => {
   return (
-      <>
-        <div className="promo-container">
-          {cards.slice(0, 3).map((card) => (
-              <PromoCard title={card.title} image={card.image} tag={card.tag} description={card.description}/>
-          ))}
+    <div className="promo-container">
+      {cards.slice(0, 3).map((card, index) => (
+        <div key={index} className="promo-card">
+          <div className="promo-image">
+            <img src={card.image} alt={card.title} />
+          </div>
+
+          <div className="promo-content">
+            <span className="promo-tag">{card.tag}</span>
+            <h3 className="promo-title">{card.title}</h3>
+            <p className="promo-description">{card.description}</p>
+          </div>
         </div>
-      </>
+      ))}
+    </div>
   );
 };
 

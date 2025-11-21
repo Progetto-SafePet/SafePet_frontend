@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PromoCards from "../components/PromoCards/PromoCards";
+import Carousel from "../components/Carousel/Carousel";
 
 function RegisterPet() {
   const promoData = [
@@ -146,7 +146,7 @@ function RegisterPet() {
             </button>
           </form>
 
-          <PromoCards cards={promoData} />
+          <Carousel cardsData={promoData} />
         </div>
       </div>
     </div>
