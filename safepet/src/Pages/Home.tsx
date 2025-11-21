@@ -2,7 +2,7 @@ import { useUser } from "../Contexts/UserProvider";
 import { useContext, useEffect, useState } from "react";
 import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
-import PromoCards from "../components/PromoCards/PromoCards";
+import Carousel from "../components/Carousel/Carousel";
 
 function Home() {
 
@@ -38,10 +38,8 @@ function Home() {
             <div className="page-container">
                 <BannerHomepage></BannerHomepage>
                 <div className="page">
-                                    
                     <div className='main-container'>
-
-                        <PromoCards cards={promoData} />
+                        <Carousel cardsData={promoData} />
                         {!usernameGlobal && (
                             <Banner
                                 text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
@@ -51,7 +49,6 @@ function Home() {
                             </Banner>
                          )}
                     </div>
-
                 </div>
             </div>
         </>
