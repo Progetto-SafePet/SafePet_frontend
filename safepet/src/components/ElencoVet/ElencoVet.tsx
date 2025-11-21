@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ElencoVet.scss";
+import Title from "../Title/Title";
 
 const StarRating = ({ rating }) => {
     const maxStars = 5;
@@ -46,22 +47,20 @@ const ElencoVet = () => {
 
     return (
         <>
-            <div className = "title">
-                <h3>Lista veterinari</h3>
-            </div>
-        <div className="promo-container">
+            <Title text={"Lista veterinari"}/>
+        <div className="veterinario-container">
             {Veterinari.length === 0 ? (
                 <p className="no-vet">Nessun veterinari.</p>
             ) : (
                 Veterinari.map((vet) => (
-                    <div key={vet.idVeterinario} className="promo-card">
-                        <div className="promo-image">
+                    <div key={vet.idVeterinario} className="veterinario-card">
+                        <div className="veterinario-image">
                             <img src={`../imgs/vetPlaceholder.jpg`} alt={"Foto veterinario"}/>
                         </div>
 
-                        <div className="promo-content">
-                            <h1 className="promo-title">{vet.nomeVeterinario} {vet.cognomeVeterinario}</h1>
-                            <div className="promo-description">
+                        <div className="veterinario-content">
+                            <h1 className="veterinario-title">{vet.nomeVeterinario} {vet.cognomeVeterinario}</h1>
+                            <div className="veterinario-description">
                                 <StarRating rating={Math.round(vet.mediaRecensioni)} />
                                 <div className={"nome-clinica"}>
                                     {vet.nomeClinica} <br />
