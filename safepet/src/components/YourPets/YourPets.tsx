@@ -39,7 +39,7 @@ const YourPets = () => {
         <p className="no-pets">Nessun animale registrato.</p>
       ) : (
         pets.map((pet) => (
-          <div key={pet.id} className="promo-card">
+          <div key={pet.id} className="promo-pet-card">
             <div className="promo-image">
               {pet.fotoBase64 ? (
                 <img
