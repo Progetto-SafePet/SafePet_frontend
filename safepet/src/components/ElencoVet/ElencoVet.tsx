@@ -50,7 +50,7 @@ const ElencoVet = () => {
             <Title text={"Lista veterinari"}/>
         <div className="veterinario-container">
             {Veterinari.length === 0 ? (
-                <p className="no-vet">Nessun veterinari.</p>
+                <p className="no-vet">Nessun veterinario presente</p>
             ) : (
                 Veterinari.map((vet) => (
                     <div key={vet.idVeterinario} className="veterinario-card">
