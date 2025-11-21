@@ -50,7 +50,6 @@ function RegisterPet() {
 
     const creaPet = async (e) => {
         e.preventDefault();
-        if (!validate()) return;
 
         // Trasforma stringhe vuote in null per i campi opzionali
         const razzaVal = razza.trim() === "" ? null : razza;
