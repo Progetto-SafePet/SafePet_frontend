@@ -56,7 +56,7 @@ const YourPets = () => {
               <h3 className="promo-title">{pet.nome}</h3>
               <p className="promo-description">
                     <strong>Specie:</strong> {pet.specie} <br />
-                    <strong>Peso:</strong> {pet.peso} <br />
+                    <strong>Data Nascita: </strong> {pet.dataNascita} <br />
               </p>
             </div>
           </div>
