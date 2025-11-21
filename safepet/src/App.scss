@@ -56,6 +56,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding-block: 40px;
   align-items: center;
+  .button-primary{width:auto;
+  }
 
   .form-group {
     display: flex;
@@ -64,6 +66,7 @@
     padding-inline: 20px;
     label {
       font-weight: 600;
+      font-size: 20px;
       margin-bottom: 6px;
       color: #333;
     }
@@ -71,7 +74,6 @@
     select {
       padding: 10px;
       height: 30px;
-      width: 100%;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 14px;
