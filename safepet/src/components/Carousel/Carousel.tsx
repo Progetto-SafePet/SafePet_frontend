@@ -17,7 +17,7 @@ const Carousel = ({ cardsData }) => {
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 3000,
 
         responsive: [
@@ -33,6 +33,7 @@ const Carousel = ({ cardsData }) => {
             {
                 breakpoint: 600,     // Mobile
                 settings: {
+                    arrows: false,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                 }
@@ -41,7 +42,7 @@ const Carousel = ({ cardsData }) => {
     };
 
     return (
-        <div style={{padding: "40px", maxWidth: "1200px" }}>
+        <div style={{padding: "40px" }}>
             <h2>Le nostre promozioni</h2>
             <Slider {...settings}>
                 {cardsData.map((card, index: string) => (
