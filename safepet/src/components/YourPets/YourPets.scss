@@ -2,7 +2,9 @@
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 30px;
+    justify-items: center;
 }
 
 .promo-pet-card {
@@ -14,6 +16,7 @@
     flex-direction: column;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    width: 400px;
 }
 
 .promo-pet-card:hover {

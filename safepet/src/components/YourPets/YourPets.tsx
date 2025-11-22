@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./YourPets.scss";
+import Title from "../Title/Title";
 
 const YourPets = () => {
   const [pets, setPets] = useState([]);
@@ -34,35 +35,38 @@ const YourPets = () => {
   }, []);
 
   return (
-    <div className="promo-container">
-      {pets.length === 0 ? (
-        <p className="no-pets">Nessun animale registrato.</p>
-      ) : (
-        pets.map((pet) => (
-          <div key={pet.id} className="promo-pet-card">
-            <div className="promo-image">
-              {pet.fotoBase64 ? (
-                <img
-                  src={`data:image/jpeg;base64,${pet.fotoBase64}`}
-                  alt={pet.nome}
-                />
-              ) : (
-                <div className="placeholder">Nessuna immagine</div>
-              )}
-            </div>
+    <>
+      <Title text="I tuoi pet"></Title>
+      <div className="promo-container">
+        {pets.length === 0 ? (
+          <p className="no-pets">Nessun animale registrato.</p>
+        ) : (
+          pets.map((pet) => (
+            <div key={pet.id} className="promo-pet-card">
+              <div className="promo-image">
+                {pet.fotoBase64 ? (
+                  <img
+                    src={`data:image/jpeg;base64,${pet.fotoBase64}`}
+                    alt={pet.nome}
+                  />
+                ) : (
+                  <div className="placeholder">Nessuna immagine</div>
+                )}
+              </div>
 
-            <div className="promo-content">
-              <span className="promo-tag">{pet.sesso === "M" ? "Maschio" : "Femmina"}</span>
-              <h3 className="promo-title">{pet.nome}</h3>
-              <p className="promo-description">
-                    <strong>Specie:</strong> {pet.specie} <br />
-                    <strong>Data Nascita: </strong> {pet.dataNascita} <br />
-              </p>
+              <div className="promo-content">
+                <span className="promo-tag">{pet.sesso === "M" ? "Maschio" : "Femmina"}</span>
+                <h3 className="promo-title">{pet.nome}</h3>
+                <p className="promo-description">
+                      <strong>Specie:</strong> {pet.specie} <br />
+                      <strong>Data Nascita: </strong> {pet.dataNascita} <br />
+                </p>
+              </div>
             </div>
-          </div>
-        ))
-      )}
-    </div>
+          ))
+        )}
+      </div>
+    </>
   );
 };
 

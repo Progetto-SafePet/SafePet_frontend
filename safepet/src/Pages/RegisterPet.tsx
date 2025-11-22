@@ -1,5 +1,6 @@
+import { useState } from "react";
+import Carousel from "../components/Carousel/Carousel";
 import {useEffect, useState} from "react";
-import PromoCards from "../components/PromoCards/PromoCards";
 
 function RegisterPet() {
 
@@ -107,10 +108,10 @@ function RegisterPet() {
     }
 
 
+    const TOKEN = localStorage.getItem("token");
 
     const creaPet = async (e) => {
         e.preventDefault();
-        if (!validate()) return;
 
         // Trasforma stringhe vuote in null per i campi opzionali
         const razzaVal = razza.trim() === "" ? null : razza;
@@ -186,7 +187,6 @@ function RegisterPet() {
                                 onChange={(e) => setNome(e.target.value)}
                                 required
                             />
-                            {errors.nome && <div className="msg-error">{errors.nome} </div>}
                         </div>
                         <div className="form-group">
                             <label>Sesso</label>
@@ -198,7 +198,6 @@ function RegisterPet() {
                                 <option value="M">Maschio</option>
                                 <option value="F">Femmina</option>
                             </select>
-                            {errors.sesso && <div className="msg-error">{errors.sesso}</div>}
                         </div>
 
                         <div className="form-group">
@@ -209,7 +208,6 @@ function RegisterPet() {
                                 onChange={(e) => setSpecie(e.target.value)}
                                 required
                             />
-                            {errors.specie && <div className="msg-error">{errors.specie}</div>}
                         </div>
 
                         <div className="form-group">
@@ -219,7 +217,6 @@ function RegisterPet() {
                                 value={razza}
                                 onChange={(e) => setRazza(e.target.value)}
                             />
-                            {errors.razza && <div className="msg-error">{errors.razza}</div>}
                         </div>
 
                         <div className="form-group">
@@ -232,7 +229,6 @@ function RegisterPet() {
                                 step="0.1"
                                 onChange={e => setPeso(e.target.value)}
                             />
-                            {errors.peso && <div className="msg-error">{errors.peso}</div>}
                         </div>
 
                         <div className="form-group">
@@ -243,7 +239,6 @@ function RegisterPet() {
                                 onChange={e => setDataNascita(e.target.value)}
                                 required
                             />
-                            {errors.dataNascita && <div className="msg-error">{errors.dataNascita}</div>}
                         </div>
 
                         <div className="form-group">
@@ -253,7 +248,6 @@ function RegisterPet() {
                                 value={coloreMantello}
                                 onChange={(e) => setColoreMantello(e.target.value)}
                             />
-                            {errors.coloreMantello && <div className="msg-error">{errors.coloreMantello}</div>}
                         </div>
 
                         <div className="form-group">
@@ -263,7 +257,6 @@ function RegisterPet() {
                                 value={microchip}
                                 onChange={(e) => setMicrochip(e.target.value)}
                             />
-                            {errors.microchip && <div className="msg-error">{errors.microchip}</div>}
                         </div>
 
                         <div className="form-group">
