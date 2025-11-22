@@ -8,6 +8,7 @@ import { UserProvider } from './Contexts/UserProvider';
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ElencoVet from './components/ElencoVet/ElencoVet';
+import ListaPazienti from "./Pages/ListaPazienti";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 
@@ -28,6 +29,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/pazienti"
+            element={
+                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                  <ListaPazienti />
+                </ProtectedRoute>
+              }
+            />
 
 
           <Route 

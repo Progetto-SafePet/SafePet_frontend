@@ -1,3 +1,4 @@
+import { CONSTANTS } from '../../constants';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import './Navbar.scss';
@@ -27,6 +28,9 @@ function Navbar() {
   const navigate = useNavigate();
 
   const menuRef = useRef(null);
+
+  // ROLE
+    const [role, setRole] = useState('');
 
   // HAMBURGER MENU
   const toggleMenu = () => {
@@ -73,6 +77,8 @@ function Navbar() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userRole', data.role);
+
+        setRole(data.role);
 
         updateUser(data.email, data.role);
         setIsVisibleLogin(false);
@@ -122,6 +128,7 @@ function Navbar() {
 
   const logOut = () => {
     updateUser('', '');
+    setRole('');
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
@@ -201,7 +208,22 @@ function Navbar() {
             {usernameGlobal && (
               <>
                 <Link className="button-primary" to="/profile" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
-                <Link className="button-primary" to="/pet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>I tuoi pet</Link>
+                {role === CONSTANTS.ROLE.PROPRIETARIO && (
+                  <Link className="button-primary" to="/pet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }} > I tuoi pet </Link>
+                )}
+
+                {role === CONSTANTS.ROLE.VETERINARIO && (
+                  <Link
+                    className="button-primary"
+                    to="/pazienti"
+                    onClick={() => {
+                      setOpenDropdown(null);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    I tuoi pazienti
+                  </Link>
+                )}
                 <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
