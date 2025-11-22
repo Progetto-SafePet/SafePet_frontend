@@ -1,4 +1,3 @@
-import { CONSTANTS } from '../../constants';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import './Navbar.scss';
@@ -6,12 +5,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../../Contexts/UserProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { CONSTANTS } from '../../constants';
 
 function Navbar() {
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
   const [isVisibleSignup, setIsVisibleSignup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // LOGIN
   const [emailLogin, setEmailLogin] = useState('');
@@ -22,6 +22,11 @@ function Navbar() {
   const [passwordSignup, setPasswordSignup] = useState('');
   const [nomeSignup, setNomeSignup] = useState('');
   const [cognomeSignup, setCognomeSignup] = useState('');
+  const [confermaPasswordSignup, setConfermaPasswordSignup] = useState('');
+  const [numeroTelefonoSignup, setNumeroTelefonoSignup] = useState('');
+  const [dataNascitaSignup, setDataNascitaSignup] = useState('');
+  const [indirizzoDomicilioSignup, setIndirizzoDomicilioSignup] = useState('');
+  const [genereSignup, setGenereSignup] = useState('');
 
   const location = useLocation();
   const { usernameGlobal, updateUser } = useUser();
@@ -29,8 +34,7 @@ function Navbar() {
 
   const menuRef = useRef(null);
 
-  // ROLE
-    const [role, setRole] = useState('');
+  const [role, setRole] = useState('');
 
   // HAMBURGER MENU
   const toggleMenu = () => {
@@ -39,7 +43,7 @@ function Navbar() {
   };
 
   // DROPDOWN OPEN/CLOSE
-  const toggleDropdown = (menu) => {
+  const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
@@ -77,7 +81,6 @@ function Navbar() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userRole', data.role);
-
         setRole(data.role);
 
         updateUser(data.email, data.role);
@@ -95,8 +98,13 @@ function Navbar() {
     const newUser = {
       email: emailSignup,
       password: passwordSignup,
+      confermaPassword: confermaPasswordSignup,
       nome: nomeSignup,
       cognome: cognomeSignup,
+      numeroTelefono: numeroTelefonoSignup,
+      dataNascita: dataNascitaSignup,
+      indirizzoDomicilio: indirizzoDomicilioSignup,
+      genere: genereSignup,
     };
 
     try {
@@ -128,7 +136,6 @@ function Navbar() {
 
   const logOut = () => {
     updateUser('', '');
-    setRole('');
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
@@ -223,7 +230,7 @@ function Navbar() {
                   >
                     I tuoi pazienti
                   </Link>
-                )}
+                )}                
                 <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
@@ -276,8 +283,29 @@ function Navbar() {
               <label>Email</label>
             </div>
             <div className="user-box">
-              <input type="password" value={passwordSignup} onChange={(e) => setPasswordSignup(e.target.value)} required />
-              <label>Password</label>
+              <input type="password" value={confermaPasswordSignup} onChange={(e) => setConfermaPasswordSignup(e.target.value)} required />
+              <label>Conferma Password</label>
+            </div>
+            <div className="user-box">
+              <input type="tel" value={numeroTelefonoSignup} onChange={(e) => setNumeroTelefonoSignup(e.target.value)} required pattern="\d{10}" placeholder="10 cifre" />
+              <label>Numero di Telefono</label>
+            </div>
+            <div className="user-box">
+              <input type="date" value={dataNascitaSignup} onChange={(e) => setDataNascitaSignup(e.target.value)} required />
+              <label>Data di Nascita</label>
+            </div>
+            <div className="user-box">
+              <input type="text" value={indirizzoDomicilioSignup} onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)} required />
+              <label>Indirizzo di Domicilio</label>
+            </div>
+            <div className="user-box">
+              <select value={genereSignup} onChange={(e) => setGenereSignup(e.target.value)} required>
+                <option value="">Seleziona genere</option>
+                <option value="M">Maschio</option>
+                <option value="F">Femmina</option>
+                <option value="A">Altro</option>
+              </select>
+              <label>Genere</label>
             </div>
             <div className="side-boxes-login">
               <button type="button" className="button-primary" onClick={signup}>Registrati</button>

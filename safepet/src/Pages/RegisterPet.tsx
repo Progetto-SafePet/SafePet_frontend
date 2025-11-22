@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Carousel from "../components/Carousel/Carousel";
 import {useEffect, useState} from "react";
 
@@ -107,66 +106,6 @@ function RegisterPet() {
         return Object.keys(newErrors).length === 0;
     }
 
-
-    const TOKEN = localStorage.getItem("token");
-
-    const creaPet = async (e) => {
-        e.preventDefault();
-
-        // Trasforma stringhe vuote in null per i campi opzionali
-        const razzaVal = razza.trim() === "" ? null : razza;
-        const coloreMantelloVal = coloreMantello.trim() === "" ? null : coloreMantello;
-        const microchipVal = microchip.trim() === "" ? null : microchip;
-
-        const formData = new FormData();
-        formData.append("nome", nome);
-        formData.append("sesso", sesso);
-        formData.append("specie", specie);
-        if (razzaVal !== null) formData.append("razza", razzaVal);
-        formData.append("dataNascita", dataNascita);
-        if (peso !== "") formData.append("peso", peso);
-        if (coloreMantelloVal !== null) formData.append("coloreMantello", coloreMantelloVal);
-        formData.append("isSterilizzato", isSterilizzato);
-        if (microchipVal !== null) formData.append("microchip", microchipVal);
-        if (foto) {  // allega solo se esiste
-            formData.append("foto", foto);
-        }
-
-        try {
-            const response = await fetch("http://localhost:8080/gestionePet/creaPet", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${TOKEN}`,
-                },
-                body: formData, // multipart
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                alert(`Animale "${data.nome}" registrato con successo!`);
-                console.log("Pet creato:", data);
-
-                setNome("");
-                setRazza("");
-                setMicrochip("");
-                setSesso("M");
-                setFoto(null);
-                setSpecie("");
-                setDataNascita("");
-                setPeso("");
-                setColoreMantello("");
-                setIsSterilizzato(false);
-                e.target.reset();
-            } else if (response.status === 401) {
-                alert("Token non valido o scaduto.");
-            } else {
-                alert("Errore durante la registrazione del pet.");
-            }
-        } catch (error) {
-            alert("Errore di connessione al server.");
-            console.error(error);
-        }
-    };
 
     return (
         <div className="page-container">
