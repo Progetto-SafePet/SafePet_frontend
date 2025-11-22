@@ -10,7 +10,7 @@ const YourPets = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await fetch("http://localhost:8080/gestionePet/visualizzaPet", {
+        const response = await fetch("http://localhost:8080/gestionePet/visualizzaElencoPet", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -21,13 +21,13 @@ const YourPets = () => {
           const data = await response.json();
           setPets(data);
         } else if (response.status === 401) {
-          alert("Token non valido o scaduto.");
+          console.log("Token non valido o scaduto.");
         } else {
-          alert("Errore durante il recupero dei tuoi animali.");
+          console.log("Errore durante il recupero dei tuoi animali.");
         }
       } catch (error) {
         console.error("Errore di connessione:", error);
-        alert("Errore di connessione al server.");
+        console.log("Errore di connessione al server.");
       }
     };
 
@@ -37,13 +37,13 @@ const YourPets = () => {
   return (
     <>
       <Title text="I tuoi pet"></Title>
-      <div className="promo-container">
+      <div className="pet-container">
         {pets.length === 0 ? (
           <p className="no-pets">Nessun animale registrato.</p>
         ) : (
           pets.map((pet) => (
-            <div key={pet.id} className="promo-pet-card">
-              <div className="promo-image">
+            <div key={pet.id} className="pet-card">
+              <div className="pet-image">
                 {pet.fotoBase64 ? (
                   <img
                     src={`data:image/jpeg;base64,${pet.fotoBase64}`}
@@ -54,10 +54,10 @@ const YourPets = () => {
                 )}
               </div>
 
-              <div className="promo-content">
-                <span className="promo-tag">{pet.sesso === "M" ? "Maschio" : "Femmina"}</span>
-                <h3 className="promo-title">{pet.nome}</h3>
-                <p className="promo-description">
+              <div className="pet-content">
+                <span className="pet-tag">{pet.sesso === "M" ? "Maschio" : "Femmina"}</span>
+                <h3 className="pet-title">{pet.nome}</h3>
+                <p className="pet-description">
                       <strong>Specie:</strong> {pet.specie} <br />
                       <strong>Data Nascita: </strong> {pet.dataNascita} <br />
                 </p>
