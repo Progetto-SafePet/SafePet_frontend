@@ -1,0 +1,93 @@
+.veterinario-container {
+  padding: 0px 50px 50px 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.veterinario-card {
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  width: 400px;
+  background-color: var(--clr-primary-40);
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+}
+
+.veterinario-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.veterinario-image {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.veterinario-image img {
+  width: 100%;
+  height: 100%;
+
+}
+
+.veterinario-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.veterinario-title {
+  font-size: 27px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.veterinario-description {
+  color: #666;
+  font-size: 18px;
+  line-height: 1.5;
+  flex-grow: 1;
+  text-align: center;
+  white-space: pre-wrap;
+}
+.nome-clinica {
+  color: #000000;
+  font-size: 20px;
+  line-height: 1.5;
+  flex-grow: 1;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.no-vet{
+  color: #000000;
+  font-size: 30px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.star-rating {
+  display: flex;
+  gap: 5px;
+  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.star {
+  color: #ccc;
+}
+
+.star.filled {
+  color: gold;
+}

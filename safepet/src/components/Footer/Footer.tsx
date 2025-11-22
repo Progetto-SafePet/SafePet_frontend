@@ -19,10 +19,11 @@ function Footer() {
         <div className="footer-column">
           <h3>Servizi</h3>
           <ul>
-            <li><Link to="/emergenze">Gestione emergenze</Link></li>
-            <li><Link to="/prenotazioni">Prenotazioni veterinarie</Link></li>
-            <li><Link to="/libretto">Libretto sanitario digitale</Link></li>
-            <li><Link to="/mappa">Mappa veterinari</Link></li>
+              <li><Link to="/ElencoVet">Elenco veterinari</Link></li>
+              <li><Link to="/emergenze">Gestione emergenze</Link></li>
+              <li><Link to="/prenotazioni">Prenotazioni veterinarie</Link></li>
+              <li><Link to="/libretto">Libretto sanitario digitale</Link></li>
+              <li><Link to="/mappa">Mappa veterinari</Link></li>
           </ul>
         </div>
 

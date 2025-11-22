@@ -174,10 +174,11 @@ function Navbar() {
 
               {openDropdown === 'servizi' && (
                 <div className="dropdown">
-                  <Link to="/emergenze" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Gestione emergenze</Link>
-                  <Link to="/prenotazioni" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Prenotazioni veterinarie</Link>
-                  <Link to="/libretto" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Libretto sanitario digitale</Link>
-                  <Link to="/mappa" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Mappa veterinari</Link>
+                    <Link to="/ElencoVet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Elenco veterinari</Link>
+                    <Link to="/emergenze" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Gestione emergenze</Link>
+                    <Link to="/prenotazioni" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Prenotazioni veterinarie</Link>
+                    <Link to="/libretto" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Libretto sanitario digitale</Link>
+                    <Link to="/mappa" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Mappa veterinari</Link>
                 </div>
               )}
             </div>
