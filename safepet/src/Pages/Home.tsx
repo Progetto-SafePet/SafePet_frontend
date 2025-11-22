@@ -2,6 +2,7 @@ import { useUser } from "../Contexts/UserProvider";
 import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
+import ImageBanner from "../components/ImageBanner/ImageBanner";
 
 function Home() {
 
@@ -62,8 +63,15 @@ function Home() {
                             >
                             </Banner>
                          )}
+                        <ImageBanner
+                            imagePath={"/imgs/use-map.jpg"}
+                            description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
+                            redirectLink={"/map"}
+                            buttonText="Vai alla mappa"
+                        />
                     </div>
                 </div>
+
             </div>
         </>
     )
