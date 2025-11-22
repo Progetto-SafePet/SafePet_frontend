@@ -139,6 +139,15 @@ html {
     background: transparent;
 }
 
+.user-box:has(.msg-error) input {
+    margin-bottom: 10px;
+}
+
+
+.login-box .msg-error {
+    margin-bottom: 20px;
+}
+
 .login-box .user-box select {
     width: 100%;
     padding: 10px 0;

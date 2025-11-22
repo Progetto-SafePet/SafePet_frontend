@@ -7,7 +7,7 @@ import Footer from './components/Footer/Footer';
 import { UserProvider } from './Contexts/UserProvider'; 
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
-import ElencoVet from './components/ElencoVet/ElencoVet';
+import ElencoVet from './Pages/ElencoVet';
 import ListaPazienti from "./Pages/ListaPazienti";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
