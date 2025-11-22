@@ -143,7 +143,6 @@ html {
     margin-bottom: 10px;
 }
 
-
 .login-box .msg-error {
     margin-bottom: 20px;
 }
@@ -159,6 +158,10 @@ html {
     outline: none;
     background: transparent;
     cursor: pointer;
+}
+
+.user-box:has(.msg-error) select {
+    margin-bottom: 10px;
 }
 
 input#birthDate {

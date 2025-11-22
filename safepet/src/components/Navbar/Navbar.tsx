@@ -273,11 +273,11 @@ function Navbar() {
 
               {openDropdown === 'servizi' && (
                 <div className="dropdown">
-                    <Link to="/ElencoVet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Elenco veterinari</Link>
-                    <Link to="/emergenze" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Gestione emergenze</Link>
-                    <Link to="/prenotazioni" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Prenotazioni veterinarie</Link>
-                    <Link to="/libretto" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Libretto sanitario digitale</Link>
-                    <Link to="/mappa" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Mappa veterinari</Link>
+                  <Link to="/ElencoVet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Elenco veterinari</Link>
+                  <Link to="/emergenze" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Gestione emergenze</Link>
+                  <Link to="/prenotazioni" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Prenotazioni veterinarie</Link>
+                  <Link to="/libretto" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Libretto sanitario digitale</Link>
+                  <Link to="/mappa" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Mappa veterinari</Link>
                 </div>
               )}
             </div>
@@ -322,7 +322,7 @@ function Navbar() {
                   >
                     I tuoi pazienti
                   </Link>
-                )}                
+                )}
                 <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
@@ -335,13 +335,13 @@ function Navbar() {
         <div id="login-box" className="login-box">
           <h2>Login</h2>
           <form onSubmit={(e) => { e.preventDefault(); if (validateLogin()) login(); }}>
-            
+
             <div className="user-box">
-              <input 
-                id="emailLogin" 
-                type="email" 
-                value={emailLogin} 
-                onChange={(e) => setEmailLogin(e.target.value)} 
+              <input
+                id="emailLogin"
+                type="email"
+                value={emailLogin}
+                onChange={(e) => setEmailLogin(e.target.value)}
                 placeholder=" "
               />
               <label>Email</label>
@@ -383,10 +383,10 @@ function Navbar() {
           <form onSubmit={(e) => { e.preventDefault(); if (validateSignup()) signup(); }}>
 
             <div className="user-box">
-              <input 
-                type="text" 
-                value={nomeSignup} 
-                onChange={(e) => setNomeSignup(e.target.value)} 
+              <input
+                type="text"
+                value={nomeSignup}
+                onChange={(e) => setNomeSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Nome</label>
@@ -396,10 +396,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="text" 
-                value={cognomeSignup} 
-                onChange={(e) => setCognomeSignup(e.target.value)} 
+              <input
+                type="text"
+                value={cognomeSignup}
+                onChange={(e) => setCognomeSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Cognome</label>
@@ -410,9 +410,9 @@ function Navbar() {
 
             <div className="user-box">
               <input
-                type="date" 
-                value={dataNascitaSignup} 
-                onChange={(e) => setDataNascitaSignup(e.target.value)} 
+                type="date"
+                value={dataNascitaSignup}
+                onChange={(e) => setDataNascitaSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Data di Nascita</label>
@@ -422,7 +422,7 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <select value={genereSignup} onChange={(e) => setGenereSignup(e.target.value)} required>
+              <select value={genereSignup} onChange={(e) => setGenereSignup(e.target.value)} >
                 <option value="" disabled>Seleziona genere</option>
                 <option value="M">Maschio</option>
                 <option value="F">Femmina</option>
@@ -435,10 +435,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="text" 
-                value={indirizzoDomicilioSignup} 
-                onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)} 
+              <input
+                type="text"
+                value={indirizzoDomicilioSignup}
+                onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Indirizzo di Domicilio</label>
@@ -448,10 +448,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="tel" 
-                value={numeroTelefonoSignup} 
-                onChange={(e) => setNumeroTelefonoSignup(e.target.value)} 
+              <input
+                type="tel"
+                value={numeroTelefonoSignup}
+                onChange={(e) => setNumeroTelefonoSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Numero di Telefono</label>
@@ -461,10 +461,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="email" 
-                value={emailSignup} 
-                onChange={(e) => setEmailSignup(e.target.value)} 
+              <input
+                type="email"
+                value={emailSignup}
+                onChange={(e) => setEmailSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Email</label>
@@ -474,10 +474,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="password" 
-                value={passwordSignup} 
-                onChange={(e) => setPasswordSignup(e.target.value)} 
+              <input
+                type="password"
+                value={passwordSignup}
+                onChange={(e) => setPasswordSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Password</label>
@@ -487,10 +487,10 @@ function Navbar() {
             </div>
 
             <div className="user-box">
-              <input 
-                type="password" 
-                value={confermaPasswordSignup} 
-                onChange={(e) => setConfermaPasswordSignup(e.target.value)} 
+              <input
+                type="password"
+                value={confermaPasswordSignup}
+                onChange={(e) => setConfermaPasswordSignup(e.target.value)}
                 placeholder=" "
               />
               <label>Conferma Password</label>
