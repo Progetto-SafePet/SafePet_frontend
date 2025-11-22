@@ -52,24 +52,20 @@ function RegisterPet() {
     function validate() {
         const newErrors = {};
 
-        // Nome
         if (!nome.trim()) newErrors.nome = "Il nome del pet è obbligatorio";
         else if (nome.length < 3 || nome.length > 20)
             newErrors.nome = "Il nome deve contenere dai 3 caratteri ai 20 caratteri";
 
-        // Sesso
         if (!sesso) newErrors.sesso = "Il sesso del pet è obbligatorio";
         else if (!/^(M|F)$/.test(sesso))
             newErrors.sesso = "Il sesso deve essere 'MASCHIO' o 'FEMMINA'";
 
-        // Specie
+
         if (!specie.trim()) newErrors.specie = "La specie del pet è obbligatoria";
 
-        // Razza
         if (razza && (razza.length < 3 || razza.length > 30))
             newErrors.razza = "La razza deve contenere dai 3 caratteri ai 30 caratteri";
 
-        // Data di nascita
         if (!dataNascita){
             newErrors.dataNascita = "La data di nascita del pet è obbligatoria";
         }else {
@@ -84,18 +80,15 @@ function RegisterPet() {
             }
         }
 
-        // Peso
         if (peso !== "") {
             const nPeso = Number(peso);
             if (nPeso < 0.1 || nPeso > 100)
                 newErrors.peso = "Il peso deve essere compreso tra 0.1 e 100.0";
         }
 
-        // Colore mantello
         if (coloreMantello && (coloreMantello.length < 3 || coloreMantello.length > 15))
             newErrors.coloreMantello = "Il colore del mantello deve contenere dai 3 caratteri ai 15 caratteri";
 
-        // Microchip
         if (microchip) {
             if (!/^\d{15}$/.test(microchip)) {
                 newErrors.microchip = "Il microchip deve contenere esattamente 15 cifre numeriche";
@@ -106,6 +99,64 @@ function RegisterPet() {
         return Object.keys(newErrors).length === 0;
     }
 
+    const creaPet = async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
+        // Trasforma stringhe vuote in null per i campi opzionali
+        const razzaVal = razza.trim() === "" ? null : razza;
+        const coloreMantelloVal = coloreMantello.trim() === "" ? null : coloreMantello;
+        const microchipVal = microchip.trim() === "" ? null : microchip;
+
+        const formData = new FormData();
+        formData.append("nome", nome);
+        formData.append("sesso", sesso);
+        formData.append("specie", specie);
+        if (razzaVal !== null) formData.append("razza", razzaVal);
+        formData.append("dataNascita", dataNascita);
+        if (peso !== "") formData.append("peso", peso);
+        if (coloreMantelloVal !== null) formData.append("coloreMantello", coloreMantelloVal);
+        formData.append("isSterilizzato", isSterilizzato);
+        if (microchipVal !== null) formData.append("microchip", microchipVal);
+        if (foto) {  // allega solo se esiste
+            formData.append("foto", foto);
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/gestionePet/creaPet", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                },
+                body: formData, // multipart
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert(`Animale "${data.nome}" registrato con successo!`);
+                console.log("Pet creato:", data);
+
+                setNome("");
+                setRazza("");
+                setMicrochip("");
+                setSesso("M");
+                setFoto(null);
+                setSpecie("");
+                setDataNascita("");
+                setPeso("");
+                setColoreMantello("");
+                setIsSterilizzato(false);
+                e.target.reset();
+            } else if (response.status === 401) {
+                alert("Token non valido o scaduto.");
+            } else {
+                alert("Errore durante la registrazione del pet.");
+            }
+        } catch (error) {
+            alert("Errore di connessione al server.");
+            console.error(error);
+        }
+    };
 
     return (
         <div className="page-container">
@@ -124,19 +175,19 @@ function RegisterPet() {
                                 type="text"
                                 value={nome}
                                 onChange={(e) => setNome(e.target.value)}
-                                required
                             />
+                            {errors.nome && <div className="msg-error">{errors.nome} </div>}
                         </div>
                         <div className="form-group">
                             <label>Sesso</label>
                             <select
                                 value={sesso}
                                 onChange={(e) => setSesso(e.target.value)}
-                                required
                             >
                                 <option value="M">Maschio</option>
                                 <option value="F">Femmina</option>
                             </select>
+                            {errors.sesso && <div className="msg-error">{errors.sesso}</div>}
                         </div>
 
                         <div className="form-group">
@@ -145,8 +196,8 @@ function RegisterPet() {
                                 type="text"
                                 value={specie}
                                 onChange={(e) => setSpecie(e.target.value)}
-                                required
                             />
+                            {errors.specie && <div className="msg-error">{errors.specie}</div>}
                         </div>
 
                         <div className="form-group">
@@ -156,6 +207,7 @@ function RegisterPet() {
                                 value={razza}
                                 onChange={(e) => setRazza(e.target.value)}
                             />
+                            {errors.razza && <div className="msg-error">{errors.razza}</div>}
                         </div>
 
                         <div className="form-group">
@@ -168,6 +220,7 @@ function RegisterPet() {
                                 step="0.1"
                                 onChange={e => setPeso(e.target.value)}
                             />
+                            {errors.peso && <div className="msg-error">{errors.peso}</div>}
                         </div>
 
                         <div className="form-group">
@@ -176,8 +229,8 @@ function RegisterPet() {
                                 type="date"
                                 value={dataNascita}
                                 onChange={e => setDataNascita(e.target.value)}
-                                required
                             />
+                            {errors.dataNascita && <div className="msg-error">{errors.dataNascita}</div>}
                         </div>
 
                         <div className="form-group">
@@ -187,6 +240,7 @@ function RegisterPet() {
                                 value={coloreMantello}
                                 onChange={(e) => setColoreMantello(e.target.value)}
                             />
+                            {errors.coloreMantello && <div className="msg-error">{errors.coloreMantello}</div>}
                         </div>
 
                         <div className="form-group">
@@ -196,6 +250,7 @@ function RegisterPet() {
                                 value={microchip}
                                 onChange={(e) => setMicrochip(e.target.value)}
                             />
+                            {errors.microchip && <div className="msg-error">{errors.microchip}</div>}
                         </div>
 
                         <div className="form-group">
@@ -221,7 +276,7 @@ function RegisterPet() {
                         </button>
                     </form>
 
-                    <PromoCards cards={promoData} />
+                    <Carousel cardsData={promoData} />
                 </div>
             </div>
         </div>
