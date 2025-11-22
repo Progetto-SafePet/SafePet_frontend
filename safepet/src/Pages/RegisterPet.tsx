@@ -133,7 +133,7 @@ function RegisterPet() {
 
             if (response.ok) {
                 const data = await response.json();
-                alert(`Animale "${data.nome}" registrato con successo!`);
+                console.log(`Animale "${data.nome}" registrato con successo!`);
                 console.log("Pet creato:", data);
 
                 setNome("");
@@ -148,12 +148,12 @@ function RegisterPet() {
                 setIsSterilizzato(false);
                 e.target.reset();
             } else if (response.status === 401) {
-                alert("Token non valido o scaduto.");
+                console.log("Token non valido o scaduto.");
             } else {
-                alert("Errore durante la registrazione del pet.");
+                console.log("Errore durante la registrazione del pet.");
             }
         } catch (error) {
-            alert("Errore di connessione al server.");
+            console.log("Errore di connessione al server.");
             console.error(error);
         }
     };
