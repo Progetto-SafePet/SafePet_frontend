@@ -1,8 +1,8 @@
+import { CONSTANTS } from '../../constants';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Navbar.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ENV } from '../../env';
 import { useUser } from '../../Contexts/UserProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -32,21 +32,29 @@ function Navbar() {
   const { usernameGlobal, updateUser } = useUser();
   const navigate = useNavigate();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const menuRef = useRef(null);
 
   const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
-  const toggleLogin = () => {
-    if (isVisibleSignup) setIsVisibleSignup(false);
-    setIsVisibleLogin(!isVisibleLogin);
-  };
+  // CLICK OUTSIDE (desktop + mobile)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpenDropdown(null);
+        setIsMenuOpen(false); // chiude anche menu mobile
+      }
+    };
 
-  const toggleSignUp = () => {
-    if (isVisibleLogin) setIsVisibleLogin(false);
-    setIsVisibleSignup(!isVisibleSignup);
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
 
   // LOGIN FETCH
   const login = async () => {
@@ -61,18 +69,19 @@ function Navbar() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token || 'dummyToken');
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
-        localStorage.setItem('userRole', data.role); //TODO
+        localStorage.setItem('userRole', data.role);
+
+        setRole(data.role);
 
         updateUser(data.email, data.role);
         setIsVisibleLogin(false);
       } else {
-        alert('Credenziali errate o utente non trovato.');
+        alert('Credenziali errate.');
       }
     } catch (error) {
-      alert('Errore di connessione al server.');
+      alert('Errore di connessione.');
     }
   };
 
@@ -100,83 +109,121 @@ function Navbar() {
       if (response.ok) {
         setIsVisibleSignup(false);
       } else {
-        alert('Errore durante la registrazione. Verifica i dati e riprova.');
+        alert('Errore durante la registrazione.');
       }
     } catch (error) {
-      alert('Errore di connessione al server.');
+      alert('Errore di connessione.');
     }
+  };
+
+  const toggleLogin = () => {
+    if (isVisibleSignup) setIsVisibleSignup(false);
+    setIsVisibleLogin(!isVisibleLogin);
+  };
+
+  const toggleSignUp = () => {
+    if (isVisibleLogin) setIsVisibleLogin(false);
+    setIsVisibleSignup(!isVisibleSignup);
   };
 
   const logOut = () => {
     updateUser('', '');
+    setRole('');
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
     navigate('/');
   };
 
+  // COMPONENTE
   return (
     <>
       <header>
-        <div className="navbar light-neutral-10">
+        <div className="navbar light-neutral-10" ref={menuRef}>
           <div>
             <Link to="/">
               <img height={70} className="logo-img" src="../imgs/logo1v2.png" alt="Logo" />
             </Link>
           </div>
 
+          {/* HAMBURGER */}
           <div className="hamburger-menu" onClick={toggleMenu}>
             <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} size="lg" />
           </div>
 
+          {/* NAV MENU */}
           <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+
+            {/* SAFEPET */}
             <div className="menu-item" onClick={() => toggleDropdown('safepet')}>
               <span>SafePet <FontAwesomeIcon icon={faChevronDown} /></span>
+
               {openDropdown === 'safepet' && (
                 <div className="dropdown">
-                  <Link to="/about">Chi siamo</Link>
-                  <Link to="/careers">Lavora con noi</Link>
-                  <Link to="/contact">Contatti</Link>
-                  <Link to="/faq">FAQ</Link>
+                  <Link to="/about" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Chi siamo</Link>
+                  <Link to="/careers" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
+                  <Link to="/contact" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Contatti</Link>
+                  <Link to="/faq" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>FAQ</Link>
                 </div>
               )}
             </div>
 
+            {/* SERVIZI */}
             <div className="menu-item" onClick={() => toggleDropdown('servizi')}>
               <span>Servizi <FontAwesomeIcon icon={faChevronDown} /></span>
+
               {openDropdown === 'servizi' && (
                 <div className="dropdown">
-                  <Link to="/emergenze">Gestione emergenze</Link>
-                  <Link to="/prenotazioni">Prenotazioni veterinarie</Link>
-                  <Link to="/libretto">Libretto sanitario digitale</Link>
-                  <Link to="/mappa">Mappa veterinari</Link>
+                    <Link to="/ElencoVet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Elenco veterinari</Link>
+                    <Link to="/emergenze" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Gestione emergenze</Link>
+                    <Link to="/prenotazioni" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Prenotazioni veterinarie</Link>
+                    <Link to="/libretto" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Libretto sanitario digitale</Link>
+                    <Link to="/mappa" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Mappa veterinari</Link>
                 </div>
               )}
             </div>
 
+            {/* SUPPORTO */}
             <div className="menu-item" onClick={() => toggleDropdown('supporto')}>
               <span>Supporto <FontAwesomeIcon icon={faChevronDown} /></span>
+
               {openDropdown === 'supporto' && (
                 <div className="dropdown">
-                  <Link to="/privacy">Privacy e sicurezza</Link>
-                  <Link to="/termini">Termini di servizio</Link>
-                  <Link to="/cookie">Cookie Policy</Link>
-                  <Link to="/accessibilita">Accessibilità</Link>
+                  <Link to="/privacy" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Privacy e sicurezza</Link>
+                  <Link to="/termini" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Termini di servizio</Link>
+                  <Link to="/cookie" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Cookie Policy</Link>
+                  <Link to="/accessibilita" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Accessibilità</Link>
                 </div>
               )}
             </div>
 
+            {/* LOGIN AREA */}
             {!usernameGlobal && (
               <>
                 <button className="button-primary" onClick={toggleLogin}>Login</button>
                 <button className="button-primary" onClick={toggleSignUp}>Registrati</button>
               </>
             )}
+
             {usernameGlobal && (
               <>
-                <Link className="button-primary" to="/profile"> Profilo </Link>
-                <Link className="button-primary" to="/pet"> I tuoi pet </Link>
+                <Link className="button-primary" to="/profile" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
+                {role === CONSTANTS.ROLE.PROPRIETARIO && (
+                  <Link className="button-primary" to="/pet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }} > I tuoi pet </Link>
+                )}
 
+                {role === CONSTANTS.ROLE.VETERINARIO && (
+                  <Link
+                    className="button-primary"
+                    to="/pazienti"
+                    onClick={() => {
+                      setOpenDropdown(null);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    I tuoi pazienti
+                  </Link>
+                )}
                 <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
@@ -190,13 +237,7 @@ function Navbar() {
           <h2>Login</h2>
           <form>
             <div className="user-box">
-              <input
-                id="emailLogin"
-                type="email"
-                value={emailLogin}
-                onChange={(e) => setEmailLogin(e.target.value)}
-                required
-              />
+              <input id="emailLogin" type="email" value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} required />
               <label>Email</label>
             </div>
             <div className="user-box">

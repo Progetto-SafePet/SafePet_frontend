@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer';
 import { UserProvider } from './Contexts/UserProvider'; 
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
+import ElencoVet from './components/ElencoVet/ElencoVet';
+import ListaPazienti from "./Pages/ListaPazienti";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 
@@ -28,6 +30,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/pazienti"
+            element={
+                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                  <ListaPazienti />
+                </ProtectedRoute>
+              }
+            />
+
 
           <Route 
             path="/registerpet" 
@@ -37,7 +48,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+            <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<div>Accesso non autorizzato</div>} />
         </Routes>
         <Footer />
