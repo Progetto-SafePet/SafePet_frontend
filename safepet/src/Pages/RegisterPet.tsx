@@ -1,5 +1,6 @@
+import { useState } from "react";
+import Carousel from "../components/Carousel/Carousel";
 import {useEffect, useState} from "react";
-import PromoCards from "../components/PromoCards/PromoCards";
 
 function RegisterPet() {
 
