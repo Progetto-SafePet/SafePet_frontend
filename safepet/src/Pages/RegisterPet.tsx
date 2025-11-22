@@ -45,6 +45,67 @@ function RegisterPet() {
     const [dataNascita, setDataNascita] = useState("");
     const [isSterilizzato, setIsSterilizzato] = useState(false);
     const [peso, setPeso] = useState("");
+    const [errors, setErrors] = useState({});
+
+    const TOKEN = localStorage.getItem("token");
+
+    // Validazione
+    function validate() {
+        const newErrors = {};
+
+        // Nome
+        if (!nome.trim()) newErrors.nome = "Il nome del pet è obbligatorio";
+        else if (nome.length < 3 || nome.length > 20)
+            newErrors.nome = "Il nome deve contenere dai 3 caratteri ai 20 caratteri";
+
+        // Sesso
+        if (!sesso) newErrors.sesso = "Il sesso del pet è obbligatorio";
+        else if (!/^(M|F)$/.test(sesso))
+            newErrors.sesso = "Il sesso deve essere 'MASCHIO' o 'FEMMINA'";
+
+        // Specie
+        if (!specie.trim()) newErrors.specie = "La specie del pet è obbligatoria";
+
+        // Razza
+        if (razza && (razza.length < 3 || razza.length > 30))
+            newErrors.razza = "La razza deve contenere dai 3 caratteri ai 30 caratteri";
+
+        // Data di nascita
+        if (!dataNascita){
+            newErrors.dataNascita = "La data di nascita del pet è obbligatoria";
+        }else {
+            const selectedDate = new Date(dataNascita);
+            const today = new Date();
+            // Azzera ore, minuti, secondi per confronto solo data
+            selectedDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+
+            if (selectedDate > today) {
+                newErrors.dataNascita = "La data di nascita non può superare il giorno corrente";
+            }
+        }
+
+        // Peso
+        if (peso !== "") {
+            const nPeso = Number(peso);
+            if (nPeso < 0.1 || nPeso > 100)
+                newErrors.peso = "Il peso deve essere compreso tra 0.1 e 100.0";
+        }
+
+        // Colore mantello
+        if (coloreMantello && (coloreMantello.length < 3 || coloreMantello.length > 15))
+            newErrors.coloreMantello = "Il colore del mantello deve contenere dai 3 caratteri ai 15 caratteri";
+
+        // Microchip
+        if (microchip) {
+            if (!/^\d{15}$/.test(microchip)) {
+                newErrors.microchip = "Il microchip deve contenere esattamente 15 cifre numeriche";
+            }
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
 
 
     const TOKEN = localStorage.getItem("token");
