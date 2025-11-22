@@ -25,8 +25,6 @@ function ImageBanner ({imagePath, description, redirectLink, buttonText} : Image
                     {redirectLink && ( // Controlliamo anche che ci sia un link
                         <Link to={redirectLink} className="button-primary"> {buttonText} </Link>
                     )}
-                    {/* Potresti voler gestire il caso button=true ma link non fornito,
-                    magari mostrando un messaggio di errore o non rendendo il bottone */}
                 </div>
             </div>
     )
