@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./ElencoVet.scss";
-import Title from "../Title/Title";
-import BannerHomepage from "../BannerHomepage/BannerHomepage";
-import Carousel from "../Carousel/Carousel";
-import Banner from "../Banner/Banner";
-import { useUser } from "../../Contexts/UserProvider";
+import Title from "../components/Title/Title";
+import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
+import Carousel from "../components/Carousel/Carousel";
+import Banner from "../components/Banner/Banner";
+import { useUser } from "../Contexts/UserProvider";
 
 const StarRating = ({ rating }) => {
     const maxStars = 5;
@@ -40,11 +39,11 @@ const ElencoVet = () => {
                     const data = await response.json();
                     setVeterinari(data);
                 } else {
-                    alert("Errore durante il recupero dei veterinari.");
+                    console.log("Errore durante il recupero dei veterinari.");
                 }
             } catch (error) {
                 console.error("Errore di connessione:", error);
-                alert("Errore di connessione al server.");
+                console.log("Errore di connessione al server.");
             }
         };
 
