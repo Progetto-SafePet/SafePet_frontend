@@ -1,9 +1,8 @@
 .pazienti-container {
-    background-color: #f4e3c3;
-    min-height: 100vh;
     padding: 40px 60px;
     font-family: "Poppins", sans-serif;
 }
+
 
 .title {
     font-size: 42px;

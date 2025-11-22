@@ -29,6 +29,13 @@ const ListaPazienti = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
+        if (response.status === 404) {
+          // Veterinario senza pazienti
+          setPazienti([]);
+          setLoading(false);
+          return;
+        }
+
         if (!response.ok) {
           setError("Errore nel recupero dei pazienti.");
           setLoading(false);
@@ -38,6 +45,7 @@ const ListaPazienti = () => {
         const data = await response.json();
         setPazienti(data);
         setLoading(false);
+
       } catch (err) {
         setError("Errore del server.");
         setLoading(false);
@@ -46,6 +54,7 @@ const ListaPazienti = () => {
 
     fetchPazienti();
   }, []);
+
 
   const formatDate = (d: string) => {
     if (!d) return "-";
@@ -58,41 +67,57 @@ const ListaPazienti = () => {
   if (error)
     return <p style={{ textAlign: "center", color: "red" }}>{error}</p>;
 
+  // ✅ NUOVO CONTROLLO: se non ci sono pazienti
+  if (!loading && pazienti.length === 0) {
+    return (
+        <div className="pazienti-container">
+          <h1 className="title">I tuoi pazienti</h1>
+
+          <p style={{
+            textAlign: "center",
+            marginTop: "30px",
+            fontSize: "18px",
+            opacity: 0.7
+          }}>
+            Non hai ancora pazienti associati al tuo profilo.
+          </p>
+        </div>
+    );
+  }
+
   return (
-    <div className="pazienti-container">
-      <h1 className="title">I tuoi pazienti</h1>
+      <div className="pazienti-container">
+        <h1 className="title">I tuoi pazienti</h1>
 
-      <div className="pazienti-list">
-        {pazienti.map((p, index) => (
-          <div key={index} className="paziente-card">
+        <div className="pazienti-list">
+          {pazienti.map((p, index) => (
+              <div key={index} className="paziente-card">
 
-            {p.fotoBase64 && (
-              <img
-                className="paziente-foto"
-                src={`data:image/jpeg;base64,${p.fotoBase64}`}
-                alt={p.nome}
-              />
-            )}
+                {p.fotoBase64 ? (
+                    <img
+                        className="paziente-foto"
+                        src={`data:image/jpeg;base64,${p.fotoBase64}`}
+                        alt={p.nome}
+                    />
+                ) : (
+                    <img
+                        className="paziente-foto"
+                        src="https://via.placeholder.com/120"
+                        alt="placeholder"
+                    />
+                )}
 
-            {!p.fotoBase64 && (
-              <img
-                className="paziente-foto"
-                src="https://via.placeholder.com/120"
-                alt="placeholder"
-              />
-            )}
+                <h2>{p.nome}</h2>
 
-            <h2>{p.nome}</h2>
+                <p><strong>Specie:</strong> {p.specie}</p>
+                <p><strong>Sesso:</strong> {p.sesso === "M" ? "Maschio" : "Femmina"}</p>
+                <p><strong>Nascita:</strong> {formatDate(p.dataNascita)}</p>
+                <p><strong>Proprietario:</strong> {p.proprietario}</p>
 
-            <p><strong>Specie:</strong> {p.specie}</p>
-            <p><strong>Sesso:</strong> {p.sesso === "M" ? "Maschio" : "Femmina"}</p>
-            <p><strong>Nascita:</strong> {formatDate(p.dataNascita)}</p>
-            <p><strong>Proprietario:</strong> {p.proprietario}</p>
-
-          </div>
-        ))}
+              </div>
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
 
