@@ -9,6 +9,16 @@
   overflow: hidden;
   font-size: 25px;
   color: var(--clr-primary-10);
+  background-image: url('../imgs/backpet.png');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 250px auto;
+
+
+  @media (max-width: 1300px) {
+    font-size: 18px;
+    background-size: 180px auto;
+  }
 
   @media (max-width: 1000px) {
     font-size: 18px;
@@ -29,7 +39,7 @@
 
   @media (max-width: 768px) {
     width: 100%;
-    padding-bottom: 100%;
+    padding-bottom: 50%;
   }
 }
 
