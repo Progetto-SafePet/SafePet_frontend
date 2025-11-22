@@ -1,4 +1,3 @@
-import { CONSTANTS } from '../../constants';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import './Navbar.scss';
@@ -6,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../../Contexts/UserProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { CONSTANTS } from '../../constants';
 
 function Navbar() {
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
@@ -20,9 +20,9 @@ function Navbar() {
   // SIGNUP
   const [emailSignup, setEmailSignup] = useState('');
   const [passwordSignup, setPasswordSignup] = useState('');
-  const [confermaPasswordSignup, setConfermaPasswordSignup] = useState('');
   const [nomeSignup, setNomeSignup] = useState('');
   const [cognomeSignup, setCognomeSignup] = useState('');
+  const [confermaPasswordSignup, setConfermaPasswordSignup] = useState('');
   const [numeroTelefonoSignup, setNumeroTelefonoSignup] = useState('');
   const [dataNascitaSignup, setDataNascitaSignup] = useState('');
   const [indirizzoDomicilioSignup, setIndirizzoDomicilioSignup] = useState('');
@@ -34,6 +34,15 @@ function Navbar() {
 
   const menuRef = useRef(null);
 
+  const [role, setRole] = useState('');
+
+  // HAMBURGER MENU
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    setOpenDropdown(null); // chiude i dropdown quando apro/chiudo hamburger
+  };
+
+  // DROPDOWN OPEN/CLOSE
   const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
@@ -72,7 +81,6 @@ function Navbar() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userRole', data.role);
-
         setRole(data.role);
 
         updateUser(data.email, data.role);
@@ -128,7 +136,6 @@ function Navbar() {
 
   const logOut = () => {
     updateUser('', '');
-    setRole('');
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
@@ -223,7 +230,7 @@ function Navbar() {
                   >
                     I tuoi pazienti
                   </Link>
-                )}
+                )}                
                 <Link to="/" className="button-primary" onClick={logOut}>Logout</Link>
               </>
             )}
@@ -274,10 +281,6 @@ function Navbar() {
             <div className="user-box">
               <input type="email" value={emailSignup} onChange={(e) => setEmailSignup(e.target.value)} required />
               <label>Email</label>
-            </div>
-            <div className="user-box">
-              <input type="password" value={passwordSignup} onChange={(e) => setPasswordSignup(e.target.value)} required />
-              <label>Password</label>
             </div>
             <div className="user-box">
               <input type="password" value={confermaPasswordSignup} onChange={(e) => setConfermaPasswordSignup(e.target.value)} required />
