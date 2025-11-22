@@ -13,6 +13,7 @@
     box-shadow: 1px;
     align-items: center;
     z-index: 999;
+
 }
 
 .nav-links {
@@ -21,13 +22,13 @@
 }
 
 .nav-links a {
-    color: inherit;
+    color: inherit; // Colore del testo dei link; 
     display: flex;
     align-items: center;
 }
 
 .nav-links a:hover {
-    color: inherit;
+    color: inherit; // Cambiato colore al passaggio del mouse
     text-decoration: underline;
 }
 
@@ -56,7 +57,7 @@
         position: absolute;
         top: 115px;
         left: 0;
-        background-color: var(--clr-primary-10);
+        background-color: var(--clr-primary-10); // Colore di sfondo del menu a discesa
         width: 100%;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         padding: 20px;
@@ -104,18 +105,18 @@ html {
     width: 460px;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 1);
+    background: white; //cambiato colore dello sfondo della login box
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     border-radius: 10px;
     z-index: 1;
-    border: solid 1px white;
+    border: solid 1px oklch(86.873% 0.07521 85.931);  //cambiato colore del bordo della login box
 }
 
 .login-box h2 {
     margin: 0 0 30px;
     padding: 0;
-    color: #fff;
+    color: #333333; //cambiato colore del testo del titolo
     text-align: center;
 }
 
@@ -127,38 +128,38 @@ html {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #333333; //cambiato colore del testo degli input
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #999999; //cambiato colore del bordo inferiore
     outline: none;
     background: transparent;
 }
 
 select#gender {
     background: transparent;
-    color: white;
+    color: #333333; //cambiato colore del testo degli input
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
     color: #fff;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #999999; //cambiato colore del bordo inferiore
     outline: none;
-    background: transparent;
+    // rimosso background: transparent; per visibilità del testo
 }
 
 input#birthDate {
     background: transparent;
-    color: white;
+    color: #333333; //cambiato colore del testo degli input
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
     color: #fff;
     /* margin-bottom: 30px; */
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #999999; //cambiato colore del bordo inferiore
     outline: none;
     background: transparent;
 }
@@ -169,7 +170,7 @@ input#birthDate {
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #666666; //cambiato colore del testo delle etichette
     pointer-events: none;
     transition: .5s;
 }
@@ -179,7 +180,7 @@ input#birthDate {
 .user-box-date label {
     top: -20px;
     left: 0;
-    color: var(--clr-primary-10);
+    color: var(--clr-primary-400); //cambiato colore del testo delle etichette attive
     font-size: 12px;
 }
 
@@ -252,7 +253,7 @@ input#birthDate {
 .menu-item {
     position: relative;
     cursor: pointer;
-    color: inherit;
+    color: #ecdebe;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -262,7 +263,7 @@ input#birthDate {
         display: flex;
         align-items: center;
         gap: 4px;
-        color: var(--clr-primary-40);
+        color: #ecdebe; // colore del testo del menu
         font-size: 20px;
     }
 
@@ -270,7 +271,7 @@ input#birthDate {
         position: absolute;
         top: 100%;
         left: 0;
-        background-color: var(--clr-primary-10);
+        background-color: var(--clr-primary-10); // Colore di sfondo del dropdown
         border-radius: 6px;
         padding: 10px;
         display: flex;
@@ -281,7 +282,7 @@ input#birthDate {
         z-index: 999;
 
         a {
-            color: var(--clr-primary-40);
+            color: var(--clr-primary-40); // Colore del testo delle opzioni del dropdown
             text-decoration: none;
             font-size: 15px;
             padding: 4px 6px;
@@ -289,8 +290,8 @@ input#birthDate {
             transition: 0.3s ease;
 
             &:hover {
-                background-color: var(--clr-primary-20);
-                color: var(--clr-primary-40);
+                background-color: #e6e6e6; // Colore di sfondo al passaggio del mouse
+                color: #000000; // Colore del testo al passaggio del mouse
             }
         }
     }
