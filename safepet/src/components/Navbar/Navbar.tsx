@@ -65,6 +65,19 @@ function Navbar() {
     };
   }, []);
 
+  // BLOCCA SCROLL QUANDO MODAL APERTO
+  useEffect(() => {
+    if (isVisibleLogin || isVisibleSignup) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isVisibleLogin, isVisibleSignup]);
+
   // LOGIN FETCH
   const login = async () => {
     const credentials = { email: emailLogin, password: passwordLogin };
@@ -108,7 +121,7 @@ function Navbar() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/auth/registraUtente', {
+      const response = await fetch('http://localhost:8080/gestioneUtente/registraProprietario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser),
@@ -242,9 +255,16 @@ function Navbar() {
       {isVisibleLogin && (
         <div id="login-box" className="login-box">
           <h2>Login</h2>
-          <form>
+          <form onSubmit={(e) => { e.preventDefault(); login(); }}>
             <div className="user-box">
-              <input id="emailLogin" type="email" value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} required />
+              <input 
+                id="emailLogin" 
+                type="email" 
+                value={emailLogin} 
+                onChange={(e) => setEmailLogin(e.target.value)} 
+                placeholder=" "
+                required 
+              />
               <label>Email</label>
             </div>
             <div className="user-box">
@@ -253,12 +273,15 @@ function Navbar() {
                 type="password"
                 value={passwordLogin}
                 onChange={(e) => setPasswordLogin(e.target.value)}
+                placeholder=" "
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
+                title="Minimo 8 caratteri, almeno una maiuscola, una minuscola e numero"
                 required
               />
               <label>Password</label>
             </div>
             <div className="side-boxes-login">
-              <button type="button" className="button-primary" onClick={login}>Login</button>
+              <button type="submit" className="button-primary">Login</button>
               <button type="button" className="button-primary" onClick={toggleLogin}>Chiudi</button>
             </div>
           </form>
@@ -269,46 +292,111 @@ function Navbar() {
       {isVisibleSignup && (
         <div id="signup-box" className="login-box">
           <h2>Registrazione</h2>
-          <form>
+          <form onSubmit={(e) => { e.preventDefault(); signup(); }}>
             <div className="user-box">
-              <input type="text" value={nomeSignup} onChange={(e) => setNomeSignup(e.target.value)} required />
+              <input 
+                type="text" 
+                value={nomeSignup} 
+                onChange={(e) => setNomeSignup(e.target.value)} 
+                placeholder=" "
+                minLength={2}
+                maxLength={50}
+                required 
+              />
               <label>Nome</label>
             </div>
             <div className="user-box">
-              <input type="text" value={cognomeSignup} onChange={(e) => setCognomeSignup(e.target.value)} required />
+              <input 
+                type="text" 
+                value={cognomeSignup} 
+                onChange={(e) => setCognomeSignup(e.target.value)} 
+                placeholder=" "
+                minLength={2}
+                maxLength={50}
+                required 
+              />
               <label>Cognome</label>
             </div>
             <div className="user-box">
-              <input type="email" value={emailSignup} onChange={(e) => setEmailSignup(e.target.value)} required />
-              <label>Email</label>
-            </div>
-            <div className="user-box">
-              <input type="password" value={confermaPasswordSignup} onChange={(e) => setConfermaPasswordSignup(e.target.value)} required />
-              <label>Conferma Password</label>
-            </div>
-            <div className="user-box">
-              <input type="tel" value={numeroTelefonoSignup} onChange={(e) => setNumeroTelefonoSignup(e.target.value)} required pattern="\d{10}" placeholder="10 cifre" />
-              <label>Numero di Telefono</label>
-            </div>
-            <div className="user-box">
-              <input type="date" value={dataNascitaSignup} onChange={(e) => setDataNascitaSignup(e.target.value)} required />
+              <input
+                type="date" 
+                value={dataNascitaSignup} 
+                onChange={(e) => setDataNascitaSignup(e.target.value)} 
+                placeholder=" "
+                required 
+              />
               <label>Data di Nascita</label>
             </div>
             <div className="user-box">
-              <input type="text" value={indirizzoDomicilioSignup} onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)} required />
-              <label>Indirizzo di Domicilio</label>
-            </div>
-            <div className="user-box">
               <select value={genereSignup} onChange={(e) => setGenereSignup(e.target.value)} required>
-                <option value="">Seleziona genere</option>
+                <option value="" disabled>Seleziona genere</option>
                 <option value="M">Maschio</option>
                 <option value="F">Femmina</option>
                 <option value="A">Altro</option>
               </select>
               <label>Genere</label>
             </div>
+            <div className="user-box">
+              <input 
+                type="text" 
+                value={indirizzoDomicilioSignup} 
+                onChange={(e) => setIndirizzoDomicilioSignup(e.target.value)} 
+                placeholder=" "
+                minLength={5}
+                maxLength={100}
+                required 
+              />
+              <label>Indirizzo di Domicilio</label>
+            </div>
+            <div className="user-box">
+              <input 
+                type="tel" 
+                value={numeroTelefonoSignup} 
+                onChange={(e) => setNumeroTelefonoSignup(e.target.value)} 
+                placeholder=" "
+                pattern="\d{10}"
+                title="numero di 10 cifre"
+                maxLength={10}
+                required 
+              />
+              <label>Numero di Telefono</label>
+            </div>
+            <div className="user-box">
+              <input 
+                type="email" 
+                value={emailSignup} 
+                onChange={(e) => setEmailSignup(e.target.value)} 
+                placeholder=" "
+                required 
+              />
+              <label>Email</label>
+            </div>
+            <div className="user-box">
+              <input 
+                type="password" 
+                value={passwordSignup} 
+                onChange={(e) => setPasswordSignup(e.target.value)} 
+                placeholder=" "
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
+                title="Minimo 8 caratteri, almeno una maiuscola, una minuscola e numero"
+                required 
+              />
+              <label>Password</label>
+            </div>
+            <div className="user-box">
+              <input 
+                type="password" 
+                value={confermaPasswordSignup} 
+                onChange={(e) => setConfermaPasswordSignup(e.target.value)} 
+                placeholder=" "
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
+                title="Minimo 8 caratteri, almeno una maiuscola, una minuscola e numero"
+                required 
+              />
+              <label>Conferma Password</label>
+            </div>
             <div className="side-boxes-login">
-              <button type="button" className="button-primary" onClick={signup}>Registrati</button>
+              <button type="submit" className="button-primary">Registrati</button>
               <button type="button" className="button-primary" onClick={toggleSignUp}>Chiudi</button>
             </div>
           </form>

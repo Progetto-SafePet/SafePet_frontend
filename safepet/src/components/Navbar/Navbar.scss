@@ -101,17 +101,19 @@ html {
 
 .login-box {
     position: fixed;
-    top: 58%;
+    top: 50%;
     left: 50%;
     width: 460px;
+    max-height: 90vh;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: white; //cambiato colore dello sfondo della login box
+    background: white;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     border-radius: 10px;
-    z-index: 1;
-    border: solid 1px oklch(86.873% 0.07521 85.931);  //cambiato colore del bordo della login box
+    z-index: 1000;
+    border: solid 1px oklch(86.873% 0.07521 85.931);
+    overflow-y: auto;
 }
 
 .login-box h2 {
@@ -137,18 +139,17 @@ html {
     background: transparent;
 }
 
-select#gender {
-    background: transparent;
-    color: #333333; //cambiato colore del testo degli input
+.login-box .user-box select {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #333333;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #999999; //cambiato colore del bordo inferiore
+    border-bottom: 1px solid #999999;
     outline: none;
-    // rimosso background: transparent; per visibilità del testo
+    background: transparent;
+    cursor: pointer;
 }
 
 input#birthDate {
@@ -177,7 +178,10 @@ input#birthDate {
 }
 
 .login-box .user-box input:focus~label,
-.login-box .user-box input:valid~label,
+.login-box .user-box input:not(:placeholder-shown)~label,
+.login-box .user-box input[type="date"]~label,
+.login-box .user-box select:focus~label,
+.login-box .user-box select:not([value=""])~label,
 .user-box-date label {
     top: -20px;
     left: 0;
