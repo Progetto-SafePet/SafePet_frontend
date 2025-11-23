@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import Title from "../components/Title/Title";
 
 import "../css/InsertLinkingCode.scss"
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import ImageBanner from "../components/ImageBanner/ImageBanner";
 
@@ -10,6 +10,8 @@ function InsertLinkingCode() {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
+    const navigate = useNavigate();
 
     const TOKEN = localStorage.getItem("token");
 
@@ -62,9 +64,7 @@ function InsertLinkingCode() {
             });
 
             if (response.ok) {
-                // const navigate = useNavigate();
-                // navigate("/pazienti", { replace: true });
-                return <Navigate to={"/pazienti"} replace={true} />
+                navigate("/pazienti", { replace: true });
             } else if (response.status === 401) {
                 console.log("Token non valido o scaduto.");
             } else {
