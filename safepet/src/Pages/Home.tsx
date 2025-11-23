@@ -3,10 +3,11 @@ import Banner from "../components/Banner/Banner";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import ImageBanner from "../components/ImageBanner/ImageBanner";
+import {CONSTANTS} from "../constants";
 
 function Home() {
 
-    const { usernameGlobal } = useUser();
+    const { usernameGlobal, role } = useUser();
 
     const promoData = [
         {
@@ -63,6 +64,15 @@ function Home() {
                             >
                             </Banner>
                          )}
+                        {usernameGlobal && role === CONSTANTS.ROLE.VETERINARIO && (
+                            <Banner
+                                text="Prendi in carico un paziente"
+                                buttonText="Portami"
+                                link = "/aggiuntaPaziente"
+                            >
+                            </Banner>
+                        )}
+
                         <ImageBanner
                             imagePath={"/imgs/use-map.jpg"}
                             description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
