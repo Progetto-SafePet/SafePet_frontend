@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../css/ListaPazienti.css";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
+import {Link} from "react-router-dom";
 
 type Paziente = {
   nome: string;
@@ -137,10 +138,10 @@ const ListaPazienti = () => {
         <div className='main-container'></div>
         <div className="pazienti-container">
           <h1 className="title">I tuoi pazienti</h1>
-
           <div className="pazienti-list">
             {pazienti.map((p, index) => (
-              <div key={index} className="paziente-card">
+                <Link key={p.id} to={`/DettagliPaziente/${p.id}`} >
+                <div key={index} className="paziente-card">
 
                 {p.fotoBase64 ? (
                   <img
@@ -162,8 +163,8 @@ const ListaPazienti = () => {
                 <p><strong>Sesso:</strong> {p.sesso === "M" ? "Maschio" : "Femmina"}</p>
                 <p><strong>Nascita:</strong> {formatDate(p.dataNascita)}</p>
                 <p><strong>Proprietario:</strong> {p.proprietario}</p>
-
               </div>
+                </Link>
             ))}
           </div>
         </div>

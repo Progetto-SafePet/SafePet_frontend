@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import DettagliPaziente from "./Pages/DettagliPaziente";
 
 function App() {
 
@@ -49,6 +50,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+            <Route
+                path="/DettagliPaziente/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <DettagliPaziente />
+                    </ProtectedRoute>
+                }
+            />
           <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
