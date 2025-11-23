@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Navbar from './components/Navbar/Navbar';
@@ -12,6 +11,8 @@ import ListaPazienti from "./Pages/ListaPazienti";
 import InsertLinkingCode from "./Pages/InsertLinkingCode";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
+import Unauthorized from "./Pages/Unauthorized";
+import Page404 from "./Pages/Page404";
 
 function App() {
 
@@ -58,8 +59,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-            <Route path="/ElencoVet" element={<ElencoVet />} />
-          <Route path="/unauthorized" element={<div>Accesso non autorizzato</div>} />
+          <Route path="/ElencoVet" element={<ElencoVet />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
       </BrowserRouter>
