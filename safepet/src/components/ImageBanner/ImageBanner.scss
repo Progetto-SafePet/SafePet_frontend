@@ -38,8 +38,7 @@
   overflow: hidden;
 
   @media (max-width: 768px) {
-    width: 100%;
-    padding-bottom: 50%;
+    display: none;
   }
 }
 
@@ -55,7 +54,7 @@
 
 .banner-content {
   flex-grow: 1;
-  padding: 20px 30px;
+  padding: 0 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
