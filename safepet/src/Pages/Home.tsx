@@ -65,20 +65,22 @@ function Home() {
                             </Banner>
                          )}
                         {usernameGlobal && role === CONSTANTS.ROLE.VETERINARIO && (
-                            <Banner
-                                text="Prendi in carico un paziente"
-                                buttonText="Portami"
-                                link = "/aggiuntaPaziente"
-                            >
-                            </Banner>
+                            <ImageBanner
+                                imagePath={"../imgs/aggiungi-paziente.jpg"}
+                                description={"Vuoi aggiungere un pet alla tua lista di pazienti? Farlo non è mai stato così facile!"}
+                                redirectLink={"/aggiuntaPaziente"}
+                                buttonText={"Andiamo!"}
+                            ></ImageBanner>
                         )}
 
-                        <ImageBanner
+                        {(!usernameGlobal || role !== CONSTANTS.ROLE.VETERINARIO) && (
+                            <ImageBanner
                             imagePath={"/imgs/use-map.jpg"}
                             description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
                             redirectLink={"/map"}
                             buttonText="Vai alla mappa"
                         />
+                        )}
                     </div>
                 </div>
 
