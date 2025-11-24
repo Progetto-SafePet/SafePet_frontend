@@ -95,7 +95,6 @@
 
   .cartella-tabs {
     margin-bottom: 1rem;
-
     ul {
       display: flex;
       gap: 1rem;
@@ -120,7 +119,6 @@
       }
     }
   }
-
   .cartella-content {
     h4 {
       margin-bottom: 0.5rem;
@@ -133,4 +131,19 @@
       font-size: 0.95rem;
     }
   }
+}
+.cartella-content.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--clr-primary-20);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 4px;
 }

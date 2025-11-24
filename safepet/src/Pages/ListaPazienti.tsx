@@ -5,6 +5,7 @@ import Carousel from "../components/Carousel/Carousel";
 import {Link} from "react-router-dom";
 
 type Paziente = {
+    id: number;
   nome: string;
   specie: string;
   dataNascita: string;
@@ -139,10 +140,9 @@ const ListaPazienti = () => {
         <div className="pazienti-container">
           <h1 className="title">I tuoi pazienti</h1>
           <div className="pazienti-list">
-            {pazienti.map((p, index) => (
-                <Link key={p.id} to={`/DettagliPaziente/${p.id}`} >
-                <div key={index} className="paziente-card">
-
+            {pazienti.map((p) => (
+                <Link key={p.id} to={`/DettagliPaziente/${p.id}`}>
+                <div className="paziente-card">
                 {p.fotoBase64 ? (
                   <img
                     className="paziente-foto"

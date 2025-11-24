@@ -2,19 +2,39 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Title from "../components/Title/Title";
 import "../css/DettagliPaziente.scss";
-import { useUser } from "../Contexts/UserProvider";
+
+type Paziente = {
+    id: number;
+    nome: string;
+    specie: string;
+    razza?: string;
+    sesso: string;
+    dataNascita: string;
+    proprietarioCompleto: string;
+    peso?: number;
+    coloreMantello?: string;
+    microchip?: string;
+    sterilizzato?: boolean;
+    fotoBase64?: string;
+};
 
 const DettagliPaziente: React.FC = () => {
-    const [Pet, setPet] = useState<any>(null);   // nessuna interface, uso any
-    const { usernameGlobal } = useUser();
-    const { id } = useParams<{ id: string }>();
+    const [pet, setPet] = useState<Paziente | null>(null);
     const [activeTab, setActiveTab] = useState<"vaccinazioni" | "visite" | "patologie" | "terapie">("vaccinazioni");
+    const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
         const fetchPaziente = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/gestionePaziente/${id}`, {  //TODO: va aggiornato questo link
+                const token = localStorage.getItem("token");
+                if (!id) return;
+
+                const response = await fetch(`http://localhost:8080/gestionePaziente/dettagli/${id}`, {
                     method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
                 });
 
                 if (response.ok) {
@@ -28,22 +48,22 @@ const DettagliPaziente: React.FC = () => {
             }
         };
 
-        if (id) {
-            fetchPaziente();
-        }
+        fetchPaziente();
     }, [id]);
 
-    // TODO: aggiungere i campi da recuperare dal database
     const renderTabContent = () => {
         switch (activeTab) {
             case "vaccinazioni":
                 return (
+                    <>
                     <div>
                         <h4>Nobivac DHPPi</h4>
                         <p>Vaccino polivalente</p>
                         <p><strong>Data vaccinazione:</strong> 10/03/2025</p>
                         <p><strong>Richiamo previsto:</strong> 10/03/2026</p>
+                        <button>Aggiungi nuova vaccinazione</button>
                     </div>
+                    </>
                 );
             case "visite":
                 return (
@@ -51,20 +71,22 @@ const DettagliPaziente: React.FC = () => {
                         <h4>Visita di controllo</h4>
                         <p><strong>Data:</strong> 15/04/2025</p>
                         <p>Esame generale, tutto regolare.</p>
+                        <button>Aggiungi nuova visita</button>
                     </div>
                 );
             case "patologie":
                 return (
-                    <div>
-                        <h4>Nessuna patologia registrata</h4>
+                    <div><h4>Nessuna patologia registrata</h4>
+                        <button>Aggiungi nuova patologia</button>
                     </div>
-                );
+            );
             case "terapie":
                 return (
                     <div>
                         <h4>Terapia dermatologica</h4>
                         <p><strong>Farmaco:</strong> Crema lenitiva</p>
                         <p><strong>Durata:</strong> 7 giorni</p>
+                        <button>Aggiungi nuova terapia</button>
                     </div>
                 );
             default:
@@ -72,16 +94,19 @@ const DettagliPaziente: React.FC = () => {
         }
     };
 
+    if (!pet) return <div>Caricamento paziente...</div>;
+
     return (
         <div className="page-container">
-            <Title text={"Dettagli paziente"} />
+            <Title text="Dettagli paziente" />
+
             <div className="photo-container">
-                {Pet?.fotoBase64 ? (
-                    <img src={`data:image/jpeg;base64,${Pet.fotoBase64}`} alt="Foto del pet" />
+                {pet.fotoBase64 ? (
+                    <img src={`data:image/jpeg;base64,${pet.fotoBase64}`} alt="Foto del pet" />
                 ) : (
                     <img src="../imgs/vetPlaceholder.jpg" alt="Foto del pet" />
                 )}
-                <strong>{Pet?.nome || "Nome Pet"}</strong>
+                <strong>{pet.nome}</strong>
             </div>
 
             <div className="dettagli-card">
@@ -89,20 +114,20 @@ const DettagliPaziente: React.FC = () => {
                     <div className="info-section">
                         <div className="info-block">
                             <strong>Informazioni Anagrafiche</strong>
-                            <p><strong>Nome:</strong> {Pet?.nome}</p>
-                            <p><strong>Specie:</strong> {Pet?.specie}</p>
-                            <p><strong>Razza:</strong> {Pet?.razza}</p>
-                            <p><strong>Sesso:</strong> {Pet?.sesso}</p>
-                            <p><strong>Data Nascita:</strong> {Pet?.dataNascita}</p>
-                            <p><strong>Proprietario:</strong> {Pet?.proprietarioCompleto}</p>
+                            <p><strong>Nome:</strong> {pet.nome}</p>
+                            <p><strong>Specie:</strong> {pet.specie}</p>
+                            <p><strong>Razza:</strong> {pet.razza || "-"}</p>
+                            <p><strong>Sesso:</strong> {pet.sesso}</p>
+                            <p><strong>Data Nascita:</strong> {pet.dataNascita}</p>
+                            <p><strong>Proprietario:</strong> {pet.proprietarioCompleto}</p>
                         </div>
 
                         <div className="info-block">
                             <strong>Informazioni Fisiche</strong>
-                            <p><strong>Peso:</strong> {Pet?.peso} kg</p>
-                            <p><strong>Colore Mantello:</strong> {Pet?.coloreMantello}</p>
-                            <p><strong>Microchip:</strong> {Pet?.microchip}</p>
-                            <p><strong>Sterilizzato:</strong> {Pet?.sterilizzato ? "Sì" : "No"}</p>
+                            <p><strong>Peso:</strong> {pet.peso ?? "-"} kg</p>
+                            <p><strong>Colore Mantello:</strong> {pet.coloreMantello || "-"}</p>
+                            <p><strong>Microchip:</strong> {pet.microchip || "-"}</p>
+                            <p><strong>Sterilizzato:</strong> {pet.sterilizzato ? "Sì" : "No"}</p>
                         </div>
                     </div>
 
