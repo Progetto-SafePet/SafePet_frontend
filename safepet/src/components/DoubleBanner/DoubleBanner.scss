@@ -1,0 +1,10 @@
+.horiziontal-align {
+    display: flex;
+    max-width: 100%;
+    flex-direction: row;
+    gap: 30px;
+
+    .banner-container {
+        min-width: unset !important;
+    }
+}

@@ -9,7 +9,7 @@ function Footer() {
         <div className="footer-column">
           <h3>SafePet</h3>
           <ul>
-            <li><Link to="/about">Chi siamo</Link></li>
+            <li><Link to="/ChiSiamo">Chi siamo</Link></li>
             <li><Link to="/careers">Lavora con noi</Link></li>
             <li><Link to="/contact">Contatti</Link></li>
             <li><Link to="/faq">FAQ</Link></li>
