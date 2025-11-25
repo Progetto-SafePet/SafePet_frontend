@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import AggiungiNota from './Pages/AggiungiNota';
 
 function App() {
 
@@ -26,11 +27,12 @@ function App() {
             path="/pet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                <Pet />
+                <Pet/>
               </ProtectedRoute>
             }
           />
 
+ 
           <Route
             path="/pazienti"
             element={
@@ -40,6 +42,15 @@ function App() {
               }
             />
 
+
+          <Route 
+            path="/pet/:petId/addnote" 
+            element={
+                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                  <AggiungiNota/>
+                </ProtectedRoute>
+              }
+            />
 
           <Route 
             path="/registerpet" 
