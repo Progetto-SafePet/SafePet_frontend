@@ -262,7 +262,7 @@ function Navbar() {
                   <Link to="/about" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Chi siamo</Link>
                   <Link to="/careers" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
                   <Link to="/contact" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Contatti</Link>
-                  <Link to="/faq" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>FAQ</Link>
+                  <Link to="/veterinario/1" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>FAQ</Link>
                 </div>
               )}
             </div>

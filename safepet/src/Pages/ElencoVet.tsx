@@ -4,6 +4,7 @@ import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import Banner from "../components/Banner/Banner";
 import { useUser } from "../Contexts/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const StarRating = ({ rating }) => {
     const maxStars = 5;
@@ -26,6 +27,7 @@ const StarRating = ({ rating }) => {
 const ElencoVet = () => {
     const [Veterinari, setVeterinari] = useState([]);
     const { usernameGlobal } = useUser();
+    const navigate = useNavigate();
     
 
     useEffect(() => {
@@ -60,7 +62,12 @@ const ElencoVet = () => {
                         <p className="no-vet">Nessun veterinario presente</p>
                     ) : (
                         Veterinari.map((vet) => (
-                            <div key={vet.idVeterinario} className="veterinario-card">
+                            <div
+                                key={vet.idVeterinario}
+                                className="veterinario-card"
+                                onClick={() => navigate(`/veterinario/${vet.idVeterinario}`)} // <-- naviga al dettaglio
+                                style={{ cursor: "pointer" }} // <-- rende la card cliccabile
+                            >
                                 <div className="veterinario-image">
                                     <img src={`../imgs/vetPlaceholder.jpg`} alt={"Foto veterinario"}/>
                                 </div>

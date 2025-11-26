@@ -7,6 +7,7 @@ import { UserProvider } from './Contexts/UserProvider';
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ElencoVet from './Pages/ElencoVet';
+import DettagliVeterinario from './Pages/DettagliVeterinario';
 import ListaPazienti from "./Pages/ListaPazienti";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
@@ -50,6 +51,7 @@ function App() {
             }
           />
           <Route path="/ElencoVet" element={<ElencoVet />} />
+            <Route path="/veterinario/:id" element={<DettagliVeterinario />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
