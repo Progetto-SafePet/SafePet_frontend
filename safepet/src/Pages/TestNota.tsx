@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormNota from "../components/formAggiuntaNota/AggiungiNota";
+import FormNota from "../components/formAggiuntaNota/FormNota";
 
 const TestNota: React.FC = () => {
     const [showForm, setShowForm] = useState(false);
