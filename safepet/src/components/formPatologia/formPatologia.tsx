@@ -46,18 +46,22 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         setSubmitting(true);
         setServerError(null);
 
-        const formData = new FormData();
-        formData.append("nome", nome);
-        formData.append("dataDiDiagnosi", dataDiDiagnosi);
-        formData.append("sintomiOsservati", sintomi);
-        formData.append("diagnosi", diagnosi);
-        formData.append("terapiaAssociata", terapia);
+        const requestBody = {
+            nome,
+            dataDiDiagnosi,
+            sintomiOsservati: sintomi,
+            diagnosi,
+            terapiaAssociata: terapia
+        };
 
         try {
-            const res = await fetch(`http://localhost:8080/gestioneCartellaClinica/creaPatologia/${petId}`, {
+            const res = await fetch(`http://localhost:8080/gestioneCartellaClinica/aggiungiPatologia/${petId}`, {
                 method: "POST",
-                body: formData,
-                headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : undefined,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {})
+                },
+                body: JSON.stringify(requestBody)
             });
 
             if (!res.ok) {
@@ -76,7 +80,7 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             setDiagnosi("");
             setTerapia("");
 
-            onClose?.(); // chiude modal
+            onClose?.();
         } catch (err: any) {
             setServerError(err.message || "Errore di rete");
         } finally {

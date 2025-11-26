@@ -6,11 +6,12 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 10px;
 }
 
 .modal-box {
   background: #fff;
-  padding: 25px 25px;
+  padding: 2rem;
   border-radius: 10px;
   width: 95%;
   max-width: 500px;
@@ -21,15 +22,15 @@
 }
 
 .modal-box h2 {
-  margin-bottom: 25px;
+  margin-bottom: 1.5rem;
   text-align: center;
-  font-size: 26px;
+  font-size: 1.6rem;
   color: var(--clr-primary-20);
 }
 
 .user-box {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -38,12 +39,18 @@
   input,
   textarea {
     width: 90%;
-    padding: 14px 12px;
-    font-size: 16px;
+    padding: 0.85rem 0.75rem;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: none;
     transition: border-color 0.3s;
+  }
+
+  textarea {
+    max-height: 150px;
+    overflow-y: auto;
+    resize: vertical;
   }
 
   input:focus,
@@ -54,11 +61,11 @@
 
   label {
     position: absolute;
-    left: 12px;
-    top: 14px;
+    left: 0.75rem;
+    top: 0.85rem;
     background: #fff;
     padding: 0 5px;
-    font-size: 16px;
+    font-size: 1rem;
     color: #999;
     pointer-events: none;
     transition: all 0.3s ease;
@@ -68,27 +75,27 @@
   textarea:focus + label,
   input:not(:placeholder-shown) + label,
   textarea:not(:placeholder-shown) + label {
-    top: -8px;
-    left: 12px;
-    font-size: 12px;
+    top: -0.5rem;
+    left: 0.75rem;
+    font-size: 0.75rem;
     color: var(--clr-primary-20);
   }
 }
 
-
 .msg-error {
   color: red;
-  font-size: 12px;
-  margin-top: 2px;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
 
 .side-boxes-login {
   display: flex;
-  justify-content: center; // centra i pulsanti
-  margin-top: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 
   button {
-    margin: 0 10px; // distanza tra i pulsanti
+    margin: 0.5rem;
   }
 }
 
@@ -102,7 +109,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 800;
   box-shadow: 0 0 0 3px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
@@ -112,5 +119,49 @@
     box-shadow: 0 0 0 6px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
     transform: translateY(-2px);
     text-decoration: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    padding: 1.5rem;
+  }
+
+  .modal-box h2 {
+    font-size: 1.4rem;
+  }
+
+  .button-primary-Patologia {
+    width: 150px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .modal-box h2 {
+    font-size: 1.2rem;
+  }
+
+  .button-primary-Patologia {
+    width: 130px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  input,
+  textarea {
+    width: 95%;
+    font-size: 0.95rem;
+    padding: 0.7rem 0.6rem;
+  }
+
+  label {
+    font-size: 0.95rem;
   }
 }

@@ -12,7 +12,7 @@ const TestPatologia: React.FC = () => {
 
             {showForm && (
                 <FormPatologia
-                    petId={2}
+                    petId={1}
                     onSuccess={(data) => {
                         console.log("Patologia registrata:", data);
                         setShowForm(false);
