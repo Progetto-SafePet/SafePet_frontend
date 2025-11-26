@@ -37,10 +37,6 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
         }
 
         setError(newErrors);
-        // *** AGGIUNGI QUESTO LOG ***
-        console.log("Errore di validazione (Punteggio):", newErrors.punteggio);
-        console.log("Stato degli errori dopo il set:", newErrors);
-        // *************************
         return Object.keys(newErrors).length === 0;
     };
 

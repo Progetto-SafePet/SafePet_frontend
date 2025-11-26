@@ -114,14 +114,14 @@
       max-width: 320px;
       padding: 15px;
       border-radius: 8px;
-      box-sizing: border-box; /* ✅ Include padding nel calcolo */
-      overflow: hidden; /* ✅ Evita elementi che escono */
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .user-box input,
     .user-box textarea {
       width: 100%;
-      max-width: 100%; /* ✅ Blocca larghezza */
+      max-width: 100%;
       font-size: 14px;
       padding: 10px;
       box-sizing: border-box;
@@ -129,15 +129,15 @@
     }
 
     .side-boxes-login {
-      flex-wrap: wrap; /* ✅ Se i bottoni non ci stanno, vanno sotto */
+      flex-wrap: wrap;
       justify-content: center;
       width: 100%;
     }
 
     .side-boxes-login button,
     .button-primary-Recensione {
-      width: 100%; /* ✅ Bottoni larghi quanto il contenitore */
-      max-width: 140px; /* ✅ Limite per non esagerare */
+      width: 100%;
+      max-width: 140px;
       margin: 5px auto;
       font-size: 16px;
     }
