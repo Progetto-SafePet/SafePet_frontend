@@ -13,6 +13,7 @@ import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
 import TestRecensione from './Pages/TestRecensione';
+import TestNota from './Pages/TestNota';
 
 function App() {
 
@@ -27,10 +28,11 @@ function App() {
             path="/pet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                <Pet />
+                <Pet/>
               </ProtectedRoute>
             }
           />
+
 
           <Route
             path="/pazienti"
@@ -49,7 +51,9 @@ function App() {
                 }
             />
 
-          <Route 
+          <Route path="/TestNota" element={<TestNota/>} />
+
+          <Route
             path="/registerpet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
