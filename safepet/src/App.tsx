@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
             }
           />
 
- 
+
           <Route
             path="/pazienti"
             element={
@@ -42,10 +43,17 @@ function App() {
               }
             />
 
+            {/* NUOVA ROTTA: TEST RECENSIONE (NON PROTETTA PER IL TEST)*/}
+            <Route
+                path="/TestRecensione"
+                element={
+                        <TestRecensione/>
+                }
+            />
 
           <Route path="/TestNota" element={<TestNota/>} />
 
-          <Route 
+          <Route
             path="/registerpet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
