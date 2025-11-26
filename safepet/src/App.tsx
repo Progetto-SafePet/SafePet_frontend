@@ -12,7 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
-import TestRecensione from './Pages/TestRecensione'; // Aggiungi questa linea
+import TestRecensione from './Pages/TestRecensione';
 
 function App() {
 
