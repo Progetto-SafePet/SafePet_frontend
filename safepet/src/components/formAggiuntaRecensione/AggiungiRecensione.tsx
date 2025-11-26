@@ -115,21 +115,22 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-box">
-                <h2>Lascia una Recensione</h2>
-                <form onSubmit={creaRecensione}>
+        <div className="aggiunta-recensione">
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <h2>Lascia una Recensione</h2>
+                    <form onSubmit={creaRecensione}>
 
-                    {/* CAMPO RATING (STELLE) */}
-                    <div className="user-box rating-box">
-                        <div style={{ padding: '10px 0' }}>
-                            {renderStars()}
+                        {/* CAMPO RATING (STELLE) */}
+                        <div className="user-box rating-box">
+                            <div style={{padding: '10px 0'}}>
+                                {renderStars()}
+                            </div>
+                            {error.punteggio && <div className="msg-error">{error.punteggio}</div>}
                         </div>
-                        {error.punteggio && <div className="msg-error">{error.punteggio}</div>}
-                    </div>
 
-                    {/* CAMPO Descrizione */}
-                    <div className="user-box">
+                        {/* CAMPO Descrizione */}
+                        <div className="user-box">
                         <textarea
                             id="descrizione"
                             value={descrizione}
@@ -137,22 +138,24 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
                             rows={4}
                             placeholder="Lascia una descrizione..."
                         />
-                        {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
-                    </div>
+                            {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
+                        </div>
 
-                    {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && <div className="msg-error">{serverError}</div>}
 
-                    <div className="side-boxes-login">
-                        <button
-                            type="submit"
-                            className="button-primary-Recensione"
-                            disabled={submitting}
-                        >
-                            {submitting ? "Salvataggio..." : "Invia"}
-                        </button>
-                        <button type="button" className="button-primary-Recensione" onClick={onClose}>Chiudi</button>
-                    </div>
-                </form>
+                        <div className="side-boxes-login">
+                            <button
+                                type="submit"
+                                className="button-primary-Recensione"
+                                disabled={submitting}
+                            >
+                                {submitting ? "Salvataggio..." : "Invia"}
+                            </button>
+                            <button type="button" className="button-primary-Recensione" onClick={onClose}>Chiudi
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
