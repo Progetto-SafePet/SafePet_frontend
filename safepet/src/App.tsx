@@ -12,7 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
-import AggiungiNota from './Pages/AggiungiNota';
+import TestNota from './Pages/TestNota';
 
 function App() {
 
@@ -43,14 +43,7 @@ function App() {
             />
 
 
-          <Route 
-            path="/pet/:petId/addnote" 
-            element={
-                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                  <AggiungiNota/>
-                </ProtectedRoute>
-              }
-            />
+          <Route path="/TestNota" element={<TestNota/>} />
 
           <Route 
             path="/registerpet" 
