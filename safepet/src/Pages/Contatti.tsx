@@ -20,7 +20,7 @@ function Contatti() {
             tag: "INTEGRAZIONE VETERINARIA",
             title: "Collaborazione tra veterinari e strutture",
             description:
-                "SafePet connette cliniche, ambulatori e medici veterinari in un’unica rete digitale. La piattaforma facilita la condivisione sicura dei dati, riducendo tempi di diagnosi e migliorando la qualità delle cure.",
+                "SafePet connette cliniche, ambulatori e medici veterinari in un'unica rete digitale. La piattaforma facilita la condivisione sicura dei dati, riducendo tempi di diagnosi e migliorando la qualità delle cure.",
         },
         {
             image: "https://d3544la1u8djza.cloudfront.net/APHI/Blog/2023/September/small-breeds-hero.jpg",
@@ -48,14 +48,14 @@ function Contatti() {
 
     const faqs = [
         {
-            question: "Come posso contattare l’assistenza SafePet?",
+            question: "Come posso contattare l'assistenza SafePet?",
             answer:
-            "Puoi inviare una richiesta tramite il modulo di supporto presente nella pagina oppure scrivere direttamente all’indirizzo assistenza@safepet.it. Il nostro team risponde entro 24/48 ore."
+            "Puoi inviare una richiesta tramite il modulo di supporto presente nella pagina oppure scrivere direttamente all'indirizzo assistenza@safepet.it. Il nostro team risponde entro 24/48 ore."
         },
         {
             question: "Sono un veterinario: come posso diventare partner di SafePet?",
             answer:
-            "Puoi candidare la tua struttura compilando il form dedicato nella sezione 'Diventa partner'. Verrai ricontattato entro pochi giorni per una breve call conoscitiva e l’attivazione dell’account."
+            "Puoi candidare la tua struttura compilando il form dedicato nella sezione 'Diventa partner'. Verrai ricontattato entro pochi giorni per una breve call conoscitiva e l'attivazione dell'account."
         }
     ];
 
@@ -70,14 +70,14 @@ function Contatti() {
 
                         <DoubleBanner
                             text="Hai bisogno di aiuto o informazioni?"
-                            buttonText="Contatta l’assistenza"
-                            link="/supporto"
+                            buttonText="Domande frequenti "
+                            link="/faq"
 
                             text2="Sei una clinica o un veterinario?"
-                            buttonText2="Diventa partner"
-                            link2="/partner"
+                            buttonText2="Premi per registrati"
+                            link2="/registrati"
                         ></DoubleBanner>
-                        
+
                         <Carousel cardsData={promoData} />
 
                         <Accordion items={faqs} />
@@ -91,4 +91,3 @@ function Contatti() {
 }
 
 export default Contatti;
-

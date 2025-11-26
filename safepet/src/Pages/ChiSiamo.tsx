@@ -2,7 +2,6 @@ import Banner from "../components/Banner/Banner";
 import Title from "../components/Title/Title";
 import TeamMember from "../components/TeamMember/TeamMember"
 
-
 function ChiSiamo() {
     const teamMembers = [
         {
@@ -80,73 +79,72 @@ function ChiSiamo() {
         {
             name: "Gianmarco",
             surname: "Amatruda",
-            github: "gianamrco: https://github.com/Giammi19",
+            github: "https://github.com/Giammi19",
             image: "https://avatars.githubusercontent.com/u/238502418?v=4"
         }
     ];
 
-    return (
-        <>
-            <div className="page-container">
-                <div className="page">
-                    <div className='main-container'>
-                        <Title text="Chi Siamo" />
-                        <Banner
-                            text="Un team di professionisti dedicato alla salute e al benessere dei tuoi animali domestici"
-                            buttonText="Scopri SafePet"
-                            link="/"
-                        />
-
-                        <div className="team-section">
-                            <div className="team-intro">
-                                <h2>Il Nostro Team</h2>
-                                <p>
-                                    Siamo un team che crede che ogni animale meriti protezione, cura e una voce anche
-                                    nei momenti più difficili. Con SafePet trasformiamo la tecnologia in un gesto
-                                    d'amore, rendendo le informazioni sanitarie sempre accessibili e sicure. Lavoriamo
-                                    ogni giorno per un futuro in cui nessun animale sia mai lasciato solo nelle
-                                    emergenze.
-                                </p>
+return (
+    <>
+        <div className="page-container">
+            <div className="page">
+                <div className='main-container'>
+                    <Title text="Chi Siamo" />
+                    <div className="mission-banner-container">
+                        <h2>La Nostra Missione</h2>
+                        <div className="mission-content">
+                            <div className="mission-card">
+                                <div className="mission-icon">🎯</div>
+                                <h3>Innovazione</h3>
+                                <p>Sviluppiamo soluzioni tecnologiche all'avanguardia per semplificare la gestione della salute animale</p>
                             </div>
-
-                            <div className="team-grid">
-                                {teamMembers.map((member, index) => (
-                                    <TeamMember
-                                        key={index}
-                                        name={member.name}
-                                        surname={member.surname}
-                                        github={member.github}
-                                        image={member.image}
-                                    />
-                                ))}
+                            <div className="mission-card">
+                                <div className="mission-icon">🤝</div>
+                                <h3>Collaborazione</h3>
+                                <p>Creiamo ponti tra veterinari, strutture e proprietari per una cura integrata e coordinata</p>
                             </div>
-                        </div>
-
-                        <div className="mission-section">
-                            <h2>La Nostra Missione</h2>
-                            <div className="mission-content">
-                                <div className="mission-card">
-                                    <div className="mission-icon">🎯</div>
-                                    <h3>Innovazione</h3>
-                                    <p>Sviluppiamo soluzioni tecnologiche all'avanguardia per semplificare la gestione della salute animale</p>
-                                </div>
-                                <div className="mission-card">
-                                    <div className="mission-icon">🤝</div>
-                                    <h3>Collaborazione</h3>
-                                    <p>Creiamo ponti tra veterinari, strutture e proprietari per una cura integrata e coordinata</p>
-                                </div>
-                                <div className="mission-card">
-                                    <div className="mission-icon">❤️</div>
-                                    <h3>Passione</h3>
-                                    <p>Il benessere degli animali è al centro di ogni nostra decisione e innovazione</p>
-                                </div>
+                            <div className="mission-card">
+                                <div className="mission-icon">❤️</div>
+                                <h3>Passione</h3>
+                                <p>Il benessere degli animali è al centro di ogni nostra decisione e innovazione</p>
                             </div>
                         </div>
                     </div>
+                    <div className="team-section">
+                        <div className="team-intro">
+                        <Title text="Il nostro team" />
+                            <p>
+                                Siamo un team che crede che ogni animale meriti protezione, cura e una voce anche
+                                nei momenti più difficili. Con SafePet trasformiamo la tecnologia in un gesto
+                                d'amore, rendendo le informazioni sanitarie sempre accessibili e sicure. Lavoriamo
+                                ogni giorno per un futuro in cui nessun animale sia mai lasciato solo nelle
+                                emergenze.
+                            </p>
+                        </div>
+
+                        <div className="team-grid">
+                            {teamMembers.map((member, index) => (
+                                <TeamMember
+                                    key={index}
+                                    name={member.name}
+                                    surname={member.surname}
+                                    github={member.github}
+                                    image={member.image}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <Banner
+                        text="Un team di professionisti dedicato alla salute e al benessere dei tuoi animali domestici"
+                        buttonText="Scopri SafePet"
+                        link="/"
+                    />
                 </div>
             </div>
-        </>
-    );
+        </div>
+    </>
+);
+
 }
 
 export default ChiSiamo;

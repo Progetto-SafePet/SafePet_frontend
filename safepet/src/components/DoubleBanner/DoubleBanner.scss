@@ -1,10 +1,20 @@
 .horiziontal-align {
-    display: flex;
-    max-width: 100%;
-    flex-direction: row;
-    gap: 30px;
+  display: flex;
+  max-width: 100%;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 
-    .banner-container {
-        min-width: unset !important;
-    }
+  .banner-container {
+    min-width: unset !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .horiziontal-align {
+    flex-direction: column;
+    gap: 30px;
+  }
 }
