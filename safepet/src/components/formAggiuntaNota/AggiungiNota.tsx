@@ -82,41 +82,43 @@ const FormNota: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-box">
-                <h2>Aggiungi la tua nota</h2>
-                <form onSubmit={creaNota}>
-                    <div className="user-box">
-                        <input
-                            type="text"
-                            value={titolo}
-                            onChange={e => setTitolo(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Titolo</label>
-                        {error.titolo && <div className="msg-error">{error.titolo}</div>}
-                    </div>
+        <div className="note-proprietario">
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <h2>Aggiungi la tua nota</h2>
+                    <form onSubmit={creaNota}>
+                        <div className="user-box">
+                            <input
+                                type="text"
+                                value={titolo}
+                                onChange={e => setTitolo(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Titolo</label>
+                            {error.titolo && <div className="msg-error">{error.titolo}</div>}
+                        </div>
 
-                    <div className="user-box">
-                        <input
-                            type="descrizione"
-                            value={descrizione}
-                            onChange={e => setDescrizione(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Descrizione</label>
-                        {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
-                    </div>
+                        <div className="user-box">
+                            <input
+                                type="descrizione"
+                                value={descrizione}
+                                onChange={e => setDescrizione(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Descrizione</label>
+                            {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
+                        </div>
 
-                    {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && <div className="msg-error">{serverError}</div>}
 
-                    <div className="side-boxes-login">
-                        <button type="submit" className="button-primary-Nota" disabled={submitting}>
-                            {submitting ? "Salvataggio..." : "Salva nota"}
-                        </button>
-                        <button type="button" className="button-primary-Nota" onClick={onClose}>Chiudi</button>
-                    </div>
-                </form>
+                        <div className="side-boxes-login">
+                            <button type="submit" className="button-primary-Nota" disabled={submitting}>
+                                {submitting ? "Salvataggio..." : "Salva nota"}
+                            </button>
+                            <button type="button" className="button-primary-Nota" onClick={onClose}>Chiudi</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
