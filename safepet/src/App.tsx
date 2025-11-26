@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import TestVisitaMedica from "./Pages/TestVisitaMedica";
 
 function App() {
 
@@ -40,6 +41,8 @@ function App() {
               }
             />
 
+
+            <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
 
           <Route 
             path="/registerpet" 
