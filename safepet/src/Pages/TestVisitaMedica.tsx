@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormVisitaMedica from "../components/formVisitaMedica/AggiuntaVisitaMedica";
+import FormVisitaMedica from "../components/formVisitaMedica/FormVisitaMedica";
 
 const TestVisitaMedica: React.FC = () => {
     const [showForm, setShowForm] = useState(false);

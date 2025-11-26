@@ -91,63 +91,65 @@ const FormVisitaMedica: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 };
 
 return (
-    <div className="modal-overlay">
-        <div className="modal-box">
-            <h2>Registra nuova Visita Medica</h2>
-            <form onSubmit={creaVisitaMedica}>
-                <div className="user-box">
-                    <input
-                        type="text"
-                        value={nome}
-                        onChange={e => setNome(e.target.value)}
-                        maxLength={20}
-                        placeholder=" "
-                    />
-                    <label>Nome</label>
-                    {error.nome && <div className="msg-error">{error.nome}</div>}
-                </div>
-
-                <div className="user-box">
-                        <textarea
-                            id="descrizione"
-                            value={descrizione}
-                            onChange={(e) => setDescrizione(e.target.value)}
-                            rows={5}
-                            maxLength={300}
+    <div className="visita-medica">
+        <div className="modal-overlay">
+            <div className="modal-box">
+                <h2>Registra nuova Visita Medica</h2>
+                <form onSubmit={creaVisitaMedica}>
+                    <div className="user-box">
+                        <input
+                            type="text"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                            maxLength={20}
                             placeholder=" "
                         />
-                    <label>Descrizione</label>
-                    {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
-                </div>
+                        <label>Nome</label>
+                        {error.nome && <div className="msg-error">{error.nome}</div>}
+                    </div>
 
-                <div className="user-box">
-                    <input
-                        type="date"
-                        value={data}
-                        onChange={e => setData(e.target.value)}
-                        placeholder=" "
-                    />
-                    <label>Data Visita</label>
-                    {error.data && <div className="msg-error">{error.data}</div>}
-                </div>
+                    <div className="user-box">
+                            <textarea
+                                id="descrizione"
+                                value={descrizione}
+                                onChange={(e) => setDescrizione(e.target.value)}
+                                rows={5}
+                                maxLength={300}
+                                placeholder=" "
+                            />
+                        <label>Descrizione</label>
+                        {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
+                    </div>
 
-                <div className="user-box">
-                    <input
-                        type="file"
-                        accept="application/pdf"
-                        onChange={(e) => setReferto(e.target.files[0])}
-                    />
-                </div>
+                    <div className="user-box">
+                        <input
+                            type="date"
+                            value={data}
+                            onChange={e => setData(e.target.value)}
+                            placeholder=" "
+                        />
+                        <label>Data Visita</label>
+                        {error.data && <div className="msg-error">{error.data}</div>}
+                    </div>
 
-                {serverError && <div className="msg-error">{serverError}</div>}
+                    <div className="user-box">
+                        <input
+                            type="file"
+                            accept="application/pdf"
+                            onChange={(e) => setReferto(e.target.files[0])}
+                        />
+                    </div>
 
-                <div className="side-boxes-login">
-                    <button type="submit" className="button-primary-VisitaMedica" disabled={submitting}>
-                        {submitting ? "Salvataggio..." : "Salva Visita Medica"}
-                    </button>
-                    <button type="button" className="button-primary-VisitaMedica" onClick={onClose}>Chiudi</button>
-                </div>
-            </form>
+                    {serverError && <div className="msg-error">{serverError}</div>}
+
+                    <div className="side-boxes-login">
+                        <button type="submit" className="button-primary-VisitaMedica" disabled={submitting}>
+                            {submitting ? "Salvataggio..." : "Salva Visita Medica"}
+                        </button>
+                        <button type="button" className="button-primary-VisitaMedica" onClick={onClose}>Chiudi</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 );
