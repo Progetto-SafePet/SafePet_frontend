@@ -33,10 +33,14 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
         if (!descrizione.trim()) {
             newErrors.descrizione = "La descrizione è obbligatoria";
         } else if (descrizione.length > 100) {
-            newErrors.descrizoine = "La descrizione non può superare i 100 caratteri";
+            newErrors.descrizione = "La descrizione non può superare i 100 caratteri";
         }
 
         setError(newErrors);
+        // *** AGGIUNGI QUESTO LOG ***
+        console.log("Errore di validazione (Punteggio):", newErrors.punteggio);
+        console.log("Stato degli errori dopo il set:", newErrors);
+        // *************************
         return Object.keys(newErrors).length === 0;
     };
 
@@ -136,15 +140,13 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
                         {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
                     </div>
 
-                        {error.descrizione && <div className="msg-error">{error.descrizione}</div>}
-
                     {serverError && <div className="msg-error">{serverError}</div>}
 
                     <div className="side-boxes-login">
                         <button
                             type="submit"
                             className="button-primary-Recensione"
-                            disabled={submitting || punteggio === 0}
+                            disabled={submitting}
                         >
                             {submitting ? "Salvataggio..." : "Invia"}
                         </button>

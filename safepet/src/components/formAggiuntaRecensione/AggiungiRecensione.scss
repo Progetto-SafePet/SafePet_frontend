@@ -10,7 +10,7 @@
 
 .modal-box {
   background: #fff;
-  padding: 25px 25px;
+  padding: 20px;
   border-radius: 10px;
   width: 95%;
   max-width: 500px;
@@ -23,7 +23,7 @@
 }
 
 .modal-box h2 {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 26px;
   color: var(--clr-primary-20);
@@ -36,35 +36,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
-  input,
-  textarea {
-    width: 90%;
-    padding: 14px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: none;
-    transition: border-color 0.3s;
-    resize: vertical;
-  }
+.user-box input,
+.user-box textarea {
+  width: 90%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: none;
+  transition: border-color 0.3s;
+  resize: vertical;
+}
 
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: var(--clr-primary-20);
-  }
-
+.user-box input:focus,
+.user-box textarea:focus {
+  outline: none;
+  border-color: var(--clr-primary-20);
 }
 
 .rating-box {
   align-items: center;
   width: 100%;
+}
 
-  div {
-    display: flex;
-    align-items: center;
-  }
+.rating-box div {
+  display: flex;
+  align-items: center;
 }
 
 .msg-error {
@@ -79,10 +78,10 @@
   display: flex;
   justify-content: center;
   margin-top: 25px;
+}
 
-  button {
-    margin: 0 10px;
-  }
+.side-boxes-login button {
+  margin: 0 10px;
 }
 
 .button-primary-Recensione {
@@ -99,11 +98,46 @@
   font-weight: 800;
   box-shadow: 0 0 0 3px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
 
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 0 0 6px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
-    transform: translateY(-2px);
-    text-decoration: none !important;
+.button-primary-Recensione:hover {
+  cursor: pointer;
+  box-shadow: 0 0 0 6px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
+  transform: translateY(-2px);
+  text-decoration: none !important;
+}
+
+@media (max-width: 480px) {
+  .modal-box {
+    width: 90%;
+    max-width: 320px;
+    padding: 15px;
+    border-radius: 8px;
+    box-sizing: border-box; /* ✅ Include padding nel calcolo */
+    overflow: hidden; /* ✅ Evita elementi che escono */
+  }
+
+  .user-box input,
+  .user-box textarea {
+    width: 100%;
+    max-width: 100%; /* ✅ Blocca larghezza */
+    font-size: 14px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .side-boxes-login {
+    flex-wrap: wrap; /* ✅ Se i bottoni non ci stanno, vanno sotto */
+    justify-content: center;
+    width: 100%;
+  }
+
+  .side-boxes-login button,
+  .button-primary-Recensione {
+    width: 100%; /* ✅ Bottoni larghi quanto il contenitore */
+    max-width: 140px; /* ✅ Limite per non esagerare */
+    margin: 5px auto;
+    font-size: 16px;
   }
 }
