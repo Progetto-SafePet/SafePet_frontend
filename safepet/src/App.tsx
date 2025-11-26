@@ -14,6 +14,7 @@ import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
+import TestTerapia form'./Pages/TestTerapia';
 
 function App() {
 
