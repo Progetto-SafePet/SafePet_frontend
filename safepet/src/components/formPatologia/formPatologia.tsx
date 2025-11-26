@@ -89,72 +89,74 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     };
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-box">
-                <h2>Registra nuova patologia</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="user-box">
-                        <input
-                            type="text"
-                            value={nome}
-                            onChange={e => setNome(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Nome</label>
-                        {errors.nome && <div className="msg-error">{errors.nome}</div>}
-                    </div>
+        <div className="aggiunta-Patologia">
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <h2>Registra nuova patologia</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="user-box">
+                            <input
+                                type="text"
+                                value={nome}
+                                onChange={e => setNome(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Nome</label>
+                            {errors.nome && <div className="msg-error">{errors.nome}</div>}
+                        </div>
 
-                    <div className="user-box">
-                        <input
-                            type="date"
-                            value={dataDiDiagnosi}
-                            onChange={e => setDataDiDiagnosi(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Data diagnosi</label>
-                        {errors.dataDiDiagnosi && <div className="msg-error">{errors.dataDiDiagnosi}</div>}
-                    </div>
+                        <div className="user-box">
+                            <input
+                                type="date"
+                                value={dataDiDiagnosi}
+                                onChange={e => setDataDiDiagnosi(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Data diagnosi</label>
+                            {errors.dataDiDiagnosi && <div className="msg-error">{errors.dataDiDiagnosi}</div>}
+                        </div>
 
-                    <div className="user-box">
-                        <textarea
-                            value={sintomi}
-                            onChange={e => setSintomi(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Sintomi osservati</label>
-                        {errors.sintomi && <div className="msg-error">{errors.sintomi}</div>}
-                    </div>
+                        <div className="user-box">
+                            <textarea
+                                value={sintomi}
+                                onChange={e => setSintomi(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Sintomi osservati</label>
+                            {errors.sintomi && <div className="msg-error">{errors.sintomi}</div>}
+                        </div>
 
-                    <div className="user-box">
-                        <textarea
-                            value={diagnosi}
-                            onChange={e => setDiagnosi(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Diagnosi</label>
-                        {errors.diagnosi && <div className="msg-error">{errors.diagnosi}</div>}
-                    </div>
+                        <div className="user-box">
+                            <textarea
+                                value={diagnosi}
+                                onChange={e => setDiagnosi(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Diagnosi</label>
+                            {errors.diagnosi && <div className="msg-error">{errors.diagnosi}</div>}
+                        </div>
 
-                    <div className="user-box">
-                        <input
-                            type="text"
-                            value={terapia}
-                            onChange={e => setTerapia(e.target.value)}
-                            placeholder=" "
-                        />
-                        <label>Terapia associata</label>
-                        {errors.terapia && <div className="msg-error">{errors.terapia}</div>}
-                    </div>
+                        <div className="user-box">
+                            <input
+                                type="text"
+                                value={terapia}
+                                onChange={e => setTerapia(e.target.value)}
+                                placeholder=" "
+                            />
+                            <label>Terapia associata</label>
+                            {errors.terapia && <div className="msg-error">{errors.terapia}</div>}
+                        </div>
 
-                    {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && <div className="msg-error">{serverError}</div>}
 
-                    <div className="side-boxes-login">
-                        <button type="submit" className="button-primary-Patologia" disabled={submitting}>
-                            {submitting ? "Salvataggio..." : "Salva patologia"}
-                        </button>
-                        <button type="button" className="button-primary-Patologia" onClick={onClose}>Chiudi</button>
-                    </div>
-                </form>
+                        <div className="side-boxes-login">
+                            <button type="submit" className="button-primary-Patologia" disabled={submitting}>
+                                {submitting ? "Salvataggio..." : "Salva patologia"}
+                            </button>
+                            <button type="button" className="button-primary-Patologia" onClick={onClose}>Chiudi</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
