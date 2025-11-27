@@ -12,41 +12,42 @@
 
   .modal-box {
     background: #fff;
-    padding: 1.8rem;
-    border-radius: 10px;
+    padding: 2rem;
+    border-radius: 12px;
     width: 95%;
-    max-width: 450px;
+    max-width: 480px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch; /* FIX */
   }
 
   .modal-box h2 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: var(--clr-primary-20);
   }
 
   .user-box {
     position: relative;
-    margin-bottom: 1.25rem;
-    width: 95%;
+    width: 100%; /* FIX PRINCIPALE – prende tutta la larghezza */
+    margin-bottom: 1.4rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 0.3rem;
 
     input,
     textarea,
     select {
-      width: 100%;
-      padding: 0.85rem 0.75rem;
-      font-size: 1rem;
+      width: 100%; /* FULL WIDTH */
+      padding: 1rem;
+      font-size: 1.05rem;
       border: 1px solid #ccc;
-      border-radius: 5px;
-      background: none;
-      transition: border-color 0.3s;
+      border-radius: 8px;
+      background: #fff;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box; /* Importantissimo */
     }
 
     textarea {
@@ -64,26 +65,26 @@
 
     label {
       position: absolute;
-      left: 0.75rem;
-      top: 0.85rem;
-      background: #fff;
-      padding: 0 5px;
+      left: 12px;
+      top: 16px;
+      padding: 0 6px;
       font-size: 1rem;
       color: #999;
+      background: white;
       pointer-events: none;
-      transition: all 0.3s ease;
-      z-index: 1;
+      transition: 0.25s ease;
     }
 
+    /* Effetto float label */
     input:focus + label,
     textarea:focus + label,
     select:focus + label,
     input:not(:placeholder-shown) + label,
     textarea:not(:placeholder-shown) + label,
     select:not([value=""]) + label {
-      top: -0.5rem;
-      left: 0.75rem;
-      font-size: 0.75rem;
+      top: -8px;
+      left: 10px;
+      font-size: 0.78rem;
       color: var(--clr-primary-20);
       z-index: 2;
     }
@@ -91,87 +92,62 @@
 
   .msg-error {
     color: red;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
   }
 
   .side-boxes-login {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-
-    button {
-      margin: 0.5rem;
-    }
+    margin-top: 1.6rem;
   }
 
   .button-primary-Patologia {
-    width: 180px;
-    height: 50px;
+    width: 200px;
+    height: 55px;
     border: solid var(--clr-primary-20) 5px;
     border-radius: 10px;
-    color: var(--clr-primary-20) !important;
+    color: var(--clr-primary-20);
     background-color: var(--clr-primary-40);
+    font-size: 1.3rem;
+    font-weight: 800;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.25rem;
-    font-weight: 800;
-    box-shadow: 0 0 0 3px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 0 3px var(--clr-primary-40),
+    0 0 0 6px var(--clr-primary-20);
+    transition: 0.25s ease;
+    cursor: pointer;
 
     &:hover {
-      cursor: pointer;
-      box-shadow: 0 0 0 6px var(--clr-primary-40), 0 0 0 6px var(--clr-primary-20);
       transform: translateY(-2px);
-      text-decoration: none !important;
+      box-shadow: 0 0 0 6px var(--clr-primary-40),
+      0 0 0 6px var(--clr-primary-20);
     }
   }
 
-  @media (max-width: 768px) {
-    .modal-box {
-      padding: 1.5rem;
-      max-width: 400px;
-    }
-
-    .modal-box h2 {
-      font-size: 1.4rem;
-    }
-
-    .button-primary-Patologia {
-      width: 150px;
-      height: 45px;
-      font-size: 1.1rem;
-    }
-  }
-
+  /* RESPONSIVE */
   @media (max-width: 480px) {
     .modal-box {
-      padding: 1rem;
+      padding: 1.4rem;
       width: 95%;
     }
 
     .modal-box h2 {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
 
     .button-primary-Patologia {
-      width: 130px;
-      height: 40px;
-      font-size: 1rem;
+      width: 160px;
+      height: 48px;
+      font-size: 1.1rem;
     }
 
     input,
     textarea,
     select {
-      width: 100%;
-      font-size: 0.95rem;
-      padding: 0.7rem 0.6rem;
-    }
-
-    label {
-      font-size: 0.95rem;
+      padding: 0.85rem;
+      font-size: 1rem;
     }
   }
 }

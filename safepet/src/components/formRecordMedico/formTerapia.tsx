@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import "../formRecordMedico/form.scss";
 
-const FormTerapia: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const petId = id ? Number(id) : undefined;
-    const navigate = useNavigate();
+type Props = {
+    petId: number;
+    onSuccess?: () => void;
+    onClose?: () => void;
+};
 
+const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     const [nome, setNome] = useState("");
     const [formaFarmaceutica, setFormaFarmaceutica] = useState("");
     const [dosaggio, setDosaggio] = useState("");
@@ -25,32 +26,41 @@ const FormTerapia: React.FC = () => {
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
 
+        // Controllo ID paziente (in più rispetto al form patologia)
         if (!petId || isNaN(petId) || petId <= 0) {
             newErrors.petId = "ID paziente non valido o mancante.";
         }
 
+        // Nome farmaco: obbligatorio e 3–100 caratteri
         if (!nome.trim()) newErrors.nome = "Il nome è obbligatorio";
         else if (nome.length < 3 || nome.length > 100)
-            newErrors.nome = "Nome 3-100 caratteri";
+            newErrors.nome = "Il nome deve essere compreso tra 3 e 100 caratteri";
 
+        // Forma farmaceutica: obbligatoria
         if (!formaFarmaceutica.trim())
             newErrors.formaFarmaceutica = "La forma farmaceutica è obbligatoria";
 
+        // Dosaggio: obbligatorio
         if (!dosaggio.trim())
             newErrors.dosaggio = "Il dosaggio è obbligatorio";
 
+        // Posologia: obbligatoria
         if (!posologia.trim())
             newErrors.posologia = "La posologia è obbligatoria";
 
+        // Via di somministrazione: obbligatoria
         if (!viaDiSomministrazione.trim())
             newErrors.viaDiSomministrazione = "La via di somministrazione è obbligatoria";
 
+        // Durata: obbligatoria
         if (!durata.trim())
             newErrors.durata = "La durata è obbligatoria";
 
+        // Frequenza: obbligatoria
         if (!frequenza.trim())
             newErrors.frequenza = "La frequenza è obbligatoria";
 
+        // Motivo: obbligatorio
         if (!motivo.trim())
             newErrors.motivo = "Il motivo è obbligatorio";
 
@@ -62,7 +72,8 @@ const FormTerapia: React.FC = () => {
         e.preventDefault();
 
         if (!validate()) {
-            if (errors.petId) {
+            // Se l'errore è proprio l'ID paziente, mostro anche un messaggio generale
+            if (!petId || isNaN(petId) || petId <= 0) {
                 setServerError("ID Paziente non valido. Impossibile salvare la terapia.");
             }
             return;
@@ -71,7 +82,7 @@ const FormTerapia: React.FC = () => {
         setSubmitting(true);
         setServerError(null);
 
-        const requestBody = {
+        const payload = {
             nome,
             formaFarmaceutica,
             dosaggio,
@@ -91,25 +102,32 @@ const FormTerapia: React.FC = () => {
                         "Content-Type": "application/json",
                         ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {})
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify(payload)
                 }
             );
 
             if (!res.ok) {
                 const text = await res.text();
                 let errorMessage = text || "Errore dal server durante il salvataggio.";
+                // Provo a leggere JSON (es. error response Spring)
                 try {
                     const errorJson = JSON.parse(text);
                     errorMessage = errorJson.detail || errorJson.title || errorMessage;
-                } catch {}
+                } catch {
+                    // se non è JSON lascio il text grezzo
+                }
 
                 setServerError(errorMessage);
                 setSubmitting(false);
                 return;
             }
 
-            alert("Terapia registrata con successo!");
+            // NIENTE redirect, niente alert.
+            // Lascio gestire al padre (es. refresh cartella clinica + chiusura modal)
+            onSuccess?.();
+            onClose?.();
 
+            // opzionale: reset dei campi in locale (utile se il form resta aperto)
             setNome("");
             setFormaFarmaceutica("");
             setDosaggio("");
@@ -118,40 +136,26 @@ const FormTerapia: React.FC = () => {
             setDurata("");
             setFrequenza("");
             setMotivo("");
+
         } catch (err: any) {
             const errorMessage = err instanceof Error ? err.message : "Errore di rete";
             setServerError(errorMessage);
         } finally {
             setSubmitting(false);
         }
+        alert("Terapia registrata con successo!");
     };
 
-    if (!petId || isNaN(petId) || petId <= 0) {
-        return (
-            <div className="aggiunta-Terapia">
-                <div className="modal-overlay">
-                    <div className="modal-box error-state">
-                        <h2>Errore Critico</h2>
-                        <div className="msg-error">
-                            ID Paziente non fornito o non valido. Impossibile registrare la terapia.
-                        </div>
-                        <div className="side-boxes-login">
-                            <button type="button" className="button-primary-Terapia" onClick={() => navigate(-1)}>Torna indietro</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
+    // Niente schermate separate di errore: lo gestiamo come gli altri form modali
     return (
         <div className="form-RecordMedico">
             <div className="modal-overlay">
                 <div className="modal-box">
-                    <h2>Aggiungi Terapia (Pet ID: {petId})</h2>
+                    <h2>Registra nuova terapia</h2>
 
                     <form onSubmit={handleSubmit}>
 
+                        {/* NOME FARMACO */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -159,10 +163,11 @@ const FormTerapia: React.FC = () => {
                                 onChange={e => setNome(e.target.value)}
                                 placeholder=" "
                             />
-                            <label>Nome terapia</label>
+                            <label>Nome farmaco</label>
                             {errors.nome && <div className="msg-error">{errors.nome}</div>}
                         </div>
 
+                        {/* FORMA FARMACEUTICA */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -171,9 +176,12 @@ const FormTerapia: React.FC = () => {
                                 placeholder=" "
                             />
                             <label>Forma farmaceutica</label>
-                            {errors.formaFarmaceutica && <div className="msg-error">{errors.formaFarmaceutica}</div>}
+                            {errors.formaFarmaceutica && (
+                                <div className="msg-error">{errors.formaFarmaceutica}</div>
+                            )}
                         </div>
 
+                        {/* DOSAGGIO */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -185,6 +193,7 @@ const FormTerapia: React.FC = () => {
                             {errors.dosaggio && <div className="msg-error">{errors.dosaggio}</div>}
                         </div>
 
+                        {/* POSOLOGIA */}
                         <div className="user-box">
                             <textarea
                                 value={posologia}
@@ -195,6 +204,7 @@ const FormTerapia: React.FC = () => {
                             {errors.posologia && <div className="msg-error">{errors.posologia}</div>}
                         </div>
 
+                        {/* VIA DI SOMMINISTRAZIONE */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -203,9 +213,12 @@ const FormTerapia: React.FC = () => {
                                 placeholder=" "
                             />
                             <label>Via di somministrazione</label>
-                            {errors.viaDiSomministrazione && <div className="msg-error">{errors.viaDiSomministrazione}</div>}
+                            {errors.viaDiSomministrazione && (
+                                <div className="msg-error">{errors.viaDiSomministrazione}</div>
+                            )}
                         </div>
 
+                        {/* DURATA */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -217,6 +230,7 @@ const FormTerapia: React.FC = () => {
                             {errors.durata && <div className="msg-error">{errors.durata}</div>}
                         </div>
 
+                        {/* FREQUENZA */}
                         <div className="user-box">
                             <input
                                 type="text"
@@ -228,6 +242,7 @@ const FormTerapia: React.FC = () => {
                             {errors.frequenza && <div className="msg-error">{errors.frequenza}</div>}
                         </div>
 
+                        {/* MOTIVO */}
                         <div className="user-box">
                             <textarea
                                 value={motivo}
@@ -237,22 +252,33 @@ const FormTerapia: React.FC = () => {
                             <label>Motivo</label>
                             {errors.motivo && <div className="msg-error">{errors.motivo}</div>}
                         </div>
-                        {serverError && (
-                            <div className="user-box">
-                                <div className="msg-error">
-                                    {serverError}
-                                </div>
+
+                        {/* ERRORI GLOBALI */}
+                        {(errors.petId || serverError) && (
+                            <div className="msg-error">
+                                {errors.petId && <div>{errors.petId}</div>}
+                                {serverError && <div>{serverError}</div>}
                             </div>
                         )}
+
                         <div className="side-boxes-login">
-                            <button type="submit" className="button-primary" disabled={submitting}>
-                                {submitting ? "Salvataggio..." : "Aggiungi Terapia"}
+                            <button
+                                type="submit"
+                                className="button-primary-Patologia"
+                                disabled={submitting}
+                            >
+                                {submitting ? "Salvataggio..." : "Salva terapia"}
                             </button>
 
-                            <button type="button" className="button-primary" onClick={() => navigate(-1)}>
-                                Annulla
+                            <button
+                                type="button"
+                                className="button-primary-Patologia"
+                                onClick={onClose}
+                            >
+                                Chiudi
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
