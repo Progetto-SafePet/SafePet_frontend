@@ -47,19 +47,6 @@ function App() {
               }
             />
 
-            {/* NUOVA ROTTA: TEST RECENSIONE (NON PROTETTA PER IL TEST)*/}
-            <Route
-                path="/TestRecensione"
-                element={
-                        <TestRecensione/>
-                }
-            />
-
-          <Route path="/TestNota" element={<TestNota/>} />
-
-            <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
-
-          <Route 
           <Route
             path="/registerpet" 
             element={
@@ -67,20 +54,32 @@ function App() {
                 <RegisterPet />
               </ProtectedRoute>
             }
+            />
+
+          <Route
+              path="/TestRecensione"
+              element={
+                      <TestRecensione/>
+              }
           />
 
-            <Route
-                path="/TestVaccinazione"
-                element={
-                   // <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
-                        <TestVaccinazione />
-                    //</ProtectedRoute>
-                }
-            />
-          <Route path="/ElencoVet" element={<ElencoVet />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/TestNota" element={<TestNota/>} />
+
+          <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
+
+          <Route
+              path="/TestVaccinazione"
+              element={
+                  // <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                      <TestVaccinazione />
+                  //</ProtectedRoute>
+              }
+          />
           <Route path="/TestPatologia" element={<TestPatologia />} />
           <Route path="/test-terapia" element={<TestTerapia />} />
+          
+          <Route path="/ElencoVet" element={<ElencoVet />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
