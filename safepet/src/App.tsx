@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import TestVisitaMedica from "./Pages/TestVisitaMedica";
 import TestPatologia from "./Pages/TestPatologia";
 import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
@@ -56,6 +57,9 @@ function App() {
 
           <Route path="/TestNota" element={<TestNota/>} />
 
+            <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
+
+          <Route 
           <Route
             path="/registerpet" 
             element={
