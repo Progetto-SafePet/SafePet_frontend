@@ -1,4 +1,4 @@
-.visita-medica {
+.aggiunta-vaccinazione {
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -19,13 +19,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
 
-  .modal-box h2 {
-    margin-bottom: 25px;
-    text-align: center;
-    font-size: 26px;
-    color: var(--clr-primary-20);
+    h2 {
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 26px;
+      color: var(--clr-primary-20);
+    }
   }
 
   .user-box {
@@ -37,7 +37,8 @@
     align-items: center;
 
     input,
-    textarea {
+    textarea,
+    select {
       width: 90%;
       padding: 14px 12px;
       font-size: 16px;
@@ -45,14 +46,12 @@
       border-radius: 5px;
       background: none;
       transition: border-color 0.3s;
-    }
-
-    textarea {
-      padding-inline: 16px;
+      appearance: none;   // stile uniforme select
     }
 
     input:focus,
-    textarea:focus {
+    textarea:focus,
+    select:focus {
       outline: none;
       border-color: var(--clr-primary-20);
     }
@@ -69,6 +68,7 @@
       transition: all 0.3s ease;
     }
 
+    // Animazione label per input
     input:focus + label,
     textarea:focus + label,
     input:not(:placeholder-shown) + label,
@@ -78,8 +78,16 @@
       font-size: 12px;
       color: var(--clr-primary-20);
     }
-  }
 
+    // Animazione label per select (quando selezionato)
+    select:focus + label,
+    select:not([value=""]) + label {
+      top: -8px;
+      left: 12px;
+      font-size: 12px;
+      color: var(--clr-primary-20);
+    }
+  }
 
   .msg-error {
     color: red;
@@ -89,15 +97,16 @@
 
   .side-boxes-login {
     display: flex;
-    justify-content: center; // centra i pulsanti
+    justify-content: center;
     margin-top: 25px;
 
     button {
-      margin: 0 10px; // distanza tra i pulsanti
+      margin: 0 10px;
     }
   }
 
-  .button-primary-VisitaMedica {
+  /* 🟦 BOTTONI PER FORM VACCINAZIONE (uguali allo stile Patologia) */
+  .button-primary-Vaccinazione {
     width: 180px;
     height: 50px;
     border: solid var(--clr-primary-20) 5px;
@@ -120,7 +129,5 @@
     }
   }
 
-  #descrizione{
-    resize: none;
-  }
 }
+
