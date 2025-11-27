@@ -12,7 +12,12 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
-import DettagliPaziente from "./Pages/DettagliPaziente";
+import TestVisitaMedica from "./Pages/TestVisitaMedica";
+import TestPatologia from "./Pages/TestPatologia";
+import TestVaccinazione from "./Pages/TestVaccinazione";
+import TestRecensione from './Pages/TestRecensione';
+import TestNota from './Pages/TestNota';
+import TestTerapia from'./Pages/TestTerapia';
 
 function App() {
 
@@ -27,10 +32,11 @@ function App() {
             path="/pet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                <Pet />
+                <Pet/>
               </ProtectedRoute>
             }
           />
+
 
           <Route
             path="/pazienti"
@@ -41,23 +47,37 @@ function App() {
               }
             />
 
-
-          <Route 
+          <Route
             path="/registerpet" 
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
                 <RegisterPet />
               </ProtectedRoute>
             }
-          />
-            <Route
-                path="/DettagliPaziente/:id"
-                element={
-                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
-                        <DettagliPaziente />
-                    </ProtectedRoute>
-                }
             />
+
+          <Route
+              path="/TestRecensione"
+              element={
+                      <TestRecensione/>
+              }
+          />
+
+          <Route path="/TestNota" element={<TestNota/>} />
+
+          <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
+
+          <Route
+              path="/TestVaccinazione"
+              element={
+                  // <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                      <TestVaccinazione />
+                  //</ProtectedRoute>
+              }
+          />
+          <Route path="/TestPatologia" element={<TestPatologia />} />
+          <Route path="/test-terapia" element={<TestTerapia />} />
+          
           <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
