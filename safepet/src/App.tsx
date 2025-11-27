@@ -15,6 +15,8 @@ import Page404 from "./Pages/Page404";
 import FAQ from "./Pages/FAQ";
 import Contatti from "./Pages/Contatti";
 import ChiSiamo from "./Pages/ChiSiamo";
+import TestRecensione from './Pages/TestRecensione';
+import TestNota from './Pages/TestNota';
 
 function App() {
 
@@ -25,32 +27,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route
-            path="/about"
-            element={
-              <ChiSiamo />
-              }
-            />
+          <Route path="/about" element={<ChiSiamo />} />
 
-          <Route
-            path="/faq"
-            element={
-              <FAQ />
-            }
-          />
+          <Route path="/faq" element={<FAQ />} />
 
-          <Route
-            path="/contact"
-            element={
-              <Contatti />
-            }
-          />
+          <Route path="/contact" element={<Contatti />} />
 
           <Route
             path="/pet"
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                <Pet />
+                <Pet/>
               </ProtectedRoute>
             }
           />
@@ -58,12 +45,15 @@ function App() {
           <Route
             path="/pazienti"
             element={
-                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
-                  <ListaPazienti />
-                </ProtectedRoute>
-              }
-            />
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                <ListaPazienti />
+              </ProtectedRoute>
+            }
+          />
 
+          <Route path="/TestRecensione" element={<TestRecensione />} />
+
+          <Route path="/TestNota" element={<TestNota />} />
 
           <Route
             path="/registerpet"
@@ -73,8 +63,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/ElencoVet" element={<ElencoVet />} />
 
+          <Route path="/ElencoVet" element={<ElencoVet />} />
 
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />

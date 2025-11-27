@@ -74,8 +74,8 @@ function Contatti() {
                             link="/faq"
 
                             text2="Sei una clinica o un veterinario?"
-                            buttonText2="Premi per registrati"
-                            link2="/registrati"
+                            buttonText2="Premi per collaborare "
+                            link2="https://github.com/Progetto-SafePet"
                         ></DoubleBanner>
 
                         <Carousel cardsData={promoData} />

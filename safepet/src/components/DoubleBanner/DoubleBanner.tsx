@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react'
 import './DoubleBanner.scss'
-import { Link } from 'react-router-dom';
 import "../Banner/Banner.scss"
 
 type BannerProps = {
@@ -15,20 +13,25 @@ type BannerProps = {
 
 function DoubleBanner({ text, buttonText, link, text2, buttonText2, link2 }: BannerProps) {
 
-  
+  const handleClick = (url: string) => () => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <>
-        <div className='horiziontal-align'>
-          <div className="banner-container">
-              <h2>{text}</h2>
-              <Link to = { link } className='button-primary'>{ buttonText }</Link>
-          </div>
-          <div className="banner-container">
-              <h2>{text2}</h2>
-              <Link to = { link2 } className='button-primary'>{ buttonText2 }</Link>
-          </div>
-        </div>
-    </>
+    <div className='horiziontal-align'>
+      <div className="banner-container">
+        <h2>{text}</h2>
+        <button onClick={handleClick(link)} className='button-primary'>
+          {buttonText}
+        </button>
+      </div>
+      <div className="banner-container">
+        <h2>{text2}</h2>
+        <button onClick={handleClick(link2)} className='button-primary'>
+          {buttonText2}
+        </button>
+      </div>
+    </div>
   );
 }
 

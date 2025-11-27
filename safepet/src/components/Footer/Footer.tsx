@@ -10,7 +10,7 @@ function Footer() {
           <h3>SafePet</h3>
           <ul>
             <li><Link to="/about">Chi siamo</Link></li>
-            <li><Link to="/register">Lavora con noi</Link></li>
+            <li><Link to="https://github.com/Progetto-SafePet">Lavora con noi</Link></li>
             <li><Link to="/contact">Contatti</Link></li>
             <li><Link to="/faq">FAQ</Link></li>
           </ul>

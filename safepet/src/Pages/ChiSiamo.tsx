@@ -1,4 +1,5 @@
 import Banner from "../components/Banner/Banner";
+import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Title from "../components/Title/Title";
 import TeamMember from "../components/TeamMember/TeamMember"
 
@@ -87,6 +88,7 @@ function ChiSiamo() {
 return (
     <>
         <div className="page-container">
+        <BannerHomepage></BannerHomepage>
             <div className="page">
                 <div className='main-container'>
                     <Title text="Chi Siamo" />
@@ -135,7 +137,7 @@ return (
                         </div>
                     </div>
                     <Banner
-                        text="Un team di professionisti dedicato alla salute e al benessere dei tuoi animali domestici"
+                        text="Un team dedicato alla salute e al benessere dei tuoi animali domestici"
                         buttonText="Scopri SafePet"
                         link="/"
                     />
