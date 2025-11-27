@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormTerapia from "../components/formTerapia/formTerapia";
+import FormTerapia from "../components/formRecordMedico/formTerapia";
 
 const TestTerapia: React.FC = () => {
     const [showForm, setShowForm] = useState(false);
