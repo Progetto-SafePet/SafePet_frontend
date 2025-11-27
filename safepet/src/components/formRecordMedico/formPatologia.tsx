@@ -1,31 +1,33 @@
 import { useState } from "react";
-import "./formPatologia.scss";
+import { useParams } from "react-router-dom";
+import "../formRecordMedico/form.scss";
 
-type Props = {
-    petId: number;
-    onSuccess?: (data: any) => void;
-    onClose?: () => void;
-};
-
-// Funzione helper per ottenere la data odierna formattata come "YYYY-MM-DD"
+// Funzione helper per ottenere la data odierna formattata "YYYY-MM-DD"
 const getOggiFormatted = () => {
     const data = new Date();
-    // Normalizziamo a mezzanotte
     data.setHours(0, 0, 0, 0);
 
     const anno = data.getFullYear();
-    const mese = String(data.getMonth() + 1).padStart(2, '0'); // Mese + 1 (0=Gennaio)
-    const giorno = String(data.getDate()).padStart(2, '0');
+    const mese = String(data.getMonth() + 1).padStart(2, "0");
+    const giorno = String(data.getDate()).padStart(2, "0");
 
-    return `${anno}-${mese}-${giorno}`; // Esempio: "2025-11-27"
+    return `${anno}-${mese}-${giorno}`;
 };
 
-const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
+const FormPatologia: React.FC = () => {
+
+    // ⬇️ Prende l'id del Pet direttamente dall'URL /patologia/:id
+    const { id } = useParams();
+    const petId = Number(id);
+
+    console.log("PET ID:", petId); // Debug
+
     const [nome, setNome] = useState("");
     const [dataDiDiagnosi, setDataDiDiagnosi] = useState("");
     const [sintomi, setSintomi] = useState("");
     const [diagnosi, setDiagnosi] = useState("");
     const [terapia, setTerapia] = useState("");
+
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [serverError, setServerError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
@@ -35,33 +37,29 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
 
-        // --- Nome ---
+        // Nome
         if (!nome.trim()) newErrors.nome = "Il nome è obbligatorio";
         else if (nome.length < 3 || nome.length > 20) newErrors.nome = "Nome 3-20 caratteri";
 
-        // --- Sintomi ---
+        // Sintomi
         if (!sintomi.trim()) newErrors.sintomi = "I sintomi sono obbligatori";
         else if (sintomi.length > 200) newErrors.sintomi = "Max 200 caratteri";
 
-        // --- Diagnosi ---
+        // Diagnosi
         if (!diagnosi.trim()) newErrors.diagnosi = "La diagnosi è obbligatoria";
         else if (diagnosi.length > 200) newErrors.diagnosi = "Max 200 caratteri";
 
-        // --- Terapia ---
+        // Terapia
         if (!terapia.trim()) newErrors.terapia = "La terapia è obbligatoria";
         else if (terapia.length > 200) newErrors.terapia = "Max 200 caratteri";
 
-
-        // -----------------------------------------------------
-        // VALIDAZIONE DATA DI DIAGNOSI
-        // -----------------------------------------------------
+        // Data diagnosi
         if (!dataDiDiagnosi) {
             newErrors.dataDiDiagnosi = "La data della diagnosi è obbligatoria";
         } else {
             const diagnosiDate = new Date(dataDiDiagnosi);
             const oggi = new Date();
 
-            // Normalizziamo: azzeriamo ore/minuti per evitare sfasamenti
             diagnosiDate.setHours(0, 0, 0, 0);
             oggi.setHours(0, 0, 0, 0);
 
@@ -69,7 +67,6 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 newErrors.dataDiDiagnosi = "La data della diagnosi non può essere nel futuro";
             }
         }
-
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -91,14 +88,17 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         };
 
         try {
-            const res = await fetch(`http://localhost:8080/gestioneCartellaClinica/aggiungiPatologia/${petId}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {})
-                },
-                body: JSON.stringify(requestBody)
-            });
+            const res = await fetch(
+                `http://localhost:8080/gestioneCartellaClinica/aggiungiPatologia/${petId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {})
+                    },
+                    body: JSON.stringify(requestBody)
+                }
+            );
 
             if (!res.ok) {
                 const text = await res.text();
@@ -107,17 +107,15 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 return;
             }
 
-            const data = await res.json();
-            onSuccess?.(data);
-
-            // Reset
+            // Reset campi
             setNome("");
             setDataDiDiagnosi("");
             setSintomi("");
             setDiagnosi("");
             setTerapia("");
 
-            onClose?.();
+            alert("Patologia registrata con successo!");
+
         } catch (err: any) {
             const errorMessage = err instanceof Error ? err.message : "Errore di rete";
             setServerError(errorMessage);
@@ -127,18 +125,15 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     };
 
     return (
-        <div className="aggiunta-Patologia">
+        <div className="form-RecordMedico">
             <div className="modal-overlay">
                 <div className="modal-box">
                     <h2>Registra nuova patologia</h2>
+
                     <form onSubmit={handleSubmit}>
+
                         <div className="user-box">
-                            <input
-                                type="text"
-                                value={nome}
-                                onChange={e => setNome(e.target.value)}
-                                placeholder=" "
-                            />
+                            <input type="text" value={nome} onChange={e => setNome(e.target.value)} placeholder=" " />
                             <label>Nome</label>
                             {errors.nome && <div className="msg-error">{errors.nome}</div>}
                         </div>
@@ -147,7 +142,6 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             <input
                                 type="date"
                                 value={dataDiDiagnosi}
-                                // Imposta il valore massimo sul picker della data per impedire la selezione futura
                                 max={getOggiFormatted()}
                                 onChange={e => setDataDiDiagnosi(e.target.value)}
                                 placeholder=" "
@@ -157,50 +151,31 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         </div>
 
                         <div className="user-box">
-                            <textarea
-                                value={sintomi}
-                                onChange={e => setSintomi(e.target.value)}
-                                placeholder=" "
-                            />
+                            <textarea value={sintomi} onChange={e => setSintomi(e.target.value)} placeholder=" " />
                             <label>Sintomi osservati</label>
                             {errors.sintomi && <div className="msg-error">{errors.sintomi}</div>}
                         </div>
 
                         <div className="user-box">
-                            <textarea
-                                value={diagnosi}
-                                onChange={e => setDiagnosi(e.target.value)}
-                                placeholder=" "
-                            />
+                            <textarea value={diagnosi} onChange={e => setDiagnosi(e.target.value)} placeholder=" " />
                             <label>Diagnosi</label>
                             {errors.diagnosi && <div className="msg-error">{errors.diagnosi}</div>}
                         </div>
 
                         <div className="user-box">
-                            <input
-                                type="text"
-                                value={terapia}
-                                onChange={e => setTerapia(e.target.value)}
-                                placeholder=" "
-                            />
+                            <input type="text" value={terapia} onChange={e => setTerapia(e.target.value)} placeholder=" " />
                             <label>Terapia associata</label>
                             {errors.terapia && <div className="msg-error">{errors.terapia}</div>}
                         </div>
 
-                        {serverError && (
-                            <div className="user-box">
-                                <div className="msg-error">
-                                    {serverError}
-                                </div>
-                            </div>
-                        )}
+                        {serverError && <div className="msg-error">{serverError}</div>}
 
                         <div className="side-boxes-login">
                             <button type="submit" className="button-primary-Patologia" disabled={submitting}>
                                 {submitting ? "Salvataggio..." : "Salva patologia"}
                             </button>
-                            <button type="button" className="button-primary-Patologia" onClick={onClose}>Chiudi</button>
                         </div>
+
                     </form>
                 </div>
             </div>

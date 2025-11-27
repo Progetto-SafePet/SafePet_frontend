@@ -1,13 +1,13 @@
 import { useState } from "react";
-import "./FormVaccinazione.scss";
+import { useParams } from "react-router-dom";
+import "../formRecordMedico/form.scss";
 
-type Props = {
-    petId: number;
-    onSuccess?: (data: unknown) => void;
-    onClose?: () => void;
-};
+const FormVaccinazione: React.FC = () => {
 
-const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
+    // ⬇️ ID del pet preso da URL /vaccinazione/:id
+    const { id } = useParams();
+    const petId = Number(id);
+
     const [nomeVaccino, setNomeVaccino] = useState("");
     const [tipologia, setTipologia] = useState("");
     const [dataDiSomministrazione, setDataDiSomministrazione] = useState("");
@@ -22,40 +22,26 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
     const TOKEN = localStorage.getItem("token");
 
-    // -----------------------------------------------------
-    // VALIDAZIONE COMPLETA
-    // -----------------------------------------------------
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
 
-        // --- Nome vaccino ---
-        if (!nomeVaccino.trim()) newErrors.nomeVaccino = "Il nome del vaccino è obbligatorio";
+        if (!nomeVaccino.trim())
+            newErrors.nomeVaccino = "Il nome del vaccino è obbligatorio";
         else if (nomeVaccino.length < 3 || nomeVaccino.length > 20)
             newErrors.nomeVaccino = "Nome vaccino 3-20 caratteri";
 
-        // --- Tipologia ---
-        if (!tipologia.trim()) newErrors.tipologia = "La tipologia è obbligatoria";
+        if (!tipologia.trim())
+            newErrors.tipologia = "La tipologia è obbligatoria";
         else if (tipologia.length < 3 || tipologia.length > 20)
             newErrors.tipologia = "Tipologia 3-20 caratteri";
 
-        // -----------------------------------------------------
-        // VALIDAZIONE DATE
-        // -----------------------------------------------------
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const somministrazioneDate = dataDiSomministrazione ? new Date(dataDiSomministrazione) : null;
-        const richiamoDate = richiamoPrevisto ? new Date(richiamoPrevisto) : null;
-
-        // Data somministrazione
-        // Validazione data di somministrazione
+        // Validazione data somministrazione
         if (!dataDiSomministrazione) {
             newErrors.dataDiSomministrazione = "La data di somministrazione è obbligatoria";
         } else {
             const somministrazione = new Date(dataDiSomministrazione);
             const oggi = new Date();
 
-            // Normalizziamo: azzeriamo ore/minuti per evitare sfasamenti
             somministrazione.setHours(0, 0, 0, 0);
             oggi.setHours(0, 0, 0, 0);
 
@@ -64,8 +50,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             }
         }
 
-
-        // Richiamo previsto — almeno 21 giorni dopo somministrazione
+        // Validazione richiamo (almeno 21 giorni dopo)
         if (!richiamoPrevisto)
             newErrors.richiamoPrevisto = "La data del richiamo è obbligatoria";
         else if (dataDiSomministrazione) {
@@ -81,12 +66,8 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             }
         }
 
-
-        // -----------------------------------------------------
-        // DOSE
-        // -----------------------------------------------------
-        if (!doseSomministrata)
-            newErrors.doseSomministrata = "La dose è obbligatoria";
+        // Dose
+        if (!doseSomministrata) newErrors.doseSomministrata = "La dose è obbligatoria";
         else {
             const dose = Number(doseSomministrata);
 
@@ -98,12 +79,9 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 newErrors.doseSomministrata = "Dose compresa tra 0.1 e 10 ml";
         }
 
-
-        // Via somministrazione
         if (!viaDiSomministrazione)
             newErrors.viaDiSomministrazione = "La via di somministrazione è obbligatoria";
 
-        // Effetti collaterali
         if (effettiCollaterali.length > 200)
             newErrors.effettiCollaterali = "Max 200 caratteri";
 
@@ -111,9 +89,6 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    // -----------------------------------------------------
-    // SUBMIT
-    // -----------------------------------------------------
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validate()) return;
@@ -151,8 +126,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 return;
             }
 
-            const data = await res.json();
-            onSuccess?.(data);
+            alert("Vaccinazione registrata con successo!");
 
             // Reset
             setNomeVaccino("");
@@ -163,7 +137,6 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             setEffettiCollaterali("");
             setRichiamoPrevisto("");
 
-            onClose?.();
         } catch (err: unknown) {
             const errorMessage = err instanceof Error ? err.message : "Errore di rete";
             setServerError(errorMessage);
@@ -172,11 +145,8 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         }
     };
 
-    // -----------------------------------------------------
-    // RENDER
-    // -----------------------------------------------------
     return (
-        <div className="aggiunta-vaccinazione">
+        <div className="form-RecordMedico">
             <div className="modal-overlay">
                 <div className="modal-box">
                     <h2>Registra nuova vaccinazione</h2>
@@ -186,7 +156,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* NOME VACCINO */}
                         <div className="user-box">
                             <input type="text" value={nomeVaccino}
-                                onChange={e => setNomeVaccino(e.target.value)} placeholder=" " />
+                                   onChange={e => setNomeVaccino(e.target.value)} placeholder=" " />
                             <label>Nome vaccino</label>
                             {errors.nomeVaccino && <div className="msg-error">{errors.nomeVaccino}</div>}
                         </div>
@@ -194,7 +164,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* TIPOLOGIA */}
                         <div className="user-box">
                             <input type="text" value={tipologia}
-                                onChange={e => setTipologia(e.target.value)} placeholder=" " />
+                                   onChange={e => setTipologia(e.target.value)} placeholder=" " />
                             <label>Tipologia</label>
                             {errors.tipologia && <div className="msg-error">{errors.tipologia}</div>}
                         </div>
@@ -202,7 +172,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* DATA SOMMINISTRAZIONE */}
                         <div className="user-box">
                             <input type="date" value={dataDiSomministrazione}
-                                onChange={e => setDataDiSomministrazione(e.target.value)} placeholder=" " />
+                                   onChange={e => setDataDiSomministrazione(e.target.value)} placeholder=" " />
                             <label>Data di somministrazione</label>
                             {errors.dataDiSomministrazione && (
                                 <div className="msg-error">{errors.dataDiSomministrazione}</div>
@@ -212,7 +182,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* DOSE */}
                         <div className="user-box">
                             <input type="number" step="0.1" value={doseSomministrata}
-                                onChange={e => setDoseSomministrata(e.target.value)} placeholder=" " />
+                                   onChange={e => setDoseSomministrata(e.target.value)} placeholder=" " />
                             <label>Dose somministrata (ml)</label>
                             {errors.doseSomministrata && (
                                 <div className="msg-error">{errors.doseSomministrata}</div>
@@ -239,7 +209,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* EFFETTI COLLATERALI */}
                         <div className="user-box">
                             <textarea value={effettiCollaterali}
-                                    onChange={e => setEffettiCollaterali(e.target.value)} placeholder=" " />
+                                      onChange={e => setEffettiCollaterali(e.target.value)} placeholder=" " />
                             <label>Effetti collaterali</label>
                             {errors.effettiCollaterali && (
                                 <div className="msg-error">{errors.effettiCollaterali}</div>
@@ -249,7 +219,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         {/* RICHIAMO */}
                         <div className="user-box">
                             <input type="date" value={richiamoPrevisto}
-                                onChange={e => setRichiamoPrevisto(e.target.value)} placeholder=" " />
+                                   onChange={e => setRichiamoPrevisto(e.target.value)} placeholder=" " />
                             <label>Richiamo previsto</label>
                             {errors.richiamoPrevisto && (
                                 <div className="msg-error">{errors.richiamoPrevisto}</div>
@@ -265,11 +235,8 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                         )}
 
                         <div className="side-boxes-login">
-                            <button type="submit" className="button-primary-Vaccinazione" disabled={submitting}>
+                            <button type="submit" className="button-primary" disabled={submitting}>
                                 {submitting ? "Salvataggio..." : "Salva"}
-                            </button>
-                            <button type="button" className="button-primary-Vaccinazione" onClick={onClose}>
-                                Chiudi
                             </button>
                         </div>
                     </form>

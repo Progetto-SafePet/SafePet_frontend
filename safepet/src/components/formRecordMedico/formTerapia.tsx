@@ -1,13 +1,12 @@
 import { useState } from "react";
-import "./formTerapia.scss";
+import { useParams, useNavigate } from "react-router-dom";
+import "../formRecordMedico/form.scss";
 
-type Props = {
-    petId: number;
-    onSuccess?: (data: any) => void;
-    onClose?: () => void;
-};
+const FormTerapia: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const petId = id ? Number(id) : undefined;
+    const navigate = useNavigate();
 
-const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     const [nome, setNome] = useState("");
     const [formaFarmaceutica, setFormaFarmaceutica] = useState("");
     const [dosaggio, setDosaggio] = useState("");
@@ -25,6 +24,10 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
+
+        if (!petId || isNaN(petId) || petId <= 0) {
+            newErrors.petId = "ID paziente non valido o mancante.";
+        }
 
         if (!nome.trim()) newErrors.nome = "Il nome è obbligatorio";
         else if (nome.length < 3 || nome.length > 100)
@@ -57,7 +60,13 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!validate()) return;
+
+        if (!validate()) {
+            if (errors.petId) {
+                setServerError("ID Paziente non valido. Impossibile salvare la terapia.");
+            }
+            return;
+        }
 
         setSubmitting(true);
         setServerError(null);
@@ -75,7 +84,7 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const res = await fetch(
-                `${import.meta.env.VITE_API_BASE_URL}/aggiungiTerapia/${petId}`,
+                `http://localhost:8080/gestioneCartellaClinica/aggiungiTerapia/${petId}`,
                 {
                     method: "POST",
                     headers: {
@@ -88,15 +97,19 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
             if (!res.ok) {
                 const text = await res.text();
-                setServerError(text || "Errore dal server");
+                let errorMessage = text || "Errore dal server durante il salvataggio.";
+                try {
+                    const errorJson = JSON.parse(text);
+                    errorMessage = errorJson.detail || errorJson.title || errorMessage;
+                } catch {}
+
+                setServerError(errorMessage);
                 setSubmitting(false);
                 return;
             }
 
-            const data = await res.json();
-            onSuccess?.(data);
+            alert("Terapia registrata con successo!");
 
-            // reset
             setNome("");
             setFormaFarmaceutica("");
             setDosaggio("");
@@ -105,20 +118,37 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             setDurata("");
             setFrequenza("");
             setMotivo("");
-
-            onClose?.();
         } catch (err: any) {
-            setServerError(err.message || "Errore di rete");
+            const errorMessage = err instanceof Error ? err.message : "Errore di rete";
+            setServerError(errorMessage);
         } finally {
             setSubmitting(false);
         }
     };
 
+    if (!petId || isNaN(petId) || petId <= 0) {
+        return (
+            <div className="aggiunta-Terapia">
+                <div className="modal-overlay">
+                    <div className="modal-box error-state">
+                        <h2>Errore Critico</h2>
+                        <div className="msg-error">
+                            ID Paziente non fornito o non valido. Impossibile registrare la terapia.
+                        </div>
+                        <div className="side-boxes-login">
+                            <button type="button" className="button-primary-Terapia" onClick={() => navigate(-1)}>Torna indietro</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="aggiunta-Terapia">
+        <div className="form-RecordMedico">
             <div className="modal-overlay">
                 <div className="modal-box">
-                    <h2>Aggiungi Terapia</h2>
+                    <h2>Aggiungi Terapia (Pet ID: {petId})</h2>
 
                     <form onSubmit={handleSubmit}>
 
@@ -215,12 +245,12 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             </div>
                         )}
                         <div className="side-boxes-login">
-                            <button type="submit" className="button-primary-Terapia" disabled={submitting}>
+                            <button type="submit" className="button-primary" disabled={submitting}>
                                 {submitting ? "Salvataggio..." : "Aggiungi Terapia"}
                             </button>
 
-                            <button type="button" className="button-primary-Terapia" onClick={onClose}>
-                                Chiudi
+                            <button type="button" className="button-primary" onClick={() => navigate(-1)}>
+                                Annulla
                             </button>
                         </div>
                     </form>

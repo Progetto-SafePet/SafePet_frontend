@@ -95,7 +95,7 @@
   }
 
   .cartella-tabs {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     ul {
       display: flex;
       gap: 1rem;
@@ -184,14 +184,14 @@
     }
   }
 }
+
 .tabs-and-actions {
   display: flex;
-  justify-content: space-between; /* Sposta il bottone a destra */
-  align-items: center; /* Allinea verticalmente tab e bottone */
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
-/* Stile per i bottoni "Aggiungi" */
 .cartella-clinica button {
   background-color: var(--clr-primary-20);
   color: #fff;
@@ -202,14 +202,72 @@
   font-weight: 600;
   font-size: 0.9rem;
   transition: background-color 0.2s;
-  flex-shrink: 0; /* Impedisce al bottone di restringersi */
+  flex-shrink: 0;
 }
 
 .cartella-clinica button:hover {
   background-color: var(--clr-primary-10);
 }
 
-/* Rimuovi il margine inferiore da cartella-tabs perché ora il margine è gestito da tabs-and-actions */
-.cartella-clinica .cartella-tabs {
+.note-proprietario-section {
+  margin-top: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+
+.note-proprietario-section .cartella-header {
+  background: transparent;
+  color: var(--clr-primary-20);
+  padding: 0;
+  margin-bottom: 0.5rem;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--clr-primary-20);
+  }
+}
+
+.note-proprietario-section .nota-item {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem; /* Spazio tra le note */
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--clr-primary-20);
+  }
+
+  p {
+    margin: 0.2rem 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 0.8rem 0;
+  }
+
+  small {
+    display: block;
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 0.5rem;
+  }
+}
+
+/* ⚠️ NUOVA REGOLA PER CORREGGERE LA COMPENETRAZIONE VISIVA DELL'ULTIMO ELEMENTO */
+.note-proprietario-section .nota-item:last-child {
   margin-bottom: 0;
 }

@@ -346,7 +346,7 @@ const DettagliPaziente: React.FC = () => {
                             {renderTabContent()}
                         </div>
                     </div>
-                    <div className="cartella-clinica">
+                    <div className="note-proprietario-section">
                         <div className="cartella-header">
                             <h3>Note Proprietario</h3>
                         </div>
@@ -362,7 +362,6 @@ const DettagliPaziente: React.FC = () => {
                         ) : (
                             <p>Nessuna nota presente</p>
                         )}
-
                     </div>
                 </div>
             </div>

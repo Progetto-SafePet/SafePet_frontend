@@ -12,10 +12,10 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
-import Patologia from "./components/formPatologia/formPatologia";
-import Terapia from "./components/formTerapia/formTerapia";
-import Vaccinazione from "./components/formVaccinazione/FormVaccinazione";
-import VisitaMedica from "./components/formVisitaMedica/FormVisitaMedica";
+import Patologia from "./components/formRecordMedico/formPatologia";
+import Terapia from "./components/formRecordMedico/formTerapia";
+import Vaccinazione from "./components/formRecordMedico/FormVaccinazione";
+import VisitaMedica from "./components/formRecordMedico/FormVisitaMedica";
 
 import DettagliPaziente from "./Pages/DettagliPaziente";
 
@@ -72,7 +72,7 @@ function App() {
                 }
             />
             <Route
-                path="/visita/:id"
+                path="/visitaMedica/:id"
                 element={
                     <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
                         <VisitaMedica />
