@@ -4,7 +4,7 @@ import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import Banner from "../components/Banner/Banner";
 import { useUser } from "../Contexts/UserProvider";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const StarRating = ({ rating }) => {
     const maxStars = 5;
@@ -62,11 +62,11 @@ const ElencoVet = () => {
                         <p className="no-vet">Nessun veterinario presente</p>
                     ) : (
                         Veterinari.map((vet) => (
-                            <div
+                            <Link
                                 key={vet.idVeterinario}
                                 className="veterinario-card"
-                                onClick={() => navigate(`/veterinario/${vet.idVeterinario}`)} // <-- naviga al dettaglio
-                                style={{ cursor: "pointer" }} // <-- rende la card cliccabile
+                                to={`/veterinario/${vet.idVeterinario}`}
+                                style={{ cursor: "pointer" }}
                             >
                                 <div className="veterinario-image">
                                     <img src={`../imgs/vetPlaceholder.jpg`} alt={"Foto veterinario"}/>
@@ -83,7 +83,7 @@ const ElencoVet = () => {
                                         <strong>Telefono: </strong>{vet.telefonoClinica} <br />
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))
                     )}
                     

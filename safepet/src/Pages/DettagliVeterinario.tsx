@@ -35,8 +35,8 @@ type Veterinario = {
     numeroTelefonoClinica: string;
     latitudineClinica?: number;
     longitudineClinica?: number;
-    orariClinica: OrariClinica[];
-    recensioniClinica: Recensioni[];
+    orarioDiAperturaClinica: OrariClinica[];
+    listaRecensioniVeterinario: Recensioni[];
     mediaRecensione: number;
 }
 
@@ -76,8 +76,8 @@ function DettagliVeterinario() {
 
     return (
         <div className="dettagli-card">
-            <div className="photo-container">
-                <img src="https://via.placeholder.com/100" alt="Foto Veterinario Fake" />
+            <div className="veterinario-image">
+                <img src={`../imgs/vetPlaceholder.jpg`} alt={"Foto veterinario"}/>
                 <strong>
                     {veterinario.nomeVeterinario} {veterinario.cognome}
                 </strong>
@@ -113,10 +113,7 @@ function DettagliVeterinario() {
                 </div>
                 <div className="vet-content">
                     {veterinario.latitudineClinica && veterinario.longitudineClinica ? (
-                        <MappaClinica
-                            latitudineClinica={veterinario.latitudineClinica}
-                            longitudineClinica={veterinario.longitudineClinica}
-                        />
+                        <div></div>
                     ) : (
                         <p>Posizione non disponibile</p>
                     )}
@@ -129,7 +126,7 @@ function DettagliVeterinario() {
                     <h3>Recensioni (⭐ {veterinario.mediaRecensione?.toFixed(1)})</h3>
                 </div>
                 <div className="vet-content">
-                    {veterinario.recensioniClinica?.map(r => (
+                    {veterinario.listaRecensioniVeterinario?.map(r => (
                         <p key={r.id}>
                             ⭐ {r.punteggio} - {r.descrizione}
                         </p>
