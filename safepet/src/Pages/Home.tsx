@@ -1,8 +1,8 @@
 import { useUser } from "../Contexts/UserProvider";
 import Banner from "../components/Banner/Banner";
-import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import ImageBanner from "../components/ImageBanner/ImageBanner";
+import HeroCarousel from "../components/HeroCarousel/HeroCarousel";
 import {CONSTANTS} from "../constants";
 
 function Home() {
@@ -45,17 +45,31 @@ function Home() {
             description:
                 "Trova immediatamente le cliniche veterinarie aperte più vicine a te grazie alla mappa interattiva real-time. Visualizza orari, servizi disponibili e contatti per una risposta immediata alle emergenze.",
         },
+    ];
 
+    const slides = [
+        {
+            image: "../imgs/dog-wj7msvc5kj9v6cyy.jpg",
+            title: "La Salute del Tuo Pet, Sempre con Te",
+            text: "Gestisci vaccini, terapie, visite e referti con un unico libretto sanitario digitale.",
+            cta: { label: "Scopri i servizi", href: "/features/libretto" }
+        },
+        {
+            image: "../imgs/pexels.jpeg",
+            title: "Un Ecosistema Digitale per Veterinari",
+            text: "Agenda smart, schede cliniche avanzate, integrazione con microchip e API per strutture veterinarie.",
+            cta: { label: "Per le Strutture", href: "/veterinari" }
+        }
     ];
 
 
     return (
         <>
             <div className="page-container">
-                <BannerHomepage></BannerHomepage>
+                <HeroCarousel slides={slides} />
                 <div className="page">
                     <div className='main-container'>
-                        <Carousel cardsData={promoData} />
+                        <Carousel cardsData={promoData} autoplay={false} />
                         {!usernameGlobal && (
                             <Banner
                                 text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
