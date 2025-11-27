@@ -1,9 +1,23 @@
 import { useState } from "react";
 import "./formPatologia.scss";
+
 type Props = {
     petId: number;
     onSuccess?: (data: any) => void;
     onClose?: () => void;
+};
+
+// Funzione helper per ottenere la data odierna formattata come "YYYY-MM-DD"
+const getOggiFormatted = () => {
+    const data = new Date();
+    // Normalizziamo a mezzanotte
+    data.setHours(0, 0, 0, 0);
+
+    const anno = data.getFullYear();
+    const mese = String(data.getMonth() + 1).padStart(2, '0'); // Mese + 1 (0=Gennaio)
+    const giorno = String(data.getDate()).padStart(2, '0');
+
+    return `${anno}-${mese}-${giorno}`; // Esempio: "2025-11-27"
 };
 
 const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
@@ -21,19 +35,41 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
 
+        // --- Nome ---
         if (!nome.trim()) newErrors.nome = "Il nome è obbligatorio";
         else if (nome.length < 3 || nome.length > 20) newErrors.nome = "Nome 3-20 caratteri";
 
-        if (!dataDiDiagnosi) newErrors.dataDiDiagnosi = "La data della diagnosi è obbligatoria";
-
+        // --- Sintomi ---
         if (!sintomi.trim()) newErrors.sintomi = "I sintomi sono obbligatori";
         else if (sintomi.length > 200) newErrors.sintomi = "Max 200 caratteri";
 
+        // --- Diagnosi ---
         if (!diagnosi.trim()) newErrors.diagnosi = "La diagnosi è obbligatoria";
         else if (diagnosi.length > 200) newErrors.diagnosi = "Max 200 caratteri";
 
+        // --- Terapia ---
         if (!terapia.trim()) newErrors.terapia = "La terapia è obbligatoria";
         else if (terapia.length > 200) newErrors.terapia = "Max 200 caratteri";
+
+
+        // -----------------------------------------------------
+        // VALIDAZIONE DATA DI DIAGNOSI
+        // -----------------------------------------------------
+        if (!dataDiDiagnosi) {
+            newErrors.dataDiDiagnosi = "La data della diagnosi è obbligatoria";
+        } else {
+            const diagnosiDate = new Date(dataDiDiagnosi);
+            const oggi = new Date();
+
+            // Normalizziamo: azzeriamo ore/minuti per evitare sfasamenti
+            diagnosiDate.setHours(0, 0, 0, 0);
+            oggi.setHours(0, 0, 0, 0);
+
+            if (diagnosiDate > oggi) {
+                newErrors.dataDiDiagnosi = "La data della diagnosi non può essere nel futuro";
+            }
+        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -74,6 +110,7 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
             const data = await res.json();
             onSuccess?.(data);
 
+            // Reset
             setNome("");
             setDataDiDiagnosi("");
             setSintomi("");
@@ -82,7 +119,8 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
             onClose?.();
         } catch (err: any) {
-            setServerError(err.message || "Errore di rete");
+            const errorMessage = err instanceof Error ? err.message : "Errore di rete";
+            setServerError(errorMessage);
         } finally {
             setSubmitting(false);
         }
@@ -109,6 +147,8 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             <input
                                 type="date"
                                 value={dataDiDiagnosi}
+                                // Imposta il valore massimo sul picker della data per impedire la selezione futura
+                                max={getOggiFormatted()}
                                 onChange={e => setDataDiDiagnosi(e.target.value)}
                                 placeholder=" "
                             />
