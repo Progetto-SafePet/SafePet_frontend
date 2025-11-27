@@ -15,6 +15,7 @@ import Page404 from "./Pages/Page404";
 import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
+import TestTerapia from'./Pages/TestTerapia';
 
 function App() {
 
@@ -73,6 +74,7 @@ function App() {
             />
           <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/test-terapia" element={<TestTerapia />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
