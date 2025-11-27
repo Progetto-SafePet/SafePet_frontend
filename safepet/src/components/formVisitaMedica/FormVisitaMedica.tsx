@@ -32,6 +32,13 @@ const FormVisitaMedica: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         if (!data.trim()) {
             newErrors.data = "La data della visita è obbligatoria";
+        } else {
+            const today = new Date();
+            const selectedDate = new Date(data);
+
+            if(selectedDate > today) {
+                newErrors.data = "La data della visita non può essere futura.";
+            }
         }
 
         setErrors(newErrors);
