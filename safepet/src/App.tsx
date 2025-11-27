@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import TestPatologia from "./Pages/TestPatologia";
 import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
@@ -74,6 +75,7 @@ function App() {
             />
           <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/TestPatologia" element={<TestPatologia />} />
           <Route path="/test-terapia" element={<TestTerapia />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
