@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Title from "../components/Title/Title";
 import "../css/dettagli.scss";
 
@@ -10,6 +10,16 @@ const formatDate = (dateString: string | undefined | null): string => {
     } catch (e) {
         return String(dateString);
     }
+};
+
+type Nota = {
+    idNota: number;
+    titolo: string;
+    descrizione: string;
+    idPet: number;
+    nomePet: string;
+    idProprietario: number;
+    nomeCompletoProprietario: string;
 };
 
 type VisitaMedicaResponseDTO = {
@@ -72,7 +82,7 @@ type CartellaClinica = {
     vaccinazioni: VaccinazioneResponseDTO[];
 };
 
-type Paziente = {
+type DettagliResponseDTO = {
     id: number;
     nome: string;
     specie: string;
@@ -85,15 +95,17 @@ type Paziente = {
     microchip?: string;
     sterilizzato?: boolean;
     fotoBase64?: string;
+    noteProprietario: Nota[];
 };
 
 
 const DettagliPaziente: React.FC = () => {
-    const [pet, setPet] = useState<Paziente | null>(null);
+    const [pet, setDettagli] = useState<DettagliResponseDTO | null>(null);
     const [clinicalRecord, setClinicalRecord] = useState<CartellaClinica | null>(null);
     const [loadingError, setLoadingError] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<"vaccinazioni" | "visite" | "patologie" | "terapie">("vaccinazioni");
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -114,7 +126,7 @@ const DettagliPaziente: React.FC = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setPet(data);
+                    setDettagli(data);
                 } else {
                     console.error("Errore durante il recupero del paziente. Stato:", response.status);
                 }
@@ -153,6 +165,30 @@ const DettagliPaziente: React.FC = () => {
         fetchCartellaClinica();
     }, [id]);
 
+    const handleNavigateToForm = () => {
+        if (!id) return;
+
+        let basePath = "";
+        switch (activeTab) {
+            case "vaccinazioni":
+                basePath = "/vaccinazione";
+                break;
+            case "visite":
+                basePath = "/visitaMedica";
+                break;
+            case "patologie":
+                basePath = "/patologia";
+                break;
+            case "terapie":
+                basePath = "/terapia";
+                break;
+            default:
+                return;
+        }
+
+        navigate(`${basePath}/${id}`);
+    };
+
     const renderTabContent = () => {
         if (loadingError) {
             return <div className="error-message">ERRORE DI CARICAMENTO: {loadingError}</div>;
@@ -182,7 +218,6 @@ const DettagliPaziente: React.FC = () => {
                         ) : (
                             <h4>Nessuna vaccinazione registrata</h4>
                         )}
-                        <button>Aggiungi nuova vaccinazione</button>
                     </>
                 );
             case "visite":
@@ -203,7 +238,6 @@ const DettagliPaziente: React.FC = () => {
                         ) : (
                             <h4>Nessuna visita registrata</h4>
                         )}
-                        <button>Aggiungi nuova visita</button>
                     </>
                 );
             case "patologie":
@@ -225,7 +259,6 @@ const DettagliPaziente: React.FC = () => {
                         ) : (
                             <h4>Nessuna patologia registrata</h4>
                         )}
-                        <button>Aggiungi nuova patologia</button>
                     </>
                 );
             case "terapie":
@@ -247,7 +280,6 @@ const DettagliPaziente: React.FC = () => {
                         ) : (
                             <h4>Nessuna terapia registrata</h4>
                         )}
-                        <button>Aggiungi nuova terapia</button>
                     </>
                 );
             default:
@@ -295,17 +327,42 @@ const DettagliPaziente: React.FC = () => {
                         <div className="cartella-header">
                             <h3>Cartella Clinica</h3>
                         </div>
-                        <div className="cartella-tabs">
-                            <ul>
-                                <li className={activeTab === "vaccinazioni" ? "active" : ""} onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni</li>
-                                <li className={activeTab === "visite" ? "active" : ""} onClick={() => setActiveTab("visite")}>Visite</li>
-                                <li className={activeTab === "patologie" ? "active" : ""} onClick={() => setActiveTab("patologie")}>Patologie</li>
-                                <li className={activeTab === "terapie" ? "active" : ""} onClick={() => setActiveTab("terapie")}>Terapie</li>
-                            </ul>
+
+                        <div className="tabs-and-actions">
+                            <div className="cartella-tabs">
+                                <ul>
+                                    <li className={activeTab === "vaccinazioni" ? "active" : ""} onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni</li>
+                                    <li className={activeTab === "visite" ? "active" : ""} onClick={() => setActiveTab("visite")}>Visite</li>
+                                    <li className={activeTab === "patologie" ? "active" : ""} onClick={() => setActiveTab("patologie")}>Patologie</li>
+                                    <li className={activeTab === "terapie" ? "active" : ""} onClick={() => setActiveTab("terapie")}>Terapie</li>
+                                </ul>
+                            </div>
+                            <button onClick={handleNavigateToForm}>
+                                Aggiungi nuova {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                            </button>
                         </div>
+
                         <div className="cartella-content">
                             {renderTabContent()}
                         </div>
+                    </div>
+                    <div className="cartella-clinica">
+                        <div className="cartella-header">
+                            <h3>Note Proprietario</h3>
+                        </div>
+                        {pet?.noteProprietario?.length ? (
+                            pet.noteProprietario.map((nota) => (
+                                <div key={nota.idNota} className="nota-item">
+                                    <h4>{nota.titolo}</h4>
+                                    <p>{nota.descrizione}</p>
+                                    <small>Pet: {nota.nomePet} | Autore: {nota.nomeCompletoProprietario}</small>
+                                    <hr />
+                                </div>
+                            ))
+                        ) : (
+                            <p>Nessuna nota presente</p>
+                        )}
+
                     </div>
                 </div>
             </div>

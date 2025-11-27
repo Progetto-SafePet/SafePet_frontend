@@ -184,19 +184,32 @@
     }
   }
 }
-
-.cartella-content.button {
+.tabs-and-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Sposta il bottone a destra */
+  align-items: center; /* Allinea verticalmente tab e bottone */
+  margin-bottom: 1rem;
 }
 
-button {
+/* Stile per i bottoni "Aggiungi" */
+.cartella-clinica button {
   background-color: var(--clr-primary-20);
   color: #fff;
   padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 4px;
   border: none;
-  margin-top: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+  flex-shrink: 0; /* Impedisce al bottone di restringersi */
+}
+
+.cartella-clinica button:hover {
+  background-color: var(--clr-primary-10);
+}
+
+/* Rimuovi il margine inferiore da cartella-tabs perché ora il margine è gestito da tabs-and-actions */
+.cartella-clinica .cartella-tabs {
+  margin-bottom: 0;
 }
