@@ -207,9 +207,13 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             <label>Motivo</label>
                             {errors.motivo && <div className="msg-error">{errors.motivo}</div>}
                         </div>
-
-                        {serverError && <div className="msg-error">{serverError}</div>}
-
+                        {serverError && (
+                            <div className="user-box">
+                                <div className="msg-error">
+                                    {serverError}
+                                </div>
+                            </div>
+                        )}
                         <div className="side-boxes-login">
                             <button type="submit" className="button-primary-Terapia" disabled={submitting}>
                                 {submitting ? "Salvataggio..." : "Aggiungi Terapia"}
