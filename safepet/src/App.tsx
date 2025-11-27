@@ -3,7 +3,7 @@ import './App.scss';
 import Navbar from './components/Navbar/Navbar';
 import Home from './Pages/Home';
 import Footer from './components/Footer/Footer';
-import { UserProvider } from './Contexts/UserProvider'; 
+import { UserProvider } from './Contexts/UserProvider';
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ElencoVet from './Pages/ElencoVet';
@@ -29,8 +29,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route 
-            path="/pet" 
+          <Route
+            path="/pet"
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
                 <Pet/>
@@ -89,7 +89,7 @@ function App() {
           />
           <Route path="/TestPatologia" element={<TestPatologia />} />
           <Route path="/test-terapia" element={<TestTerapia />} />
-          
+
           <Route path="/ElencoVet" element={<ElencoVet />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />

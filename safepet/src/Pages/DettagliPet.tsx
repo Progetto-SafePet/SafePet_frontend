@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Title from "../components/Title/Title";
 import FormNota from "../components/formAggiuntaNota/FormNota";
+import "../css/dettagli.scss";
 
 const formatDate = (dateString: string | undefined | null): string => {
     if (!dateString) return "-";
@@ -90,7 +91,6 @@ type Paziente = {
     fotoBase64?: string;
 };
 
-
 type Nota = {
     idNota: number;
     titolo: string;
@@ -106,8 +106,6 @@ type DettagliPetResponseDTO = {
     cartellaClinicaDTO: CartellaClinica;
     noteProprietarioDTO: Nota[];
 };
-
-
 
 const DettagliPet: React.FC = () => {
     const [dettagli, setDettagli] = useState<DettagliPetResponseDTO | null>(null);
@@ -125,7 +123,7 @@ const DettagliPet: React.FC = () => {
 
         const fetchDettagliPet = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/dettaglioPet/${id}`, {
+                const response = await fetch(`http://localhost:8080/gestionePet/dettaglioPet/${id}`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -241,25 +239,49 @@ const DettagliPet: React.FC = () => {
             {dettagli && (
                 <>
                     <Title text={`Dettagli di ${dettagli.anagraficaDTO.nome}`} />
-                    <div className="anagrafica">
+
+                    {/* Photo Container */}
+                    <div className="photo-container">
                         <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
-                        <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
-                        <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
-                        <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
-                        <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                        <strong>{dettagli.anagraficaDTO.nome}</strong>
                     </div>
 
-                    {/* Tabs per cartella clinica */}
-                    <div className="tabs">
-                        <button onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni</button>
-                        <button onClick={() => setActiveTab("visite")}>Visite</button>
-                        <button onClick={() => setActiveTab("patologie")}>Patologie</button>
-                        <button onClick={() => setActiveTab("terapie")}>Terapie</button>
-                    </div>
-                    <div className="tab-content">{renderTabContent()}</div>
+                    {/* Dettagli Card con info anagrafica */}
+                    <div className="dettagli-card">
+                        <div className="profile-section">
+                            <div className="info-section">
+                                <div className="info-block">
+                                    <h3>Informazioni Generali</h3>
+                                    <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
+                                    <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
+                                    <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
+                                    <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="note-proprietario">
-                        <h3>Note del Proprietario</h3>
+                    {/* Cartella Clinica */}
+                    <div className="cartella-clinica">
+                        <div className="cartella-header">
+                            <h3>Cartella Clinica</h3>
+                        </div>
+                        <div className="tabs-and-actions">
+                            <div className="cartella-tabs">
+                                <ul>
+                                    <li className={activeTab === "vaccinazioni" ? "active" : ""} onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni</li>
+                                    <li className={activeTab === "visite" ? "active" : ""} onClick={() => setActiveTab("visite")}>Visite</li>
+                                    <li className={activeTab === "patologie" ? "active" : ""} onClick={() => setActiveTab("patologie")}>Patologie</li>
+                                    <li className={activeTab === "terapie" ? "active" : ""} onClick={() => setActiveTab("terapie")}>Terapie</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="cartella-content">{renderTabContent()}</div>
+                    </div>
+
+                    <div className="note-proprietario-section">
+                        <div className="cartella-header">
+                            <h3>Note Proprietario</h3>
+                        </div>
                         {dettagli?.noteProprietarioDTO?.length ? (
                             dettagli.noteProprietarioDTO.map((nota) => (
                                 <div key={nota.idNota} className="nota-item">
@@ -293,6 +315,7 @@ const DettagliPet: React.FC = () => {
                                 onClose={() => setShowModal(false)}
                             />
                         )}
+                    </div>
                     </div>
                 </>
             )}
