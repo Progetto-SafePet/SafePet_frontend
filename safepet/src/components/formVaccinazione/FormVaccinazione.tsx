@@ -256,7 +256,13 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             )}
                         </div>
 
-                        {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && (
+                            <div className="user-box">
+                                <div className="msg-error">
+                                    {serverError}
+                                </div>
+                            </div>
+                        )}
 
                         <div className="side-boxes-login">
                             <button type="submit" className="button-primary-Vaccinazione" disabled={submitting}>

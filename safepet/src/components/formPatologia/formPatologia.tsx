@@ -147,7 +147,13 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                             {errors.terapia && <div className="msg-error">{errors.terapia}</div>}
                         </div>
 
-                        {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && (
+                            <div className="user-box">
+                                <div className="msg-error">
+                                    {serverError}
+                                </div>
+                            </div>
+                        )}
 
                         <div className="side-boxes-login">
                             <button type="submit" className="button-primary-Patologia" disabled={submitting}>
