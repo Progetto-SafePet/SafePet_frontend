@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./YourPets.scss";
 import Title from "../Title/Title";
 
@@ -42,7 +43,14 @@ const YourPets = () => {
           <p className="no-pets">Nessun animale registrato.</p>
         ) : (
           pets.map((pet) => (
-            <div key={pet.id} className="pet-card">
+              <Link
+                  key={pet.id}
+                  to={`/dettaglioPet/${pet.id}`}
+                  className="pet-card"
+                  style={{ textDecoration: "none", color: "inherit" }}
+              >
+
+              <div key={pet.id} className="pet-card">
               <div className="pet-image">
                 {pet.fotoBase64 ? (
                   <img
@@ -63,6 +71,7 @@ const YourPets = () => {
                 </p>
               </div>
             </div>
+              </Link>
           ))
         )}
       </div>
