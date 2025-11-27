@@ -18,6 +18,7 @@ import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import TestTerapia from'./Pages/TestTerapia';
+import ProfiloProprietario from './Pages/ProfiloProprietario';
 
 function App() {
 
@@ -55,6 +56,15 @@ function App() {
               </ProtectedRoute>
             }
             />
+
+          <Route
+            path="/profilo-proprietario"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                <ProfiloProprietario />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
               path="/TestRecensione"
