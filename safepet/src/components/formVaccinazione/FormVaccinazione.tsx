@@ -176,96 +176,98 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
     // RENDER
     // -----------------------------------------------------
     return (
-        <div className="modal-overlay">
-            <div className="modal-box">
-                <h2>Registra nuova vaccinazione</h2>
+        <div className="aggiunta-vaccinazione">
+            <div className="modal-overlay">
+                <div className="modal-box">
+                    <h2>Registra nuova vaccinazione</h2>
 
-                <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
 
-                    {/* NOME VACCINO */}
-                    <div className="user-box">
-                        <input type="text" value={nomeVaccino}
-                               onChange={e => setNomeVaccino(e.target.value)} placeholder=" " />
-                        <label>Nome vaccino</label>
-                        {errors.nomeVaccino && <div className="msg-error">{errors.nomeVaccino}</div>}
-                    </div>
+                        {/* NOME VACCINO */}
+                        <div className="user-box">
+                            <input type="text" value={nomeVaccino}
+                                onChange={e => setNomeVaccino(e.target.value)} placeholder=" " />
+                            <label>Nome vaccino</label>
+                            {errors.nomeVaccino && <div className="msg-error">{errors.nomeVaccino}</div>}
+                        </div>
 
-                    {/* TIPOLOGIA */}
-                    <div className="user-box">
-                        <input type="text" value={tipologia}
-                               onChange={e => setTipologia(e.target.value)} placeholder=" " />
-                        <label>Tipologia</label>
-                        {errors.tipologia && <div className="msg-error">{errors.tipologia}</div>}
-                    </div>
+                        {/* TIPOLOGIA */}
+                        <div className="user-box">
+                            <input type="text" value={tipologia}
+                                onChange={e => setTipologia(e.target.value)} placeholder=" " />
+                            <label>Tipologia</label>
+                            {errors.tipologia && <div className="msg-error">{errors.tipologia}</div>}
+                        </div>
 
-                    {/* DATA SOMMINISTRAZIONE */}
-                    <div className="user-box">
-                        <input type="date" value={dataDiSomministrazione}
-                               onChange={e => setDataDiSomministrazione(e.target.value)} placeholder=" " />
-                        <label>Data di somministrazione</label>
-                        {errors.dataDiSomministrazione && (
-                            <div className="msg-error">{errors.dataDiSomministrazione}</div>
-                        )}
-                    </div>
+                        {/* DATA SOMMINISTRAZIONE */}
+                        <div className="user-box">
+                            <input type="date" value={dataDiSomministrazione}
+                                onChange={e => setDataDiSomministrazione(e.target.value)} placeholder=" " />
+                            <label>Data di somministrazione</label>
+                            {errors.dataDiSomministrazione && (
+                                <div className="msg-error">{errors.dataDiSomministrazione}</div>
+                            )}
+                        </div>
 
-                    {/* DOSE */}
-                    <div className="user-box">
-                        <input type="number" step="0.1" value={doseSomministrata}
-                               onChange={e => setDoseSomministrata(e.target.value)} placeholder=" " />
-                        <label>Dose somministrata (ml)</label>
-                        {errors.doseSomministrata && (
-                            <div className="msg-error">{errors.doseSomministrata}</div>
-                        )}
-                    </div>
+                        {/* DOSE */}
+                        <div className="user-box">
+                            <input type="number" step="0.1" value={doseSomministrata}
+                                onChange={e => setDoseSomministrata(e.target.value)} placeholder=" " />
+                            <label>Dose somministrata (ml)</label>
+                            {errors.doseSomministrata && (
+                                <div className="msg-error">{errors.doseSomministrata}</div>
+                            )}
+                        </div>
 
-                    {/* VIA */}
-                    <div className="user-box">
-                        <select value={viaDiSomministrazione}
-                                onChange={e => setViaDiSomministrazione(e.target.value)}>
-                            <option value="">Seleziona</option>
-                            <option value="SOTTOCUTANEA">Sottocutanea</option>
-                            <option value="INTRAMUSCOLARE">Intramuscolare</option>
-                            <option value="ORALE">Orale</option>
-                            <option value="INTRANASALE">Intranasale</option>
-                            <option value="TRANSDERMICA">Transdermica</option>
-                        </select>
-                        <label>Via di somministrazione</label>
-                        {errors.viaDiSomministrazione && (
-                            <div className="msg-error">{errors.viaDiSomministrazione}</div>
-                        )}
-                    </div>
+                        {/* VIA */}
+                        <div className="user-box">
+                            <select value={viaDiSomministrazione}
+                                    onChange={e => setViaDiSomministrazione(e.target.value)}>
+                                <option value="">Seleziona</option>
+                                <option value="SOTTOCUTANEA">Sottocutanea</option>
+                                <option value="INTRAMUSCOLARE">Intramuscolare</option>
+                                <option value="ORALE">Orale</option>
+                                <option value="INTRANASALE">Intranasale</option>
+                                <option value="TRANSDERMICA">Transdermica</option>
+                            </select>
+                            <label>Via di somministrazione</label>
+                            {errors.viaDiSomministrazione && (
+                                <div className="msg-error">{errors.viaDiSomministrazione}</div>
+                            )}
+                        </div>
 
-                    {/* EFFETTI COLLATERALI */}
-                    <div className="user-box">
-                        <textarea value={effettiCollaterali}
-                                  onChange={e => setEffettiCollaterali(e.target.value)} placeholder=" " />
-                        <label>Effetti collaterali</label>
-                        {errors.effettiCollaterali && (
-                            <div className="msg-error">{errors.effettiCollaterali}</div>
-                        )}
-                    </div>
+                        {/* EFFETTI COLLATERALI */}
+                        <div className="user-box">
+                            <textarea value={effettiCollaterali}
+                                    onChange={e => setEffettiCollaterali(e.target.value)} placeholder=" " />
+                            <label>Effetti collaterali</label>
+                            {errors.effettiCollaterali && (
+                                <div className="msg-error">{errors.effettiCollaterali}</div>
+                            )}
+                        </div>
 
-                    {/* RICHIAMO */}
-                    <div className="user-box">
-                        <input type="date" value={richiamoPrevisto}
-                               onChange={e => setRichiamoPrevisto(e.target.value)} placeholder=" " />
-                        <label>Richiamo previsto</label>
-                        {errors.richiamoPrevisto && (
-                            <div className="msg-error">{errors.richiamoPrevisto}</div>
-                        )}
-                    </div>
+                        {/* RICHIAMO */}
+                        <div className="user-box">
+                            <input type="date" value={richiamoPrevisto}
+                                onChange={e => setRichiamoPrevisto(e.target.value)} placeholder=" " />
+                            <label>Richiamo previsto</label>
+                            {errors.richiamoPrevisto && (
+                                <div className="msg-error">{errors.richiamoPrevisto}</div>
+                            )}
+                        </div>
 
-                    {serverError && <div className="msg-error">{serverError}</div>}
+                        {serverError && <div className="msg-error">{serverError}</div>}
 
-                    <div className="side-boxes-login">
-                        <button type="submit" className="button-primary-Vaccinazione" disabled={submitting}>
-                            {submitting ? "Salvataggio..." : "Salva"}
-                        </button>
-                        <button type="button" className="button-primary-Vaccinazione" onClick={onClose}>
-                            Chiudi
-                        </button>
-                    </div>
-                </form>
+                        <div className="side-boxes-login">
+                            <button type="submit" className="button-primary-Vaccinazione" disabled={submitting}>
+                                {submitting ? "Salvataggio..." : "Salva"}
+                            </button>
+                            <button type="button" className="button-primary-Vaccinazione" onClick={onClose}>
+                                Chiudi
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
