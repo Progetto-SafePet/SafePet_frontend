@@ -21,12 +21,16 @@ type UserProviderProps = {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [usernameGlobal, setUsernameGlobal] = useState('');
   const [role, setRole] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false); 
 
   useEffect(() => {
     const savedUsername = localStorage.getItem('authUsername');
     const savedRole = localStorage.getItem('authRole');
+
     if (savedUsername) setUsernameGlobal(savedUsername);
     if (savedRole) setRole(savedRole);
+
+    setIsLoaded(true); 
   }, []);
 
   const updateUser = (username: string, role: string) => {
@@ -42,6 +46,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem('authUsername');
     localStorage.removeItem('authRole');
   };
+
+  if (!isLoaded) return null;
 
   return (
     <UserContext.Provider value={{ usernameGlobal, role, updateUser, logout }}>
