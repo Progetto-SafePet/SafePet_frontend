@@ -8,6 +8,7 @@ import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ElencoVet from './Pages/ElencoVet';
 import ListaPazienti from "./Pages/ListaPazienti";
+import InsertLinkingCode from "./Pages/InsertLinkingCode";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
@@ -19,6 +20,7 @@ import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import TestTerapia from'./Pages/TestTerapia';
 import DettagliPet from './Pages/DettagliPet';
+import TestTerapia from './Pages/TestTerapia';
 
 function App() {
 
@@ -33,7 +35,7 @@ function App() {
             path="/pet"
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                <Pet/>
+                <Pet />
               </ProtectedRoute>
             }
           />
@@ -42,11 +44,11 @@ function App() {
           <Route
             path="/pazienti"
             element={
-                <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
-                  <ListaPazienti />
-                </ProtectedRoute>
-              }
-            />
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                <ListaPazienti />
+              </ProtectedRoute>
+            }
+          />
 
 
             <Route
@@ -67,25 +69,43 @@ function App() {
                     </ProtectedRoute>
                 }
             />
-
           <Route
-              path="/TestRecensione"
-              element={
-                      <TestRecensione/>
-              }
+            path="/aggiuntaPaziente"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                <InsertLinkingCode />
+              </ProtectedRoute>
+            }
           />
 
-          <Route path="/TestNota" element={<TestNota/>} /> //da eliminare
+
+          <Route
+            path="/registerpet"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                <RegisterPet />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/TestRecensione"
+            element={
+              <TestRecensione />
+            }
+          />
+
+          <Route path="/TestNota" element={<TestNota />} />
 
           <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
 
           <Route
-              path="/TestVaccinazione"
-              element={
-                  // <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
-                      <TestVaccinazione />
-                  //</ProtectedRoute>
-              }
+            path="/TestVaccinazione"
+            element={
+              // <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+              <TestVaccinazione />
+              //</ProtectedRoute>
+            }
           />
           <Route path="/TestPatologia" element={<TestPatologia />} />
           <Route path="/test-terapia" element={<TestTerapia />} />
