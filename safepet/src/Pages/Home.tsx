@@ -122,14 +122,16 @@ function Home() {
                         )}
 
                         {(!usernameGlobal || role !== CONSTANTS.ROLE.VETERINARIO) && (
-                            <ImageBanner
-                            imagePath={"/imgs/use-map.jpg"}
-                            description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
-                            redirectLink={"/map"}
-                            buttonText="Vai alla mappa"
-                        />
+                            <>
+                                <ImageBanner
+                                    imagePath={"/imgs/use-map.jpg"}
+                                    description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
+                                    redirectLink={"/map"}
+                                    buttonText="Vai alla mappa"
+                                />
 
-                        <Accordion items={faqs} />
+                                <Accordion items={faqs} />
+                            </>
                         )}
                     </div>
                 </div>
