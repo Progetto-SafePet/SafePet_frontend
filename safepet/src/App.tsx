@@ -17,6 +17,11 @@ import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import DettagliPet from './Pages/DettagliPet';
 import TestTerapia from './Pages/TestTerapia';
+import TestVisitaMedica from './Pages/TestVisitaMedica';
+import TestVaccinazione from './Pages/TestVaccinazione';
+import TestPatologia from './Pages/TestPatologia';
+import FAQ from './Pages/FAQ';
+import Contatti from './Pages/Contatti';
 
 function App() {
 
@@ -26,6 +31,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+
+          <Route path="/faq" element={<FAQ />} />
+
+          <Route path="/contact" element={<Contatti />} />
 
           <Route
             path="/pet"
@@ -47,33 +56,32 @@ function App() {
           />
 
 
-            <Route
-                path="/dettaglioPet/:id"
-                element={
-                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                        <DettagliPet />
-                    </ProtectedRoute>
-                }
-            />
+          <Route
+            path="/dettaglioPet/:id"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                <DettagliPet />
+              </ProtectedRoute>
+            }
+          />
 
-            {/* NUOVA ROTTA: TEST RECENSIONE (NON PROTETTA PER IL TEST)*/}
-            <Route
-                path="/TestRecensione"
-                element={
-                        <TestRecensione/>
-                }
-            />
+          <Route
+            path="/TestRecensione"
+            element={
+              <TestRecensione />
+            }
+          />
 
-          <Route path="/TestNota" element={<TestNota/>} />
+          <Route path="/TestNota" element={<TestNota />} />
 
-            <Route
-                path="/registerpet"
-                element={
-                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
-                        <RegisterPet />
-                    </ProtectedRoute>
-                }
-            />
+          <Route
+            path="/registerpet"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                <RegisterPet />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/aggiuntaPaziente"
             element={
@@ -91,7 +99,6 @@ function App() {
                 <RegisterPet />
               </ProtectedRoute>
             }
-          />
           />
 
           <Route
