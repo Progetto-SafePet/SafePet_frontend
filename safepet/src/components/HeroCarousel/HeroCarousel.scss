@@ -50,6 +50,14 @@
         }
     }
 
+    @media (max-width: 768px) {
+         .carousel-slide {
+            .slide-content {
+                width: 100%;
+            }
+        }
+    }
+
     .nav-button {
         cursor: pointer;
         position: absolute;

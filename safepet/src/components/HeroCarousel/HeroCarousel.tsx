@@ -17,12 +17,22 @@ const HeroCarousel = ({ slides }) => {
     pauseOnHover: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    
     appendDots: dots => (
       <div className="hero-dots">
         <ul>{dots}</ul>
       </div>
     ),
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+        }
+      }
+    ],
     customPaging: i => <span className="dot"></span>
+    
   };
 
   return (
