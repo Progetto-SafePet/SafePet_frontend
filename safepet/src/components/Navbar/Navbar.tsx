@@ -32,30 +32,25 @@ function Navbar() {
   const [genereSignup, setGenereSignup] = useState('');
 
   const location = useLocation();
-  const { usernameGlobal, updateUser } = useUser();
+  const { usernameGlobal, role, updateUser } = useUser();
   const navigate = useNavigate();
 
   const menuRef = useRef(null);
 
-  const [role, setRole] = useState('');
-
-  // HAMBURGER MENU
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    setOpenDropdown(null); // chiude i dropdown quando apro/chiudo hamburger
+    setOpenDropdown(null); 
   };
 
-  // DROPDOWN OPEN/CLOSE
   const toggleDropdown = (menu: string) => {
     setOpenDropdown(openDropdown === menu ? null : menu);
   };
 
-  // CLICK OUTSIDE (desktop + mobile)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpenDropdown(null);
-        setIsMenuOpen(false); // chiude anche menu mobile
+        setIsMenuOpen(false);
       }
     };
 
@@ -97,7 +92,6 @@ function Navbar() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userRole', data.role);
-        setRole(data.role);
 
         updateUser(data.email, data.role);
         setIsVisibleLogin(false);
@@ -155,7 +149,7 @@ function Navbar() {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
-    navigate('/');
+    window.location.href = '/';
   };
 
   function validateLogin() {
@@ -260,7 +254,7 @@ function Navbar() {
               {openDropdown === 'safepet' && (
                 <div className="dropdown">
                   <Link to="/about" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Chi siamo</Link>
-                  <Link to="/careers" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
+                  <Link to="https://github.com/Progetto-SafePet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
                   <Link to="/contact" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Contatti</Link>
                   <Link to="/faq" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>FAQ</Link>
                 </div>
@@ -306,7 +300,9 @@ function Navbar() {
 
             {usernameGlobal && (
               <>
-                <Link className="button-primary" to="/profile" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
+                {role === CONSTANTS.ROLE.PROPRIETARIO && (
+                  <Link className="button-primary" to="/profilo-proprietario" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
+                )}
                 {role === CONSTANTS.ROLE.PROPRIETARIO && (
                   <Link className="button-primary" to="/pet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }} > I tuoi pet </Link>
                 )}

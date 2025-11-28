@@ -1,0 +1,39 @@
+.horiziontal-align {
+  display: flex;
+  max-width: 100%;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+
+  .banner-container {
+    flex: 1;
+    min-width: unset !important;
+    max-width: unset !important;
+    width: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h2 {
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .button-primary {
+      white-space: normal; // Cambiato da nowrap a normal
+      word-wrap: break-word; // Permette di spezzare parole lunghe
+      width: fit-content;
+      max-width: 100%; // Evita che il bottone esca dal container
+      text-align: center; // Centra il testo nel bottone
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .horiziontal-align {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
