@@ -18,6 +18,8 @@ import TestPatologia from "./Pages/TestPatologia";
 import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
+import TestTerapia from'./Pages/TestTerapia';
+import DettagliPet from './Pages/DettagliPet';
 import TestTerapia from './Pages/TestTerapia';
 
 function App() {
@@ -48,6 +50,25 @@ function App() {
             }
           />
 
+
+            <Route
+                path="/dettaglioPet/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                        <DettagliPet />
+                    </ProtectedRoute>
+                }
+            />
+
+
+            <Route
+                path="/registerpet"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                        <RegisterPet />
+                    </ProtectedRoute>
+                }
+            />
           <Route
             path="/aggiuntaPaziente"
             element={
