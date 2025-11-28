@@ -1,0 +1,311 @@
+.dettagli-card {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  width: 70%;
+  max-width: 1100px;
+  background-color: var(--clr-primary-40);
+  border: 1px solid #e5e5e5;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+  padding: 2rem;
+  margin: -2rem auto;
+}
+
+.dettagli-block {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.photo-container {
+  height: 60px;
+  width: 70%;
+  max-width: 1100px;
+  background-color: var(--clr-primary-20);
+  border: 1px solid #e5e5e5;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: left;
+  margin: 2rem auto;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  strong {
+    font-size: 2.5rem;
+    color: #fff;
+  }
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+
+  .info-section {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+
+    .info-block {
+      flex: 1;
+      max-width: 450px;
+      min-width: 270px;
+      background-color: #f0f0f0;
+      padding: 1.7rem;
+      border-radius: 8px;
+
+      h3 {
+        font-size: 1.5rem;
+        color: var(--clr-primary-20);
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        margin: 0.5rem 0;
+        font-size: 1.05rem;
+      }
+    }
+  }
+}
+
+.cartella-clinica {
+  margin-top: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: none;
+  border: 1px solid #ddd;
+
+  .cartella-header {
+    background: transparent;
+    color: var(--clr-primary-20);
+    padding: 0;
+    margin-bottom: 0.5rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--clr-primary-20);
+    }
+  }
+
+  .cartella-tabs {
+    margin-bottom: 0;
+    ul {
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 4px;
+
+        &.active {
+          background-color: var(--clr-primary-20);
+          color: #fff;
+        }
+
+        &:hover {
+          background-color: #d0d0d0;
+        }
+      }
+    }
+  }
+
+  .cartella-content {
+    max-height: 480px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    gap: 1rem;
+    padding: 0 0.5rem 0 0;
+
+    &::-webkit-scrollbar {
+      width: 9px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    .clinical-item {
+      flex: 1;
+      max-width: 100%;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      word-wrap: break-word;
+
+      h4 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        color: var(--clr-primary-20);
+      }
+
+      p {
+        margin: 0.2rem 0;
+        font-size: 0.95rem;
+        color: #555;
+      }
+
+      hr {
+        border: none;
+        border-top: 1px dashed #ccc;
+        margin: 0.8rem 0;
+      }
+
+      .veterinario-info {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 0.5rem;
+      }
+    }
+
+    h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: var(--clr-primary-20);
+    }
+  }
+
+  button {
+    background-color: var(--clr-primary-20);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+  }
+}
+
+.tabs-and-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.note-proprietario-section {
+  margin-top: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  max-height: 480px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 9px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .cartella-header {
+    background: transparent;
+    color: var(--clr-primary-20);
+    padding: 0;
+    margin-bottom: 0.8rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--clr-primary-20);
+    }
+  }
+
+  .nota-item {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+
+    h4 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: var(--clr-primary-20);
+    }
+
+    p {
+      margin: 0.2rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px dashed #ccc;
+      margin: 0.8rem 0;
+    }
+
+    small {
+      display: block;
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  button {
+    background-color: var(--clr-primary-20);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+    width: 100%;
+  }
+}
+
+.dettaglio-pet {
+  padding-top: 30px;
+}
