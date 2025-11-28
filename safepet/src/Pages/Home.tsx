@@ -58,7 +58,7 @@ function Home() {
             image: "../imgs/pexels.jpeg",
             title: "Un Ecosistema Digitale per Veterinari",
             text: "Agenda smart, schede cliniche avanzate, integrazione con microchip e API per strutture veterinarie.",
-            cta: { label: "Per le Strutture", href: "/veterinari" }
+            cta: { label: "Per le Strutture", href: "/ElencoVet" }
         }
     ];
 
