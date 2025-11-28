@@ -204,10 +204,6 @@
     font-size: 0.9rem;
     transition: background-color 0.2s;
     flex-shrink: 0;
-
-    &:hover {
-      background-color: var(--clr-primary-10);
-    }
   }
 }
 
@@ -307,9 +303,9 @@
     transition: background-color 0.2s;
     margin-top: 1rem;
     width: 100%;
-
-    &:hover {
-      background-color: var(--clr-primary-10);
-    }
   }
+}
+
+.dettaglio-pet {
+  padding-top: 30px;
 }
