@@ -260,7 +260,7 @@ function Navbar() {
               {openDropdown === 'safepet' && (
                 <div className="dropdown">
                   <Link to="/about" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Chi siamo</Link>
-                  <Link to="/careers" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
+                  <Link to="https://github.com/Progetto-SafePet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Lavora con noi</Link>
                   <Link to="/contact" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Contatti</Link>
                   <Link to="/faq" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>FAQ</Link>
                 </div>

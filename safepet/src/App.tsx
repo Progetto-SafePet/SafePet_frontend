@@ -13,9 +13,6 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
-import TestVisitaMedica from "./Pages/TestVisitaMedica";
-import TestPatologia from "./Pages/TestPatologia";
-import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import DettagliPet from './Pages/DettagliPet';
@@ -59,6 +56,15 @@ function App() {
                 }
             />
 
+            {/* NUOVA ROTTA: TEST RECENSIONE (NON PROTETTA PER IL TEST)*/}
+            <Route
+                path="/TestRecensione"
+                element={
+                        <TestRecensione/>
+                }
+            />
+
+          <Route path="/TestNota" element={<TestNota/>} />
 
             <Route
                 path="/registerpet"
@@ -85,6 +91,7 @@ function App() {
                 <RegisterPet />
               </ProtectedRoute>
             }
+          />
           />
 
           <Route
