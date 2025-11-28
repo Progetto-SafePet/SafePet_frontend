@@ -39,7 +39,7 @@ function Home() {
         {
             question: "SafePet invia promemoria per vaccini e trattamenti?",
             answer:
-                "Sì. Il sistema genera notifiche automatiche per richiami vaccinali, visite programmate, terapie in corso e scadenze importanti. Il proprietario può ricevere alert via app, email o dashboard."
+                "Sì. Il sistema genera notifiche automatiche per richiami vaccinali, visite programmate, terapie in corso e scadenze importanti. Il proprietario può ricevere console.log via app, email o dashboard."
         }
     ];
 

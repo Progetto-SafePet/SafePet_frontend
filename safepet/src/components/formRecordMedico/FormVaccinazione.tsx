@@ -164,7 +164,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         } finally {
             setSubmitting(false);
         }
-        alert("Vaccinazione registrata con successo!");
+        console.log("Vaccinazione registrata con successo!");
     };
 
     // FORM

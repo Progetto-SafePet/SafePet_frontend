@@ -3,6 +3,7 @@ import "../css/ListaPazienti.css";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import ImageBanner from "../components/ImageBanner/ImageBanner";
+import { Link } from "react-router-dom";
 
 type Paziente = {
     nome: string;
@@ -144,42 +145,35 @@ const ListaPazienti = () => {
                 <div className='main-container'></div>
                 <div className="pazienti-container">
                     <h1 className="title">I tuoi pazienti</h1>
-
                     <div className="pazienti-list">
-                        {pazienti.map((p, index) => (
-                            <div key={index} className="paziente-card">
+                        {pazienti.map((p) => (
+                            <Link key={p.id} to={`/DettagliPaziente/${p.id}`}>
+                                <div className="paziente-card">
+                                    {p.fotoBase64 ? (
+                                        <img
+                                            className="paziente-foto"
+                                            src={`data:image/jpeg;base64,${p.fotoBase64}`}
+                                            alt={p.nome}
+                                        />
+                                    ) : (
+                                        <img
+                                            className="paziente-foto"
+                                            src="https://via.placeholder.com/120"
+                                            alt="placeholder"
+                                        />
+                                    )}
 
-                                {p.fotoBase64 ? (
-                                    <img
-                                        className="paziente-foto"
-                                        src={`data:image/jpeg;base64,${p.fotoBase64}`}
-                                        alt={p.nome}
-                                    />
-                                ) : (
-                                    <img
-                                        className="paziente-foto"
-                                        src="https://via.placeholder.com/120"
-                                        alt="placeholder"
-                                    />
-                                )}
+                                    <h2>{p.nome}</h2>
 
-                                <h2>{p.nome}</h2>
-
-                                <p><strong>Specie:</strong> {p.specie}</p>
-                                <p><strong>Sesso:</strong> {p.sesso === "M" ? "Maschio" : "Femmina"}</p>
-                                <p><strong>Nascita:</strong> {formatDate(p.dataNascita)}</p>
-                                <p><strong>Proprietario:</strong> {p.proprietario}</p>
-
-                            </div>
+                                    <p><strong>Specie:</strong> {p.specie}</p>
+                                    <p><strong>Sesso:</strong> {p.sesso === "M" ? "Maschio" : "Femmina"}</p>
+                                    <p><strong>Nascita:</strong> {formatDate(p.dataNascita)}</p>
+                                    <p><strong>Proprietario:</strong> {p.proprietario}</p>
+                                </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
-                <ImageBanner
-                    imagePath={"../imgs/aggiungi-paziente.jpg"}
-                    description={"Vuoi aggiungere un pet alla tua lista di pazienti? Farlo non è mai stato così facile!"}
-                    redirectLink={"/aggiuntaPaziente"}
-                    buttonText={"Andiamo!"}
-                ></ImageBanner>
             </div>
         </div>
     );

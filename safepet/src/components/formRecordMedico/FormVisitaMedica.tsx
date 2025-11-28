@@ -115,7 +115,7 @@ const FormVisitaMedica: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 return;
             }
 
-            // Nessun alert, nessuna redirect
+            // Nessun console.log, nessuna redirect
             onSuccess?.();
             onClose?.();
 
@@ -130,7 +130,7 @@ const FormVisitaMedica: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         } finally {
             setSubmitting(false);
         }
-        alert("Visita medica registrata con successo!");
+        console.log("Visita medica registrata con successo!");
     };
 
     return (

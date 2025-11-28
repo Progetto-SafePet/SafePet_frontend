@@ -96,7 +96,7 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         } finally {
             setSubmitting(false);
         }
-        alert("Patologia registrata con successo!");
+        console.log("Patologia registrata con successo!");
     };
 
     return (

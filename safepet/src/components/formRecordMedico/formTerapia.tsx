@@ -122,7 +122,7 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
                 return;
             }
 
-            // NIENTE redirect, niente alert.
+            // NIENTE redirect, niente console.log.
             // Lascio gestire al padre (es. refresh cartella clinica + chiusura modal)
             onSuccess?.();
             onClose?.();
@@ -143,7 +143,7 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
         } finally {
             setSubmitting(false);
         }
-        alert("Terapia registrata con successo!");
+        console.log("Terapia registrata con successo!");
     };
 
     // Niente schermate separate di errore: lo gestiamo come gli altri form modali
