@@ -300,7 +300,9 @@ function Navbar() {
 
             {usernameGlobal && (
               <>
-                <Link className="button-primary" to="/profile" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
+                {role === CONSTANTS.ROLE.PROPRIETARIO && (
+                  <Link className="button-primary" to="/profilo-proprietario" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }}>Profilo</Link>
+                )}
                 {role === CONSTANTS.ROLE.PROPRIETARIO && (
                   <Link className="button-primary" to="/pet" onClick={() => { setOpenDropdown(null); setIsMenuOpen(false); }} > I tuoi pet </Link>
                 )}

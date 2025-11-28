@@ -13,6 +13,13 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import TestVisitaMedica from "./Pages/TestVisitaMedica";
+import TestPatologia from "./Pages/TestPatologia";
+import TestVaccinazione from "./Pages/TestVaccinazione";
+import TestRecensione from './Pages/TestRecensione';
+import TestNota from './Pages/TestNota';
+import TestTerapia from'./Pages/TestTerapia';
+import ProfiloProprietario from './Pages/ProfiloProprietario';
 import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
@@ -95,6 +102,19 @@ function App() {
           />
 
           <Route
+            path="/profilo-proprietario"
+            element={
+              <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                <ProfiloProprietario />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+              path="/TestRecensione"
+              element={
+                      <TestRecensione/>
+              }
             path="/DettagliPaziente/:id"
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
