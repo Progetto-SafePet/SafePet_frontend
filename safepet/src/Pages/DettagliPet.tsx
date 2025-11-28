@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Title from "../components/Title/Title";
 import FormNota from "../components/formAggiuntaNota/FormNota";
 import "../css/dettagli.scss";
 
 const formatDate = (dateString: string | undefined | null): string => {
     if (!dateString) return "-";
     try {
-        return dateString.split("T")[0];
+        const [year, month, day] = dateString.split("T")[0].split("-");
+        return `${day}/${month}/${year}`;
     } catch (e) {
         return String(dateString);
     }
@@ -165,7 +165,6 @@ const DettagliPet: React.FC = () => {
                                     <p><strong>Effetti Collaterali:</strong> {v.effettiCollaterali || 'Nessuno'}</p>
                                     <p><strong>Richiamo Previsto:</strong> {formatDate(v.richiamoPrevisto)}</p>
                                     <p className="veterinario-info">Registrato da: {v.nomeVeterinarioCompleto}</p>
-                                    <hr />
                                 </div>
                             ))
                         ) : (
@@ -184,7 +183,6 @@ const DettagliPet: React.FC = () => {
                                     <p><strong>Descrizione:</strong> {v.descrizione || 'Non disponibile'}</p>
                                     <p><strong>Referto:</strong> {v.isPresentReferto ? "Disponibile" : "Non presente"}</p>
                                     <p className="veterinario-info">Effettuata da: {v.nomeCompletoVeterinario}</p>
-                                    <hr />
                                 </div>
                             ))
                         ) : (
@@ -204,7 +202,6 @@ const DettagliPet: React.FC = () => {
                                     <p><strong>Sintomi Osservati:</strong> {p.sintomiOsservati}</p>
                                     <p><strong>Terapia Associata:</strong> {p.terapiaAssociata}</p>
                                     <p className="veterinario-info">Diagnosticata da: {p.nomeVeterinarioCompleto}</p>
-                                    <hr />
                                 </div>
                             ))
                         ) : (
@@ -223,7 +220,6 @@ const DettagliPet: React.FC = () => {
                                     <p><strong>Dosaggio/Frequenza:</strong> {t.dosaggio} ({t.frequenza})</p>
                                     <p><strong>Forma/Via:</strong> {t.formaFarmaceutica}, {t.viaDiSomministrazione}</p>
                                     <p className="veterinario-info">Prescritta da: {t.nomeVeterinarioCompleto}</p>
-                                    <hr />
                                 </div>
                             ))
                         ) : (
@@ -238,47 +234,76 @@ const DettagliPet: React.FC = () => {
         <div className="dettaglio-pet">
             {dettagli && (
                 <>
-                    <Title text={`Dettagli di ${dettagli.anagraficaDTO.nome}`} />
-
-                    {/* Photo Container */}
                     <div className="photo-container">
                         <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
                         <strong>{dettagli.anagraficaDTO.nome}</strong>
                     </div>
 
-                    {/* Dettagli Card con info anagrafica */}
+                    {/* Dettagli Card con info */}
                     <div className="dettagli-card">
-                        <div className="profile-section">
-                            <div className="info-section">
-                                <div className="info-block">
-                                    <h3>Informazioni Generali</h3>
-                                    <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
-                                    <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
-                                    <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
-                                    <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                        <div className="dettagli-block">
+                            <div className="profile-section">
+                                <div className="info-section">
+                                    <div className="info-block">
+                                        <h3>Anagrafica</h3>
+                                        <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
+                                        <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
+                                        <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
+                                        <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="profile-section">
+                                <div className="info-section">
+                                    <div className="info-block">
+                                        <h3>Dettagli</h3>
+                                        <p><b>Peso:</b> {dettagli.anagraficaDTO.peso} Kg</p>
+                                        <p><b>Colore Mantello:</b> {dettagli.anagraficaDTO.coloreMantello}</p>
+
+                                        <p>
+                                            <b>Sterilizzato:</b>
+                                            {dettagli.anagraficaDTO.sterilizzato ? (
+                                                <span style={{ color: 'green' }}> ✔ </span>
+                                            ) : (
+                                                <span style={{ color: 'red' }}> ✖ </span>
+                                            )}
+                                        </p>
+
+                                        <p><b>N. Microchip:</b> {dettagli.anagraficaDTO.microchip}</p>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                    {/* Cartella Clinica */}
-                    <div className="cartella-clinica">
-                        <div className="cartella-header">
-                            <h3>Cartella Clinica</h3>
-                        </div>
-                        <div className="tabs-and-actions">
-                            <div className="cartella-tabs">
-                                <ul>
-                                    <li className={activeTab === "vaccinazioni" ? "active" : ""} onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni</li>
-                                    <li className={activeTab === "visite" ? "active" : ""} onClick={() => setActiveTab("visite")}>Visite</li>
-                                    <li className={activeTab === "patologie" ? "active" : ""} onClick={() => setActiveTab("patologie")}>Patologie</li>
-                                    <li className={activeTab === "terapie" ? "active" : ""} onClick={() => setActiveTab("terapie")}>Terapie</li>
-                                </ul>
+                        {/* Cartella Clinica */}
+                        <div className="cartella-clinica">
+                            <div className="cartella-header">
+                                <h3>Cartella Clinica</h3>
                             </div>
+                            <div className="tabs-and-actions">
+                                <div className="cartella-tabs">
+                                    <ul>
+                                        <li className={activeTab === "vaccinazioni" ? "active" : ""}
+                                            onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni
+                                        </li>
+                                        <li className={activeTab === "visite" ? "active" : ""}
+                                            onClick={() => setActiveTab("visite")}>Visite
+                                        </li>
+                                        <li className={activeTab === "patologie" ? "active" : ""}
+                                            onClick={() => setActiveTab("patologie")}>Patologie
+                                        </li>
+                                        <li className={activeTab === "terapie" ? "active" : ""}
+                                            onClick={() => setActiveTab("terapie")}>Terapie
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="cartella-content">{renderTabContent()}</div>
                         </div>
-                        <div className="cartella-content">{renderTabContent()}</div>
-                    </div>
 
-                    <div className="note-proprietario-section">
+                        {/* Note Proprietario */}
+                        <div className="note-proprietario-section">
                         <div className="cartella-header">
                             <h3>Note Proprietario</h3>
                         </div>
@@ -288,7 +313,6 @@ const DettagliPet: React.FC = () => {
                                     <h4>{nota.titolo}</h4>
                                     <p>{nota.descrizione}</p>
                                     <small>Pet: {nota.nomePet} | Autore: {nota.nomeCompletoProprietario}</small>
-                                    <hr />
                                 </div>
                             ))
                         ) : (

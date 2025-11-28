@@ -75,7 +75,7 @@ function App() {
               }
           />
 
-          <Route path="/TestNota" element={<TestNota/>} />
+          <Route path="/TestNota" element={<TestNota/>} /> //da eliminare
 
           <Route path="/TestVisitaMedica" element={<TestVisitaMedica />} />
 
