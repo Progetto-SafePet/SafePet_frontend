@@ -199,3 +199,14 @@
 .star.filled {
   color: gold;
 }
+
+
+@media (max-width: 768px) {
+  .veterinario-container {
+    padding: 0;
+  }
+
+  .veterinario-card {
+    max-width: 90%;
+  }
+}

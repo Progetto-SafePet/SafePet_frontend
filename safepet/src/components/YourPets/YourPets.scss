@@ -67,3 +67,9 @@
     line-height: 1.5;
     flex-grow: 1;
 }
+
+@media (max-width: 768px) {
+    .pet-card {
+        width: 90%;
+    }
+}

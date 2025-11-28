@@ -309,3 +309,13 @@
 .dettaglio-pet {
   padding-top: 30px;
 }
+
+@media (max-width: 768px) {
+  .info-section {
+    flex-direction: column;
+
+    .info-block {
+      min-width: unset !important;
+    }
+  }
+}
