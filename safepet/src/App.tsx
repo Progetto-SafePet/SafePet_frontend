@@ -3,11 +3,12 @@ import './App.scss';
 import Navbar from './components/Navbar/Navbar';
 import Home from './Pages/Home';
 import Footer from './components/Footer/Footer';
-import { UserProvider } from './Contexts/UserProvider'; 
+import { UserProvider } from './Contexts/UserProvider';
 import Pet from './Pages/Pet';
 import RegisterPet from './Pages/RegisterPet';
 import ElencoVet from './Pages/ElencoVet';
 import ListaPazienti from "./Pages/ListaPazienti";
+import InsertLinkingCode from "./Pages/InsertLinkingCode";
 import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
@@ -28,8 +29,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route 
-            path="/pet" 
+          <Route
+            path="/pet"
             element={
               <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
                 <Pet/>
