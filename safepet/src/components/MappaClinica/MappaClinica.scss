@@ -1,0 +1,49 @@
+.mappa-clinica {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f0f0f0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+
+  .mappa-header {
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--clr-primary-20);
+    }
+
+    .mappa-indirizzo {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .mappa-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .mappa-leaflet {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+}
+
+/* ====================== RESPONSIVE ====================== */
+
+@media (max-width: 900px) {
+  .mappa-clinica {
+    margin-top: 2rem;
+    width: 100%;
+  }
+}
