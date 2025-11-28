@@ -17,6 +17,9 @@ import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import DettagliPet from './Pages/DettagliPet';
 import TestTerapia from './Pages/TestTerapia';
+import TestVisitaMedica from "./Pages/TestVisitaMedica";
+import TestPatologia from "./Pages/TestPatologia";
+import TestVaccinazione from "./Pages/TestVaccinazione";
 
 function App() {
 
@@ -91,7 +94,6 @@ function App() {
                 <RegisterPet />
               </ProtectedRoute>
             }
-          />
           />
 
           <Route
