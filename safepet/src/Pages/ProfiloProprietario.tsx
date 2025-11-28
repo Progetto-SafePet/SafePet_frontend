@@ -139,93 +139,96 @@ function ProfiloProprietario() {
   }
 
   return (
-    <div className="page-container">
-      <div className="page">
-        <div className="main-container">
-          <Title text={`Profilo di ${profilo.nome} ${profilo.cognome}`} />
+    <div className="profile-page">
+      <div className="page-container">
+        <div className="page">
+          <div className="main-container">
+            <Title text={`Profilo di ${profilo.nome} ${profilo.cognome}`} />
 
-          <div className="profilo-info">
-            <h2>Informazioni Personali</h2>
-            <div className="profilo-info-grid">
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Nome Completo</span>
-                <span className="profilo-info-value">{`${profilo.nome} ${profilo.cognome}`}</span>
-              </div>
+            <div className="profilo-info">
+              <h2>Informazioni Personali</h2>
+              <div className="profilo-info-grid">
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Nome Completo</span>
+                  <span className="profilo-info-value">{`${profilo.nome} ${profilo.cognome}`}</span>
+                </div>
 
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Email</span>
-                <span className="profilo-info-value">{profilo.email}</span>
-              </div>
-              
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Telefono</span>
-                <span className="profilo-info-value">{profilo.numeroTelefono}</span>
-              </div>
-              
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Data di Nascita</span>
-                <span className="profilo-info-value">{formatDate(profilo.dataNascita)}</span>
-              </div>
-              
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Genere</span>
-                <span className="profilo-info-value">
-                  {profilo.genere === "M" ? "Maschio" : "Femmina"}
-                </span>
-              </div>
-              
-              <div className="profilo-info-item">
-                <span className="profilo-info-label">Indirizzo</span>
-                <span className="profilo-info-value">{profilo.indirizzoDomicilio}</span>
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Email</span>
+                  <span className="profilo-info-value">{profilo.email}</span>
+                </div>
+                
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Telefono</span>
+                  <span className="profilo-info-value">{profilo.numeroTelefono}</span>
+                </div>
+                
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Data di Nascita</span>
+                  <span className="profilo-info-value">{formatDate(profilo.dataNascita)}</span>
+                </div>
+                
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Genere</span>
+                  <span className="profilo-info-value">
+                    {profilo.genere === "M" ? "Maschio" : "Femmina"}
+                  </span>
+                </div>
+                
+                <div className="profilo-info-item">
+                  <span className="profilo-info-label">Indirizzo</span>
+                  <span className="profilo-info-value">{profilo.indirizzoDomicilio}</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <Title text="I Miei Pet" />
+            <Title text="I Miei Pet" />
 
-          <div className="pet-container">
-            {profilo.pets.length === 0 ? (
-              <p className="no-pets">Nessun animale registrato.</p>
-            ) : (
-              profilo.pets.map((pet) => (
-                <div 
-                  key={pet.id} 
-                  className="pet-card"
-                  onClick={() => handlePetClick(pet.id)}
-                >
-                  <div className="pet-image">
-                    {pet.fotoBase64 ? (
-                      <img
-                        src={`data:image/jpeg;base64,${pet.fotoBase64}`}
-                        alt={pet.nome}
-                      />
-                    ) : (
-                      <div className="placeholder">Nessuna immagine</div>
-                    )}
-                  </div>
-
-                  <div className="pet-content">
-                    <span className="pet-tag">
-                      {pet.sesso === "M" ? "Maschio" : "Femmina"}
-                    </span>
-                    <h3 className="pet-title">{pet.nome}</h3>
-                    <p className="pet-description">
-                      <strong>Specie:</strong> {pet.specie} <br />
-                      {pet.razza && (
-                        <>
-                          <strong>Razza:</strong> {pet.razza} <br />
-                        </>
+            <div className="pet-container">
+              {profilo.pets.length === 0 ? (
+                <p className="no-pets">Nessun animale registrato.</p>
+              ) : (
+                profilo.pets.map((pet) => (
+                  <div 
+                    key={pet.id} 
+                    className="pet-card"
+                    onClick={() => handlePetClick(pet.id)}
+                  >
+                    <div className="pet-image">
+                      {pet.fotoBase64 ? (
+                        <img
+                          src={`data:image/jpeg;base64,${pet.fotoBase64}`}
+                          alt={pet.nome}
+                        />
+                      ) : (
+                        <div className="placeholder">Nessuna immagine</div>
                       )}
-                      <strong>Data Nascita:</strong> {formatDate(pet.dataNascita)}
-                    </p>
+                    </div>
+
+                    <div className="pet-content">
+                      <span className="pet-tag">
+                        {pet.sesso === "M" ? "Maschio" : "Femmina"}
+                      </span>
+                      <h3 className="pet-title">{pet.nome}</h3>
+                      <p className="pet-description">
+                        <strong>Specie:</strong> {pet.specie} <br />
+                        {pet.razza && (
+                          <>
+                            <strong>Razza:</strong> {pet.razza} <br />
+                          </>
+                        )}
+                        <strong>Data Nascita:</strong> {formatDate(pet.dataNascita)}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
     </div>
+    
   );
 }
 
