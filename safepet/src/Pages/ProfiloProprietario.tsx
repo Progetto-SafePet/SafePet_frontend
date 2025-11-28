@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ENV } from "../env";
 import Title from "../components/Title/Title";
-import "../css/ProfiloPropretario.css";
+import "../css/ProfiloPropretario.scss";
 
 interface PetInfo {
   id: number;
@@ -89,17 +89,26 @@ function ProfiloProprietario() {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("it-IT");
+    if (!dateString) return "-";
+    try {
+      const [year, month, day] = dateString.split("T")[0].split("-");
+      return `${day}/${month}/${year}`;
+    } catch (e) {
+      return new Date(dateString).toLocaleDateString("it-IT");
+    }
   };
 
-  if (loading) {
+  const handlePetClick = (petId: number) => {
+    navigate(`/dettaglioPet/${petId}`);
+  };
+
+  if (loading || !profilo) {
     return (
       <div className="page-container">
         <div className="page">
           <div className="main-container">
             <p style={{ padding: "60px 20px", textAlign: "center", color: "#666" }}>
-              Caricamento...
+              {loading ? "Caricamento..." : "Nessun dato disponibile"}
             </p>
           </div>
         </div>
@@ -112,17 +121,21 @@ function ProfiloProprietario() {
       <div className="page-container">
         <div className="page">
           <div className="main-container">
-            <p style={{ padding: "60px 20px", textAlign: "center", color: "#d32f2f" }}>
+            <div className="error-message" style={{ 
+              padding: "60px 20px", 
+              textAlign: "center", 
+              color: "#d32f2f",
+              backgroundColor: "#ffebee",
+              borderRadius: "8px",
+              margin: "20px auto",
+              maxWidth: "600px"
+            }}>
               {error}
-            </p>
+            </div>
           </div>
         </div>
       </div>
     );
-  }
-
-  if (!profilo) {
-    return null;
   }
 
   return (
@@ -133,8 +146,12 @@ function ProfiloProprietario() {
 
           <div className="profilo-info">
             <h2>Informazioni Personali</h2>
-
             <div className="profilo-info-grid">
+              <div className="profilo-info-item">
+                <span className="profilo-info-label">Nome Completo</span>
+                <span className="profilo-info-value">{`${profilo.nome} ${profilo.cognome}`}</span>
+              </div>
+
               <div className="profilo-info-item">
                 <span className="profilo-info-label">Email</span>
                 <span className="profilo-info-value">{profilo.email}</span>
@@ -174,6 +191,7 @@ function ProfiloProprietario() {
                 <div 
                   key={pet.id} 
                   className="pet-card"
+                  onClick={() => handlePetClick(pet.id)}
                 >
                   <div className="pet-image">
                     {pet.fotoBase64 ? (
@@ -193,7 +211,12 @@ function ProfiloProprietario() {
                     <h3 className="pet-title">{pet.nome}</h3>
                     <p className="pet-description">
                       <strong>Specie:</strong> {pet.specie} <br />
-                      <strong>Data Nascita:</strong> {formatDate(pet.dataNascita)} <br />
+                      {pet.razza && (
+                        <>
+                          <strong>Razza:</strong> {pet.razza} <br />
+                        </>
+                      )}
+                      <strong>Data Nascita:</strong> {formatDate(pet.dataNascita)}
                     </p>
                   </div>
                 </div>
