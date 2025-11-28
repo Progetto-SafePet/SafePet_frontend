@@ -6,6 +6,7 @@ import ImageBanner from "../components/ImageBanner/ImageBanner";
 import { Link } from "react-router-dom";
 
 type Paziente = {
+    id: number;
     nome: string;
     specie: string;
     dataNascita: string;
@@ -95,6 +96,8 @@ const ListaPazienti = () => {
 
         fetchPazienti();
     }, []);
+
+
 
 
     const formatDate = (d: string) => {
