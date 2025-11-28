@@ -97,9 +97,6 @@ const ListaPazienti = () => {
         fetchPazienti();
     }, []);
 
-
-
-
     const formatDate = (d: string) => {
         if (!d) return "-";
         return new Date(d).toLocaleDateString("it-IT");
