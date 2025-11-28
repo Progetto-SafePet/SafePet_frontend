@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../css/ListaPazienti.css";
+import "../css/ListaPazienti.scss";
 import BannerHomepage from "../components/BannerHomepage/BannerHomepage";
 import Carousel from "../components/Carousel/Carousel";
 import ImageBanner from "../components/ImageBanner/ImageBanner";

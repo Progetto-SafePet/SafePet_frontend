@@ -15,10 +15,6 @@ import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
 import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
-import TestTerapia from './Pages/TestTerapia';
-import TestVisitaMedica from "./Pages/TestVisitaMedica";
-import TestPatologia from "./Pages/TestPatologia";
-import TestVaccinazione from "./Pages/TestVaccinazione";
 import FAQ from './Pages/FAQ';
 import Contatti from './Pages/Contatti';
 
