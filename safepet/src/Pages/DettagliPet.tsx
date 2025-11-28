@@ -231,118 +231,121 @@ const DettagliPet: React.FC = () => {
     };
 
     return (
-        <div className="dettaglio-pet">
-            {dettagli && (
-                <>
-                    <div className="photo-container">
-                        <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
-                        <strong>{dettagli.anagraficaDTO.nome}</strong>
-                    </div>
+        <div className="page-container">
+            <div className="page"></div>
+                <div className="dettaglio-pet">
+                    {dettagli && (
+                        <>
+                            <div className="photo-container">
+                                <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
+                                <strong>{dettagli.anagraficaDTO.nome}</strong>
+                            </div>
 
-                    {/* Dettagli Card con info */}
-                    <div className="dettagli-card">
-                        <div className="dettagli-block">
-                            <div className="profile-section">
-                                <div className="info-section">
-                                    <div className="info-block">
-                                        <h3>Anagrafica</h3>
-                                        <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
-                                        <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
-                                        <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
-                                        <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                            {/* Dettagli Card con info */}
+                            <div className="dettagli-card">
+                                <div className="dettagli-block">
+                                    <div className="profile-section">
+                                        <div className="info-section">
+                                            <div className="info-block">
+                                                <h3>Anagrafica</h3>
+                                                <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
+                                                <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
+                                                <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
+                                                <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="profile-section">
+                                        <div className="info-section">
+                                            <div className="info-block">
+                                                <h3>Dettagli</h3>
+                                                <p><b>Peso:</b> {dettagli.anagraficaDTO.peso} Kg</p>
+                                                <p><b>Colore Mantello:</b> {dettagli.anagraficaDTO.coloreMantello}</p>
+
+                                                <p>
+                                                    <b>Sterilizzato:</b>
+                                                    {dettagli.anagraficaDTO.sterilizzato ? (
+                                                        <span style={{ color: 'green' }}> ✔ </span>
+                                                    ) : (
+                                                        <span style={{ color: 'red' }}> ✖ </span>
+                                                    )}
+                                                </p>
+
+                                                <p><b>N. Microchip:</b> {dettagli.anagraficaDTO.microchip}</p>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="profile-section">
-                                <div className="info-section">
-                                    <div className="info-block">
-                                        <h3>Dettagli</h3>
-                                        <p><b>Peso:</b> {dettagli.anagraficaDTO.peso} Kg</p>
-                                        <p><b>Colore Mantello:</b> {dettagli.anagraficaDTO.coloreMantello}</p>
 
-                                        <p>
-                                            <b>Sterilizzato:</b>
-                                            {dettagli.anagraficaDTO.sterilizzato ? (
-                                                <span style={{ color: 'green' }}> ✔ </span>
-                                            ) : (
-                                                <span style={{ color: 'red' }}> ✖ </span>
-                                            )}
-                                        </p>
-
-                                        <p><b>N. Microchip:</b> {dettagli.anagraficaDTO.microchip}</p>
-
+                                {/* Cartella Clinica */}
+                                <div className="cartella-clinica">
+                                    <div className="cartella-header">
+                                        <h3>Cartella Clinica</h3>
                                     </div>
+                                    <div className="tabs-and-actions">
+                                        <div className="cartella-tabs">
+                                            <ul>
+                                                <li className={activeTab === "vaccinazioni" ? "active" : ""}
+                                                    onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni
+                                                </li>
+                                                <li className={activeTab === "visite" ? "active" : ""}
+                                                    onClick={() => setActiveTab("visite")}>Visite
+                                                </li>
+                                                <li className={activeTab === "patologie" ? "active" : ""}
+                                                    onClick={() => setActiveTab("patologie")}>Patologie
+                                                </li>
+                                                <li className={activeTab === "terapie" ? "active" : ""}
+                                                    onClick={() => setActiveTab("terapie")}>Terapie
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="cartella-content">{renderTabContent()}</div>
                                 </div>
+
+                                {/* Note Proprietario */}
+                                <div className="note-proprietario-section">
+                                <div className="cartella-header">
+                                    <h3>Note Proprietario</h3>
+                                </div>
+                                {dettagli?.noteProprietarioDTO?.length ? (
+                                    dettagli.noteProprietarioDTO.map((nota) => (
+                                        <div key={nota.idNota} className="nota-item">
+                                            <h4>{nota.titolo}</h4>
+                                            <p>{nota.descrizione}</p>
+                                            <small>Pet: {nota.nomePet} | Autore: {nota.nomeCompletoProprietario}</small>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>Nessuna nota presente</p>
+                                )}
+
+                                {/* Pulsante per aggiungere nuova nota */}
+                                <button onClick={() => setShowModal(true)}>Aggiungi Nota</button>
+
+                                {showModal && (
+                                    <FormNota
+                                        petId={Number(id)}
+                                        onSuccess={(data) => {
+                                            console.log("Nota aggiunta:", data);
+                                            setDettagli((prev) =>
+                                                prev
+                                                    ? {
+                                                        ...prev,
+                                                        noteProprietarioDTO: [...prev.noteProprietarioDTO, data],
+                                                    }
+                                                    : prev
+                                            );
+                                        }}
+                                        onClose={() => setShowModal(false)}
+                                    />
+                                )}
                             </div>
                         </div>
-
-                        {/* Cartella Clinica */}
-                        <div className="cartella-clinica">
-                            <div className="cartella-header">
-                                <h3>Cartella Clinica</h3>
-                            </div>
-                            <div className="tabs-and-actions">
-                                <div className="cartella-tabs">
-                                    <ul>
-                                        <li className={activeTab === "vaccinazioni" ? "active" : ""}
-                                            onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni
-                                        </li>
-                                        <li className={activeTab === "visite" ? "active" : ""}
-                                            onClick={() => setActiveTab("visite")}>Visite
-                                        </li>
-                                        <li className={activeTab === "patologie" ? "active" : ""}
-                                            onClick={() => setActiveTab("patologie")}>Patologie
-                                        </li>
-                                        <li className={activeTab === "terapie" ? "active" : ""}
-                                            onClick={() => setActiveTab("terapie")}>Terapie
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="cartella-content">{renderTabContent()}</div>
-                        </div>
-
-                        {/* Note Proprietario */}
-                        <div className="note-proprietario-section">
-                        <div className="cartella-header">
-                            <h3>Note Proprietario</h3>
-                        </div>
-                        {dettagli?.noteProprietarioDTO?.length ? (
-                            dettagli.noteProprietarioDTO.map((nota) => (
-                                <div key={nota.idNota} className="nota-item">
-                                    <h4>{nota.titolo}</h4>
-                                    <p>{nota.descrizione}</p>
-                                    <small>Pet: {nota.nomePet} | Autore: {nota.nomeCompletoProprietario}</small>
-                                </div>
-                            ))
-                        ) : (
-                            <p>Nessuna nota presente</p>
-                        )}
-
-                        {/* Pulsante per aggiungere nuova nota */}
-                        <button onClick={() => setShowModal(true)}>Aggiungi Nota</button>
-
-                        {showModal && (
-                            <FormNota
-                                petId={Number(id)}
-                                onSuccess={(data) => {
-                                    console.log("Nota aggiunta:", data);
-                                    setDettagli((prev) =>
-                                        prev
-                                            ? {
-                                                ...prev,
-                                                noteProprietarioDTO: [...prev.noteProprietarioDTO, data],
-                                            }
-                                            : prev
-                                    );
-                                }}
-                                onClose={() => setShowModal(false)}
-                            />
-                        )}
-                    </div>
-                    </div>
-                </>
-            )}
+                    </>
+                )}
+            </div>
         </div>
     );
 };
