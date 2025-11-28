@@ -13,6 +13,12 @@ import ProtectedRoute from './ProtectedRoute';
 import { CONSTANTS } from './constants';
 import Unauthorized from "./Pages/Unauthorized";
 import Page404 from "./Pages/Page404";
+import Patologia from "./components/formRecordMedico/formPatologia";
+import Terapia from "./components/formRecordMedico/formTerapia";
+import Vaccinazione from "./components/formRecordMedico/FormVaccinazione";
+import VisitaMedica from "./components/formRecordMedico/FormVisitaMedica";
+
+import DettagliPaziente from "./Pages/DettagliPaziente";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
 import DettagliPet from './Pages/DettagliPet';
@@ -99,6 +105,49 @@ function App() {
                 <RegisterPet />
               </ProtectedRoute>
             }
+            />
+            <Route
+                path="/DettagliPaziente/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <DettagliPaziente />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/patologia/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <Patologia />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/visitaMedica/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <VisitaMedica />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/vaccinazione/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <Vaccinazione />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/terapia/:id"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.VETERINARIO]}>
+                        <Terapia />
+                    </ProtectedRoute>
+                }
+            />
           />
 
           <Route
