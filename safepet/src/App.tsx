@@ -18,7 +18,6 @@ import TestPatologia from "./Pages/TestPatologia";
 import TestVaccinazione from "./Pages/TestVaccinazione";
 import TestRecensione from './Pages/TestRecensione';
 import TestNota from './Pages/TestNota';
-import TestTerapia from'./Pages/TestTerapia';
 import DettagliPet from './Pages/DettagliPet';
 import TestTerapia from './Pages/TestTerapia';
 
