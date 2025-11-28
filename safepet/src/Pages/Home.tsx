@@ -4,7 +4,7 @@ import Banner from "../components/Banner/Banner";
 import Carousel from "../components/Carousel/Carousel";
 import ImageBanner from "../components/ImageBanner/ImageBanner";
 import HeroCarousel from "../components/HeroCarousel/HeroCarousel";
-import {CONSTANTS} from "../constants";
+import { CONSTANTS } from "../constants";
 
 function Home() {
 
@@ -14,32 +14,32 @@ function Home() {
         {
             question: "Come funziona il libretto sanitario digitale di SafePet?",
             answer:
-            "SafePet centralizza tutte le informazioni cliniche dell’animale: vaccini, visite, terapie, referti e microchip. Il veterinario aggiorna i dati in tempo reale e il proprietario può consultarli da qualunque dispositivo in modo sicuro."
+                "SafePet centralizza tutte le informazioni cliniche dell’animale: vaccini, visite, terapie, referti e microchip. Il veterinario aggiorna i dati in tempo reale e il proprietario può consultarli da qualunque dispositivo in modo sicuro."
         },
         {
             question: "I dati sanitari del mio animale sono davvero protetti?",
             answer:
-            "Sì. SafePet utilizza crittografia end-to-end, controlli di accesso basati sui ruoli e audit log per monitorare ogni operazione. Solo veterinari autorizzati e proprietari connessi possono visualizzare o modificare i dati."
+                "Sì. SafePet utilizza crittografia end-to-end, controlli di accesso basati sui ruoli e audit log per monitorare ogni operazione. Solo veterinari autorizzati e proprietari connessi possono visualizzare o modificare i dati."
         },
         {
             question: "I veterinari devono installare software aggiuntivi?",
             answer:
-            "No. SafePet è completamente web-based: basta accedere con le proprie credenziali. Le strutture veterinarie possono integrarlo con i loro sistemi esistenti grazie alle API e all’interfaccia semplice."
+                "No. SafePet è completamente web-based: basta accedere con le proprie credenziali. Le strutture veterinarie possono integrarlo con i loro sistemi esistenti grazie alle API e all’interfaccia semplice."
         },
         {
             question: "Come posso registrare un nuovo animale sulla piattaforma?",
             answer:
-            "Il proprietario inserisce i dati principali del pet: nome, razza, sesso, microchip, foto, peso e data di nascita. Successivamente può assegnare l’animale a un veterinario che potrà aggiornare cartella clinica e vaccini."
+                "Il proprietario inserisce i dati principali del pet: nome, razza, sesso, microchip, foto, peso e data di nascita. Successivamente può assegnare l’animale a un veterinario che potrà aggiornare cartella clinica e vaccini."
         },
         {
             question: "Posso condividere i dati del mio animale con altri veterinari o cliniche?",
             answer:
-            "Sì. SafePet permette la condivisione sicura della cartella clinica con studi veterinari diversi, utile in caso di emergenze, visite specialistiche o cambio di veterinario, mantenendo sempre l’accesso sotto controllo del proprietario."
+                "Sì. SafePet permette la condivisione sicura della cartella clinica con studi veterinari diversi, utile in caso di emergenze, visite specialistiche o cambio di veterinario, mantenendo sempre l’accesso sotto controllo del proprietario."
         },
         {
             question: "SafePet invia promemoria per vaccini e trattamenti?",
             answer:
-            "Sì. Il sistema genera notifiche automatiche per richiami vaccinali, visite programmate, terapie in corso e scadenze importanti. Il proprietario può ricevere alert via app, email o dashboard."
+                "Sì. Il sistema genera notifiche automatiche per richiami vaccinali, visite programmate, terapie in corso e scadenze importanti. Il proprietario può ricevere console.log via app, email o dashboard."
         }
     ];
 
@@ -108,10 +108,10 @@ function Home() {
                             <Banner
                                 text="Registrati a SafePet per registrare il tuo pet e scoprire tutti i vantaggi"
                                 buttonText="Registrati"
-                                link = "/signup"
+                                link="/signup"
                             >
                             </Banner>
-                         )}
+                        )}
                         {usernameGlobal && role === CONSTANTS.ROLE.VETERINARIO && (
                             <ImageBanner
                                 imagePath={"../imgs/aggiungi-paziente.jpg"}
@@ -122,17 +122,17 @@ function Home() {
                         )}
 
                         {(!usernameGlobal || role !== CONSTANTS.ROLE.VETERINARIO) && (
-                            <>
-                                <ImageBanner
-                                    imagePath={"/imgs/use-map.jpg"}
-                                    description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
-                                    redirectLink={"/map"}
-                                    buttonText="Vai alla mappa"
-                                />
+                            <ImageBanner
+                                imagePath={"/imgs/use-map.jpg"}
+                                description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
+                                redirectLink={"/map"}
+                                buttonText="Vai alla mappa"
+                            />
 
-                                <Accordion items={faqs} />
-                            </>
                         )}
+
+                        <Accordion items={faqs} />
+
                     </div>
                 </div>
 

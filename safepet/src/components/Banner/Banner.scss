@@ -19,16 +19,16 @@
     color: var(--clr-primary-10);
 
     @media (max-width: 1000px) {
-        min-width: 85%;
         height: 320px;
         font-size: 18px;
         background-size: 180px auto;
         gap: 30px;
         padding: 35px;
+        margin-inline: var(--margin);
     }
 
     @media (max-width: 768px) {
-        min-width: 90%;
+        margin-inline: var(--margin);
         height: 280px;
         flex-direction: column;
         font-size: 16px;

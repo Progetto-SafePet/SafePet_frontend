@@ -47,7 +47,7 @@ function InsertLinkingCode() {
     const submit = async () => {
         const linkingCode = values.join("").trim();
         if (linkingCode.length != 8) {
-            alert("Linking code non valido")
+            console.log("Linking code non valido")
             throw new Error("Linking code non valido: " + linkingCode);
         }
 
