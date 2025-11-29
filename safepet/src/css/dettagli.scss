@@ -361,16 +361,8 @@
     color: var(--clr-primary-10);
   }
 
-  .qr-code-box {
-    width: 50%;
-
-    img {
-      width: 100%;
-    }
-  }
-
   .linking-code {
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: 600;
     color: var(--clr-primary-20);
   }
@@ -383,6 +375,11 @@
     button {
       color: white !important;
       min-width: 150px;
+
+      @media(max-width: 468px) {
+        min-width: 100px;
+        font-size: 0.75rem;
+      }
     }
   }
 

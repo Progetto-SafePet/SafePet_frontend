@@ -393,11 +393,8 @@ const DettagliPet: React.FC = () => {
 
                                 {isVisibleLinkingCode && (
                                     <div id="linking-code-box" className={"linking-code-box"}>
-                                        <h2>Linking code - {dettagli.anagraficaDTO.nome}</h2>
-                                        <div className="qr-code-box">
-                                            <img src="../../imgs/qr-code.png" alt="" className="qr-code"/>
-                                        </div>
-                                        <p className="linking-code">{linkingCode.codice}</p>
+                                        <h4>Linking code - {dettagli.anagraficaDTO.nome}</h4>
+                                        <h2 className="linking-code">{linkingCode.codice}</h2>
                                         <div className="expiration-box">
                                             <p className="expiration-date">Scadenza: {formatDate(linkingCode.dataScadenza)}</p>
                                             {linkingCode.isScaduto && (
