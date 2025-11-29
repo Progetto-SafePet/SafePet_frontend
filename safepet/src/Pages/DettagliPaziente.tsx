@@ -268,13 +268,15 @@ const DettagliPaziente: React.FC = () => {
         <div className="page-container">
             <Title text="Dettagli paziente" />
 
-            <div className="photo-container">
-                {pet.fotoBase64 ? (
-                    <img src={`data:image/jpeg;base64,${pet.fotoBase64}`} alt="Foto" />
-                ) : (
-                    <img src="../imgs/vetPlaceholder.jpg" alt="Foto" />
-                )}
-                <strong>{pet.nome}</strong>
+            <div className="pet-header">
+                <div className="photo-container">
+                    {pet.fotoBase64 ? (
+                        <img src={`data:image/jpeg;base64,${pet.fotoBase64}`} alt="Foto" />
+                    ) : (
+                        <img src="../imgs/vetPlaceholder.jpg" alt="Foto" />
+                    )}
+                    <strong>{pet.nome}</strong>
+                </div>
             </div>
 
             <div className="dettagli-card">
