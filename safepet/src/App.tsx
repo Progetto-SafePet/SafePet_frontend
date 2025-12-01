@@ -19,6 +19,7 @@ import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
 import Contatti from './Pages/Contatti';
+import MappaRealTime from './Pages/MappaRealTime';
 
 function App() {
 
@@ -39,6 +40,8 @@ function App() {
           />
 
           <Route path="/contact" element={<Contatti />} />
+
+          <Route path="/mappaRealTime" element={<MappaRealTime />} />
 
           <Route
             path="/pet"
@@ -115,10 +118,10 @@ function App() {
           />
 
           <Route path="/ElencoVet" element={<ElencoVet />} />
-            <Route path="/veterinario/:id" element={<DettagliVeterinario />} />
+          <Route path="/veterinario/:id" element={<DettagliVeterinario />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
-          
+
           <Route
             path="/ElencoVet"
             element={<ElencoVet />}
