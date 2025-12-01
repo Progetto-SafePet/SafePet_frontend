@@ -143,13 +143,19 @@ const MappaRealTime = () => {
     };
 
     // Default center (Salerno area as shown in mockup)
-    const defaultCenter: [number, number] = [40.77452909432953, 14.789611839747426];
+    const [mapCenter, setMapCenter] = useState<[number, number]>([40.77452909432953, 14.789611839747426]);
     const defaultZoom = 16;
 
     useEffect(() => {
-        const fetchCliniche = async () => {
+        const fetchCliniche = async (lat?: number, lon?: number) => {
             try {
-                const response = await fetch("http://localhost:8080/reportCliniche/mostraMappa", {
+                if (typeof lat !== 'number' && typeof lon !== 'number') {
+                    console.error("Coordinate non valide: ", lat, lon);
+                    return;
+                }
+                const url = `http://localhost:8080/reportCliniche/mostraMappa/${lat}/${lon}`;
+
+                const response = await fetch(url, {
                     method: "GET",
                 });
 
@@ -167,7 +173,44 @@ const MappaRealTime = () => {
             }
         };
 
-        fetchCliniche();
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    if (!position || !position.coords) {
+                        console.warn('Nessuna posizione valida ricevuta');
+                        return;
+                    }
+                    const { latitude, longitude } = position.coords;
+                    console.log('Posizione trovata:', latitude, longitude);
+                    setMapCenter([latitude, longitude]);
+                    fetchCliniche(latitude, longitude);
+                },
+                (error) => {
+                    // dettagli utili per debug
+                    console.warn('Geolocation error:', error);
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            console.error('Permesso negato dall\'utente.');
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            console.error('Posizione non disponibile (nessun provider disponibile o segnale).');
+                            break;
+                        case error.TIMEOUT:
+                            console.error('Timeout nella richiesta di geolocalizzazione.');
+                            break;
+                        default:
+                            console.error('Errore sconosciuto nella geolocalizzazione.');
+                    }
+                },
+                {
+                    enableHighAccuracy: true, // prova a chiedere sensori più precisi
+                    timeout: 15000,           // 15 secondi
+                    maximumAge: 0
+                }
+            );
+        } else {
+            console.warn('Geolocation API non supportata da questo browser.');
+        }
     }, []);
 
     const handleMarkerClick = (clinicaId: number) => {
@@ -209,7 +252,7 @@ const MappaRealTime = () => {
                             <div className="error-state">{error}</div>
                         ) : (
                             <MapContainer
-                                center={defaultCenter}
+                                center={mapCenter}
                                 zoom={defaultZoom}
                                 scrollWheelZoom={true}
                                 className="map-container"
@@ -261,7 +304,7 @@ const MappaRealTime = () => {
                                     >
                                         <div className="clinic-card-header">
                                             <div className="vet-avatar">
-                                                <img src="../imgs/vetPlaceholder.jpg" alt="Veterinario"/>
+                                                <img src="../imgs/vetPlaceholder.jpg" alt="Veterinario" />
                                             </div>
                                             <div className="clinic-info">
                                                 <h3 className="clinic-name"> Clinica veterinaria {clinica.nomeClinica} </h3>
