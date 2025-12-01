@@ -33,6 +33,16 @@
   justify-content: space-between;
   margin: 2rem auto;
 
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .button-primary {
+      width: auto !important;
+    }
+  }
+
   .photo-container {
     display: flex;
     align-items: center;
