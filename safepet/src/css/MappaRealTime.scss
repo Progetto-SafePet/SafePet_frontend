@@ -1,59 +1,16 @@
 .mappa-realtime-container {
-  min-height: calc(100vh - 80px);
-  background: var(--clr-neutral-95);
-  padding-top: 2rem;
 
-  .page-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  .page {
+    text-align: unset;
   }
 
-  // Search Section
-  .search-section {
-    margin-bottom: 2rem;
-
-    .page-title {
-      font-size: 2.5rem;
-      color: var(--clr-primary-30);
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-    }
-
-    .search-controls {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-
-      .search-filters {
-        display: flex;
-        gap: 2rem;
-
-        .filter-checkbox {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          cursor: pointer;
-          font-size: 1rem;
-          color: var(--clr-neutral-30);
-
-          input[type="checkbox"] {
-            width: 1.2rem;
-            height: 1.2rem;
-            cursor: pointer;
-            accent-color: var(--clr-primary-40);
-          }
-
-          &.checked span {
-            color: var(--clr-primary-30);
-            font-weight: 600;
-          }
-        }
-      }
-    }
+  .page-title {
+    font-size: 2.5rem;
+    color: var(--clr-primary-30);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
   }
 
-  // Main Content: Map + Sidebar
   .main-content {
     display: grid;
     grid-template-columns: 1fr 450px;
@@ -62,7 +19,6 @@
     min-height: 600px;
   }
 
-  // Map Section
   .map-section {
     background: white;
     border-radius: 12px;
@@ -91,7 +47,6 @@
     }
   }
 
-  // Marker Popup
   .marker-popup {
     font-size: 0.9rem;
     line-height: 1.6;
@@ -102,7 +57,6 @@
     }
   }
 
-  // Sidebar Section
   .sidebar-section {
     background: white;
     border-radius: 12px;
@@ -156,7 +110,6 @@
     }
   }
 
-  // Clinic Card
   .clinic-card {
     background: var(--clr-neutral-98);
     border-radius: 12px;
@@ -230,7 +183,6 @@
     }
 
     .clinic-details {
-      margin-bottom: 1rem;
       font-size: 0.95rem;
       color: var(--clr-neutral-30);
 
@@ -318,6 +270,11 @@
       }
     }
 
+    .vet-name {
+      font-size: 0.9rem;
+      margin: 0.5rem 0 1rem 0;
+    }
+
     .view-profile-btn {
       display: inline-block;
       width: 100%;
@@ -342,7 +299,6 @@
     }
   }
 
-  // Responsive Design
   @media (max-width: 1200px) {
     .main-content {
       grid-template-columns: 1fr 400px;
@@ -369,31 +325,6 @@
 
     .page-content {
       padding: 0 1rem;
-    }
-
-    .search-section {
-      .page-title {
-        font-size: 2rem;
-      }
-
-      .search-controls {
-        .search-input-wrapper {
-          flex-direction: column;
-
-          .search-input {
-            max-width: 100%;
-          }
-
-          .search-button {
-            width: 100%;
-          }
-        }
-
-        .search-filters {
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-      }
     }
 
     .map-section .map-container {

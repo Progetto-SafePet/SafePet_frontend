@@ -5,7 +5,6 @@ import "leaflet/dist/leaflet.css";
 import "../css/MappaRealTime.scss";
 import { Link } from "react-router-dom";
 
-// Fix per l'icona del marker di Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
@@ -37,7 +36,6 @@ interface ClinicaMappaDTO {
 
 const StarRating = ({ rating, count }: { rating: number, count: number }) => {
     const maxStars = 5;
-
     return (
         <div className="star-rating" title={`Voto: ${rating}`}>
             {Array.from({ length: maxStars }, (_, i) => (
@@ -72,7 +70,6 @@ const MappaRealTime = () => {
     const parseTimeToMinutes = (timeStr: string): number | null => {
         if (!timeStr) return null;
         const t = timeStr.trim();
-        // accetta "HH:mm" o "HH:mm:ss"
         const m = t.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
         if (!m) return null;
         const hh = Number(m[1]);
@@ -86,30 +83,29 @@ const MappaRealTime = () => {
      * Verifica se la clinica è aperta ora.
      */
     const isClinicOpen = (orari: OrariDiAperturaDTO[]): boolean => {
-        if (!orari || orari.length === 0) return false;
+        if (!orari || orari.length === 0) {
+            return false;
+        }
 
         const now = new Date();
         const days = ['Domenica', 'Lunedi', 'Martedi', 'Mercoledi', 'Giovedi', 'Venerdi', 'Sabato'];
         const currentDay = days[now.getDay()];
         const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
-
-
-        // cerca l'orario per il giorno corrente (case-insensitive, trim)
         const todaySchedule = orari.find(o => o.giorno?.trim().toLowerCase() === currentDay.toLowerCase());
-        console.log(todaySchedule);
-        if (!todaySchedule) return false;
 
-        if (todaySchedule.aperto24h) return true;
+        if (!todaySchedule) {
+            return false;
+        }
+
+        if (todaySchedule.aperto24h) {
+            return true;
+        }
 
         const openMin = parseTimeToMinutes(todaySchedule.orarioApertura);
         const closeMin = parseTimeToMinutes(todaySchedule.orarioChiusura);
 
-        if (openMin === null || closeMin === null) return false; // input malformato -> consideriamo chiuso
-
-        if (openMin === closeMin) {
-            // possibile interpretazione: chiuso tutto il giorno oppure aperto 24h.
-            // qui assumiamo che apertura==chiusura significa CHIUSO (se non impostato aperto24h)
+        if (openMin === null || closeMin === null || openMin === closeMin) {
             return false;
         }
 
@@ -142,11 +138,17 @@ const MappaRealTime = () => {
         return `${todaySchedule.giorno} ${todaySchedule.orarioApertura} - ${todaySchedule.orarioChiusura}`;
     };
 
-    // Default center (Salerno area as shown in mockup)
-    const [mapCenter, setMapCenter] = useState<[number, number]>([40.77452909432953, 14.789611839747426]);
-    const defaultZoom = 16;
+    const [mapCenter, setMapCenter] = useState<[number, number]>();
+    const defaultZoom = 14;
 
     useEffect(() => {
+        /**
+         * Invia una richiesta asincrona al server all'indirizzo http://localhost:8080/reportCliniche/mostraMappa per
+         * prelevare i dati delle cinque cliniche (comprese le loro coordinate) più vicine alla posizione del client.
+         *
+         * @param lat Latitudine del client
+         * @param lon Longitudine del client
+         */
         const fetchCliniche = async (lat?: number, lon?: number) => {
             try {
                 if (typeof lat !== 'number' && typeof lon !== 'number') {
@@ -181,31 +183,32 @@ const MappaRealTime = () => {
                         return;
                     }
                     const { latitude, longitude } = position.coords;
-                    console.log('Posizione trovata:', latitude, longitude);
                     setMapCenter([latitude, longitude]);
                     fetchCliniche(latitude, longitude);
                 },
                 (error) => {
-                    // dettagli utili per debug
-                    console.warn('Geolocation error:', error);
+                    console.warn('Errore di geolocalizzazione:', error);
+                    let message: string;
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            console.error('Permesso negato dall\'utente.');
+                            message = "Accesso alla posizione negato dall'utente.";
                             break;
                         case error.POSITION_UNAVAILABLE:
-                            console.error('Posizione non disponibile (nessun provider disponibile o segnale).');
+                            message = 'Posizione non disponibile (nessun provider disponibile o segnale).';
                             break;
                         case error.TIMEOUT:
-                            console.error('Timeout nella richiesta di geolocalizzazione.');
+                            message = 'Timeout nella richiesta di geolocalizzazione.';
                             break;
                         default:
-                            console.error('Errore sconosciuto nella geolocalizzazione.');
+                            message = 'Errore sconosciuto nella geolocalizzazione.';
                     }
+                    console.error(message);
+                    setLoading(false);
+                    setError(message)
                 },
                 {
-                    enableHighAccuracy: true, // prova a chiedere sensori più precisi
-                    timeout: 15000,           // 15 secondi
-                    maximumAge: 0
+                    enableHighAccuracy: true,
+                    timeout: 15000
                 }
             );
         } else {
@@ -213,35 +216,35 @@ const MappaRealTime = () => {
         }
     }, []);
 
+    /**
+     * Mette in evidenza nell'elenco di cliniche la clinic-card cliccata sulla mappa
+     * @param clinicaId Id della clinica corrispondente al marker cliccato
+     */
     const handleMarkerClick = (clinicaId: number) => {
         setSelectedClinicId(clinicaId);
-        // Scroll to clinic card in sidebar
         const element = document.getElementById(`clinic-card-${clinicaId}`);
         if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     };
 
-    return (
-        <div className="mappa-realtime-container">
-            <div className="page-content">
-                {/* Search Section */}
-                <div className="search-section">
-                    <h1 className="page-title">Trova un Veterinario</h1>
-                    <div className="search-controls">
-                        <div className="search-filters">
-                            <label className="filter-checkbox">
-                                <input type="checkbox" />
-                                <span>Distanza fino a 100km</span>
-                            </label>
-                            <label className="filter-checkbox checked">
-                                <input type="checkbox" defaultChecked />
-                                <span>Aperto per emergenze</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
 
+    /**
+     * Icona verde scuro utilizzata per il Marker corrispondente alla posizione dell'utente
+     */
+    const darkGreenMarker = new L.Icon({
+        iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+        shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    return (
+        <div className="page-container mappa-realtime-container">
+            <div className="page">
+                <h1 className="page-title">Trova un Veterinario</h1>
                 {/* Main Content: Map + Sidebar */}
                 <div className="main-content">
                     {/* Map Section */}
@@ -261,11 +264,24 @@ const MappaRealTime = () => {
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
                                 />
+
+
+                                <Marker
+                                    key={0}
+                                    position={[mapCenter[0], mapCenter[1]]}
+                                    icon={darkGreenMarker}
+                                >
+                                    <Popup>
+                                        <div className="marker-popup">Ti trovi qui</div>
+                                    </Popup>
+                                </Marker>
+
                                 {cliniche.map((clinica) => (
                                     <Marker
                                         key={clinica.clinicaId}
                                         position={[clinica.latitudine, clinica.longitudine]}
                                         eventHandlers={{
+                                            // evidenza la clinica nell'elenco
                                             click: () => handleMarkerClick(clinica.clinicaId),
                                         }}
                                     >
@@ -284,7 +300,6 @@ const MappaRealTime = () => {
                         )}
                     </div>
 
-                    {/* Sidebar Section */}
                     <div className="sidebar-section">
                         <h2 className="sidebar-title">Risultati</h2>
                         <div className="clinics-list">
@@ -342,7 +357,7 @@ const MappaRealTime = () => {
                                                 </div>
                                             )}
                                         </div>
-
+                                        <p className="vet-name">Veterinario: {clinica.cognomeVeterinario} {clinica.nomeVeterinario}</p>
                                         <Link to={`/veterinario/${clinica.vetId}`} className="view-profile-btn">Vedi profilo</Link>
                                     </div>
                                 ))
