@@ -1,76 +1,38 @@
-# SafePet_backend
-La **disponibilità immediata di informazioni cliniche aggiornate** è **cruciale** per interventi tempestivi
-ed efficaci sugli animali da compagnia, specialmente in **emergenze** (incidenti, allergie, intossicazioni, calamità naturali).
-La rapidità di accesso a dati come patologie pregresse, terapie e allergie può essere **vitale**.
-Il progetto **SafePet** è una piattaforma digitale che mira a:
+# 🐾 SafePet_frontend
+## 📚 Indice
+* [Overview frontend](#overview-frontend)
+  * [Obiettivi e Componenti Principali](#Obiettivi-e-Componenti-Principali)
+  * [Funzionalità-visibili-agli-utenti](#Funzionalità-visibili-agli-utenti)
+* [Tecnologie usate](#tecnologie-usate)
+* [Avvio frontend](#Avvio-frontend)
 
-* **Digitalizzare e Centralizzare i dati:** Superare la gestione cartacea e frammentata.
-* **Garantire l'Immediata Disponibilità:** Assicurare che le informazioni cliniche essenziali siano disponibili in **ogni situazione di emergenza**.
-* **Favorire la Cooperazione:** Semplificare la **condivisione sicura** delle informazioni tra proprietari e veterinari.
-* **Potenziare la Risposta alle Emergenze:** Migliorare la capacità di risposta alle crisi veterinarie e sanitarie integrate.
-* **Promuovere una Gestione Moderna:** Sostenere una sanità veterinaria più resiliente e le politiche nazionali di prevenzione e benessere animale.
 
----
+## 💡Overview frontend
+Il Frontend di SafePet funge da **Livello di Presentazione** del sistema, essendo il punto di contatto diretto con l'utente finale (Proprietari, Veterinari e Ospiti).
+È sviluppato utilizzando **React**, integrato con **Vite.js** per garantire un'esperienza fluida e reattiva.
 
-### Partecipanti
-| Nome                 | Cognome   | Ruolo           |
-|:---------------------|:----------|:----------------|
-| Francesco Alessandro | Pinto     | Project Manager |
-| Francesco Maria      | Torino    | Project Manager |
-| Aldo                 | Adinolfi  | Team Member     |
-| Gianmarco            | Amatruda  | Team Member     |
-| Simone               | Cimmino   | Team Member     |
-| Matteo Ferdinando    | Emolo     | Team Member     |
-| Anna Chiara          | Memoli    | Team Member     |
-| Chiara               | Memoli    | Team Member     |
-| Vincenzo Giuseppe    | Nappi     | Team Member     |
-| Giuseppe             | Rossano   | Team Member     |
-| Rosario              | Saggese   | Team Member     |
-| Luca                 | Salvatore | Team Member     |
-| Morgan               | Vitiello  | Team Member     |
+### Obiettivi e Componenti Principali
+La responsabilità primaria del Frontend è gestire l'interazione tra l'utente e il sistema, assicurando chiarezza e rapidità d'uso.
+* **Interfaccia Utente (GUI):** Questi componenti sono responsabili di visualizzare i dati provenienti dal backend, raccogliere l'input dell'utente (es. tramite form) e inoltrare le richieste al livello di logica applicativa tramite chiamate alle API REST.
+* **Responsive UI:** L'interfaccia è progettata per adattarsi correttamente alle risoluzioni di diversi dispositivi, inclusi desktop, tablet e smartphone, garantendo l'accessibilità.
 
----
+### Funzionalità Visibili all'Utente
+Il Frontend visualizza e gestisce tutte le interazioni relative alle aree funzionali del sistema:
+* **Profili Utente e Pet:** Schermate per la registrazione, il login, la visualizzazione dei profili e la gestione delle liste/dettagli dei Pet.
+  * Generazione Codici: Interfacce per la generazione del **Linking Code** (codice temporaneo per l'associazione paziente)
+  * Download PDF del libretto sanitario.
+  * Permette di visualizzare l'elenco dei veterinari e i loro dettagli, e di interagire con i form per lasciare recensioni.
+* **Strumenti di Emergenza:**
+    * **Mappa Real Time:** Visualizzazione di una mappa interattiva (generata tramite **OpenStreetMap**) con un indicatore della posizione dell'utente e i marker delle cliniche veterinarie aperte nelle vicinanze, mostrando orari e recapiti di contatto.
+    * **Analisi Dermatologica:** Schermata per caricare immagini del pet, che vengono inviate al **Modulo AI** per l'analisi e la restituzione di un esito preliminare e orientativo.
 
-### Installazione ed esecuzione
+## ⚙️ Tecnologie usate
+* React: Framework open-source basato su componenti per realizzare un'interfaccia utente altamente reattiva e modulare. 
+* Vite.js (v. 5.2.0): Bundler moderno che velocizza l'ambiente di sviluppo e i tempi di build del front-end. 
+* Canva: Strumento utilizzato per la realizzazione di mockup. 
+* OpenStreetMap: Piattaforma open-source impiegata per la visualizzazione interattiva delle mappe nella funzione di localizzazione delle strutture veterinarie.
 
----
-
-### Prerequisiti
-* Node.js (22.16.0)
-* Java JDK 21.0.8
-* Apache Maven 3.9.11
-* Docker 4.51.0
-* Intellij IDEA 2025.2.5 (per il backend)
-* WebStorm IDEA 2025.2.5 (per il frontend)
-
----
-
-### Installazione Maven
-Per installare maven su sistema Windows è necessario aver già installato Java Development Kit (JDK)
-ed aver configurato la variabile d'ambiente JAVA_HOME.
-
-Dopodichè è necessario seguire i seguenti passaggi:
-1. Scaricare apache-maven-3.9.11-bin.zip dalla seguente pagina: https://maven.apache.org/download.cgi
-2. Effettuare l'unzip del file scaricato al passo uno all'interno di una qualsiasi directory (preferibilmente in Program Files)
-3. Aggiungere la directory della cartella bin (contenuta nella cartella estratta al passo 2) alla variabile d'ambiente PATH
-4. Verificare se l'installazione è andata a buon fine utilizzando il comando  mvn -v  all`interno di una nuova shell
-
----
-
-### Backend
-
-Per eseguire il backend è necessario seguire i seguenti passaggi:
-1.  **Avviare Intellij** e clonare la repository del progetto:
-    * `https://github.com/Progetto-SafePet/SafePet_backend.git`
-2.  **Aprire Docker**.
-3.  Tramite il terminale di Intellij digitare:
-    * `docker compose up -d`
-4.  Eseguire `clean` e `install` di Maven.
-5.  Runnare `BackendApplication.java`.
-
----
-
-### Frontend
+## 🎨 Avvio frontend
 
 Per eseguire il frontend è necessario seguire i seguenti passaggi:
 
@@ -84,3 +46,13 @@ Per eseguire il frontend è necessario seguire i seguenti passaggi:
     * `npm run dev`
 5.  Selezionare l'indirizzo per visualizzare l'applicazione:
     * `http://localhost:5173/`
+
+---
+
+## 🔐 Account per utilizzo
+| Email | Password       | Ruolo |
+|:---|:---------------|:---|
+| maria.rossi@example.com | `MariaR123`    | Proprietario |
+| luca.bianchi@example.com | `LucaB1992`    | Proprietario |
+| acmemoli@gmail.com | `ACMemoli.91`  | Veterinario |
+| gamatruda2@gmail.com | `GAmatruda.93` | Veterinario |
