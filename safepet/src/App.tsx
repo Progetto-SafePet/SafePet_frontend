@@ -18,6 +18,7 @@ import ProfiloProprietario from './Pages/ProfiloProprietario';
 import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
+import ChiSiamo from './Pages/ChiSiamo';
 import Contatti from './Pages/Contatti';
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
           />
 
           <Route path="/contact" element={<Contatti />} />
+
+          <Route path="/about" element={<ChiSiamo />} />
 
           <Route
             path="/pet"
