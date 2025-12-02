@@ -276,6 +276,44 @@ const DettagliPet: React.FC = () => {
         return date.toLocaleDateString("it-IT").replaceAll("/", "-");
     };
 
+    const handleDownload = async () => {
+        if (!id) return;
+
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+            const response = await fetch(
+                `http://localhost:8080/gestioneCondivisioneDati/pdf/${id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                console.error("Errore download:", response.status);
+                return;
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `LibrettoSanitario_Pet_${id}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error("Errore di rete nel download:", e);
+        }
+    };
+
     return (
         <div className="page-container">
             <div className="page"></div>
@@ -287,7 +325,10 @@ const DettagliPet: React.FC = () => {
                                 <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
                                 <strong>{dettagli.anagraficaDTO.nome}</strong>
                             </div>
-                            <button className="button-primary" onClick={toggleBox}>Linking code</button>
+                            <div className="header-actions">
+                                <button className="button-primary" onClick={toggleBox}>Linking code</button>
+                                <button className="button-primary" onClick={handleDownload}> Scarica Libretto </button>
+                            </div>
                         </div>
 
                         {/* Dettagli Card con info */}
