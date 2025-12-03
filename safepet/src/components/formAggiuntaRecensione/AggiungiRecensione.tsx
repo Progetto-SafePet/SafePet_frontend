@@ -60,7 +60,7 @@ const FormRecensione: React.FC<Props> = ({ veterinarioId, onSuccess, onClose }) 
 
         try {
             const response = await axios.post(
-                `http://localhost:8080/gestioneRecensioni/veterinari/${veterinarioId}/recensioni`,
+                `/gestioneRecensioni/veterinari/${veterinarioId}/recensioni`,
                 payload,
                 {
                     headers: {

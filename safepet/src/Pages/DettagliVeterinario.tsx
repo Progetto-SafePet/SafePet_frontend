@@ -49,7 +49,7 @@ function DettagliVeterinario() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/gestioneUtente/visualizzaDettagliVeterinari/${id}`)
+        fetch(`/gestioneUtente/visualizzaDettagliVeterinari/${id}`)
             .then(res => res.json())
             .then(data => setVeterinario(data))
             .catch(err => console.error("Errore caricamento veterinario:", err));

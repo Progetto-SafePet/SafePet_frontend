@@ -124,7 +124,7 @@ const DettagliPaziente: React.FC = () => {
         if (!token) return;
 
         const res = await fetch(
-            `http://localhost:8080/gestioneCartellaClinica/cartellaClinica/${petId}`,
+            `/gestioneCartellaClinica/cartellaClinica/${petId}`,
             {
                 method: "GET",
                 headers: { "Authorization": `Bearer ${token}` }
@@ -144,7 +144,7 @@ const DettagliPaziente: React.FC = () => {
 
         const fetchPaziente = async () => {
             const res = await fetch(
-                `http://localhost:8080/gestionePaziente/dettagli/${petId}`,
+                `/gestionePaziente/dettagli/${petId}`,
                 { headers: { "Authorization": `Bearer ${token}` } }
             );
 
@@ -153,7 +153,7 @@ const DettagliPaziente: React.FC = () => {
 
         const fetchCartella = async () => {
             const res = await fetch(
-                `http://localhost:8080/gestioneCartellaClinica/cartellaClinica/${petId}`,
+                `/gestioneCartellaClinica/cartellaClinica/${petId}`,
                 { headers: { "Authorization": `Bearer ${token}` } }
             );
 
