@@ -142,6 +142,8 @@ const MappaRealTime = () => {
     const defaultZoom = 14;
 
     useEffect(() => {
+        window.scrollTo(0, 0)
+
         /**
          * Invia una richiesta asincrona al server all'indirizzo http://localhost:8080/reportCliniche/mostraMappa per
          * prelevare i dati delle cinque cliniche (comprese le loro coordinate) più vicine alla posizione del client.

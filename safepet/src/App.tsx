@@ -41,7 +41,7 @@ function App() {
 
           <Route path="/contact" element={<Contatti />} />
 
-          <Route path="/mappaRealTime" element={<MappaRealTime />} />
+          <Route path="/mappa" element={<MappaRealTime />} />
 
           <Route
             path="/pet"
