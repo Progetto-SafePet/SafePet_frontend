@@ -183,6 +183,7 @@
     border: 2px solid transparent;
     width: 220px;
     flex-shrink: 0;
+    cursor: pointer;
 
     @media (max-width: 600px) {
         width: 100%;
