@@ -13,6 +13,13 @@ function Pet() {
 
                         <YourPets />
 
+                        <Banner
+                            text="Analisi Dermatologica con IA"
+                            buttonText="Analisi"
+                            link = "/analisiDermatologica"
+                        >
+                        </Banner>
+
                         <Banner 
                             text="Registra il tuo pet per accedere ai vantaggi di SafePet"
                             buttonText="Registra Pet"
