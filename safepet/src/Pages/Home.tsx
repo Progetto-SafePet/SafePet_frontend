@@ -125,7 +125,7 @@ function Home() {
                             <ImageBanner
                                 imagePath={"/imgs/use-map.jpg"}
                                 description={"Il tuo pet sta male? Trova la clinica aperta più vicina a te grazie alla mappa real time"}
-                                redirectLink={"/map"}
+                                redirectLink={"/mappa"}
                                 buttonText="Vai alla mappa"
                             />
 
