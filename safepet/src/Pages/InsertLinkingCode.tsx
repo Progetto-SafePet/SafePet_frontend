@@ -15,6 +15,7 @@ function InsertLinkingCode() {
 
     const TOKEN = localStorage.getItem("token");
 
+    const [validationError, setValidationError] = useState<string | null>(null);
     const [values, setValues] = useState(Array(8).fill(""));
     const inputsRef = useRef([]);
 
@@ -47,8 +48,12 @@ function InsertLinkingCode() {
     const submit = async () => {
         const linkingCode = values.join("").trim();
         if (linkingCode.length != 8) {
-            console.log("Linking code non valido")
-            throw new Error("Linking code non valido: " + linkingCode);
+            //console.log("Linking code non valido")
+            //throw new Error("Linking code non valido: " + linkingCode);
+            const errorMsg = "Il linking code deve contenere esattamente 8 caratteri.";
+            setValidationError(errorMsg);
+            console.log(errorMsg);
+            return;
         }
 
         try {
@@ -91,6 +96,7 @@ function InsertLinkingCode() {
                         <div className="linking-code">
                             <p>Linking code:</p>
                             <div className="code">
+
                             {values.map((value, index) => (
                                 <input
                                     key={index}
@@ -102,7 +108,13 @@ function InsertLinkingCode() {
                                     onKeyDown={(e) => handleKeyDown(e, index)}
                                 />
                             ))}
+
                             </div>
+
+                            {validationError && (
+                                <div className="msg-error">{validationError}</div>
+                            )}
+
                         </div>
                         <div className="buttons">
                             <button onClick={(() => reset())}>Reset</button>

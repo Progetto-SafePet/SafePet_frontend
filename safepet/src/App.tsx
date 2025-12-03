@@ -18,6 +18,7 @@ import ProfiloProprietario from './Pages/ProfiloProprietario';
 import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
+import ChiSiamo from './Pages/ChiSiamo';
 import Contatti from './Pages/Contatti';
 import MappaRealTime from './Pages/MappaRealTime';
 import AnalisiDermatologica from './Pages/AnalisiDermatologica';
@@ -42,6 +43,7 @@ function App() {
 
           <Route path="/contact" element={<Contatti />} />
 
+          <Route path="/about" element={<ChiSiamo />} />
           <Route path="/mappa" element={<MappaRealTime />} />
 
           <Route
