@@ -20,6 +20,7 @@ import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
 import Contatti from './Pages/Contatti';
 import MappaRealTime from './Pages/MappaRealTime';
+import AnalisiDermatologica from './Pages/AnalisiDermatologica';
 
 function App() {
 
@@ -80,6 +81,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+            <Route
+                path="/analisiDermatologica"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                        <AnalisiDermatologica />
+                    </ProtectedRoute>
+                }
+            />
 
           <Route
             path="/aggiuntaPaziente"

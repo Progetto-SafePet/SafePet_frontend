@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import FormNota from "../components/formAggiuntaNota/FormNota";
 import "../css/dettagli.scss";
-
-const formatDate = (dateString: string | undefined | null): string => {
-    if (!dateString) return "-";
-    try {
-        const [year, month, day] = dateString.split("T")[0].split("-");
-        return `${day}/${month}/${year}`;
-    } catch (e) {
-        return String(dateString);
-    }
-};
 
 // Tipi per le entità cliniche
 type VisitaMedicaResponseDTO = {
@@ -106,6 +96,14 @@ type DettagliPetResponseDTO = {
     cartellaClinicaDTO: CartellaClinica;
     noteProprietarioDTO: Nota[];
 };
+
+type LinkingCodeResponseDTO = {
+    nomePet: string;
+    codice: string;
+    dataScadenza: string;
+    isScaduto: boolean;
+    isUsato: boolean;
+}
 
 const DettagliPet: React.FC = () => {
     const [dettagli, setDettagli] = useState<DettagliPetResponseDTO | null>(null);
@@ -230,82 +228,174 @@ const DettagliPet: React.FC = () => {
         }
     };
 
+    const [linkingCode, setLinkingCode] = useState<LinkingCodeResponseDTO | null>(null);
+    const [isVisibleLinkingCode, setIsVisibleLinkingCode] = useState(false);
+
+    const generaLinkingCode = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`http://localhost:8080/gestionePaziente/generaLinkingCode`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    petId: id
+                })
+            });
+
+            if (response.ok) {
+                try {
+                    const data: LinkingCodeResponseDTO = await response.json() // JSON.parse(text);
+                    setLinkingCode(data);
+                } catch (e) {
+                    setLoadingError("Risposta server non in formato JSON valido.");
+                }
+            } else {
+                setLoadingError(`Errore HTTP: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Errore di connessione:", error);
+            setLoadingError("Errore di rete o server non raggiungibile.");
+        }
+    };
+
+    const toggleBox = async () => {
+        if (!isVisibleLinkingCode) {
+            await generaLinkingCode();
+            setIsVisibleLinkingCode(true);
+        } else {
+            setIsVisibleLinkingCode(false);
+        }
+    };
+
+    const formatDate = (dateString?: string) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("it-IT").replaceAll("/", "-");
+    };
+
+    const handleDownload = async () => {
+        if (!id) return;
+
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+            const response = await fetch(
+                `http://localhost:8080/gestioneCondivisioneDati/pdf/${id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                console.error("Errore download:", response.status);
+                return;
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `LibrettoSanitario_Pet_${id}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            console.error("Errore di rete nel download:", e);
+        }
+    };
+
     return (
         <div className="page-container">
             <div className="page"></div>
-                <div className="dettaglio-pet">
-                    {dettagli && (
-                        <>
+            <div className="dettaglio-pet">
+                {dettagli && (
+                    <>
+                        <div className="pet-header">
                             <div className="photo-container">
                                 <img src={`data:image/png;base64,${dettagli.anagraficaDTO.fotoBase64}`} alt="Foto Pet" />
                                 <strong>{dettagli.anagraficaDTO.nome}</strong>
                             </div>
+                            <div className="header-actions">
+                                <button className="button-primary" onClick={toggleBox}>Linking code</button>
+                                <button className="button-primary" onClick={handleDownload}> Scarica Libretto </button>
+                            </div>
+                        </div>
 
-                            {/* Dettagli Card con info */}
-                            <div className="dettagli-card">
-                                <div className="dettagli-block">
-                                    <div className="profile-section">
-                                        <div className="info-section">
-                                            <div className="info-block">
-                                                <h3>Anagrafica</h3>
-                                                <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
-                                                <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
-                                                <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
-                                                <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="profile-section">
-                                        <div className="info-section">
-                                            <div className="info-block">
-                                                <h3>Dettagli</h3>
-                                                <p><b>Peso:</b> {dettagli.anagraficaDTO.peso} Kg</p>
-                                                <p><b>Colore Mantello:</b> {dettagli.anagraficaDTO.coloreMantello}</p>
-
-                                                <p>
-                                                    <b>Sterilizzato:</b>
-                                                    {dettagli.anagraficaDTO.sterilizzato ? (
-                                                        <span style={{ color: 'green' }}> ✔ </span>
-                                                    ) : (
-                                                        <span style={{ color: 'red' }}> ✖ </span>
-                                                    )}
-                                                </p>
-
-                                                <p><b>N. Microchip:</b> {dettagli.anagraficaDTO.microchip}</p>
-
-                                            </div>
+                        {/* Dettagli Card con info */}
+                        <div className="dettagli-card">
+                            <div className="dettagli-block">
+                                <div className="profile-section">
+                                    <div className="info-section">
+                                        <div className="info-block">
+                                            <h3>Anagrafica</h3>
+                                            <p><b>Specie:</b> {dettagli.anagraficaDTO.specie}</p>
+                                            <p><b>Razza:</b> {dettagli.anagraficaDTO.razza}</p>
+                                            <p><b>Sesso:</b> {dettagli.anagraficaDTO.sesso}</p>
+                                            <p><b>Data di nascita:</b> {formatDate(dettagli.anagraficaDTO.dataNascita)}</p>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="profile-section">
+                                    <div className="info-section">
+                                        <div className="info-block">
+                                            <h3>Dettagli</h3>
+                                            <p><b>Peso:</b> {dettagli.anagraficaDTO.peso} Kg</p>
+                                            <p><b>Colore Mantello:</b> {dettagli.anagraficaDTO.coloreMantello}</p>
 
-                                {/* Cartella Clinica */}
-                                <div className="cartella-clinica">
-                                    <div className="cartella-header">
-                                        <h3>Cartella Clinica</h3>
-                                    </div>
-                                    <div className="tabs-and-actions">
-                                        <div className="cartella-tabs">
-                                            <ul>
-                                                <li className={activeTab === "vaccinazioni" ? "active" : ""}
-                                                    onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni
-                                                </li>
-                                                <li className={activeTab === "visite" ? "active" : ""}
-                                                    onClick={() => setActiveTab("visite")}>Visite
-                                                </li>
-                                                <li className={activeTab === "patologie" ? "active" : ""}
-                                                    onClick={() => setActiveTab("patologie")}>Patologie
-                                                </li>
-                                                <li className={activeTab === "terapie" ? "active" : ""}
-                                                    onClick={() => setActiveTab("terapie")}>Terapie
-                                                </li>
-                                            </ul>
+                                            <p>
+                                                <b>Sterilizzato:</b>
+                                                {dettagli.anagraficaDTO.sterilizzato ? (
+                                                    <span style={{ color: 'green' }}> ✔ </span>
+                                                ) : (
+                                                    <span style={{ color: 'red' }}> ✖ </span>
+                                                )}
+                                            </p>
+
+                                            <p><b>N. Microchip:</b> {dettagli.anagraficaDTO.microchip}</p>
+
                                         </div>
                                     </div>
-                                    <div className="cartella-content">{renderTabContent()}</div>
                                 </div>
+                            </div>
 
-                                {/* Note Proprietario */}
-                                <div className="note-proprietario-section">
+                            {/* Cartella Clinica */}
+                            <div className="cartella-clinica">
+                                <div className="cartella-header">
+                                    <h3>Cartella Clinica</h3>
+                                </div>
+                                <div className="tabs-and-actions">
+                                    <div className="cartella-tabs">
+                                        <ul>
+                                            <li className={activeTab === "vaccinazioni" ? "active" : ""}
+                                                onClick={() => setActiveTab("vaccinazioni")}>Vaccinazioni
+                                            </li>
+                                            <li className={activeTab === "visite" ? "active" : ""}
+                                                onClick={() => setActiveTab("visite")}>Visite
+                                            </li>
+                                            <li className={activeTab === "patologie" ? "active" : ""}
+                                                onClick={() => setActiveTab("patologie")}>Patologie
+                                            </li>
+                                            <li className={activeTab === "terapie" ? "active" : ""}
+                                                onClick={() => setActiveTab("terapie")}>Terapie
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="cartella-content">{renderTabContent()}</div>
+                            </div>
+
+                            {/* Note Proprietario */}
+                            <div className="note-proprietario-section">
                                 <div className="cartella-header">
                                     <h3>Note Proprietario</h3>
                                 </div>
@@ -341,10 +431,30 @@ const DettagliPet: React.FC = () => {
                                         onClose={() => setShowModal(false)}
                                     />
                                 )}
+
+                                {isVisibleLinkingCode && (
+                                    <div id="linking-code-box" className={"linking-code-box"}>
+                                        <h4>Linking code - {dettagli.anagraficaDTO.nome}</h4>
+                                        <h2 className="linking-code">{linkingCode.codice}</h2>
+                                        <div className="expiration-box">
+                                            <p className="expiration-date">Scadenza: {formatDate(linkingCode.dataScadenza)}</p>
+                                            {linkingCode.isScaduto && (
+                                                <div className="expired-icon" data-tooltip="Il codice è scaduto, generane uno nuovo">⚠</div>
+                                            ) || (linkingCode.isUsato && (
+                                                <div className="expired-icon" data-tooltip="Il codice è usato, generane uno nuovo">⚠</div>
+                                            ))}
+                                        </div>
+                                        <div className="buttons">
+                                            <button className="button-primary" onClick={generaLinkingCode}>Rigenera</button>
+                                            <button className="button-primary" onClick={toggleBox}>Chiudi</button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </>
                 )}
+
             </div>
         </div>
     );
