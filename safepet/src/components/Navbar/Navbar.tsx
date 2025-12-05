@@ -82,7 +82,7 @@ function Navbar() {
     const credentials = { email: emailLogin, password: passwordLogin };
 
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch('/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials),
@@ -123,7 +123,7 @@ function Navbar() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/gestioneUtente/registraProprietario', {
+      const response = await fetch('/gestioneUtente/registraProprietario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser),

@@ -57,7 +57,7 @@ function InsertLinkingCode() {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/gestionePaziente/aggiungiPaziente", {
+            const response = await fetch("/gestionePaziente/aggiungiPaziente", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${TOKEN}`,

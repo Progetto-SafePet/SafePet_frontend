@@ -124,7 +124,7 @@ const FormVaccinazione: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const res = await fetch(
-                `http://localhost:8080/gestioneCartellaClinica/aggiungiVaccinazione/${petId}`,
+                `/gestioneCartellaClinica/aggiungiVaccinazione/${petId}`,
                 {
                     method: "POST",
                     headers: {

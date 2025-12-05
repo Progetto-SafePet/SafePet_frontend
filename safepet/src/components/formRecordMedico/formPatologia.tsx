@@ -71,7 +71,7 @@ const FormPatologia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const res = await fetch(
-                `http://localhost:8080/gestioneCartellaClinica/aggiungiPatologia/${petId}`,
+                `/gestioneCartellaClinica/aggiungiPatologia/${petId}`,
                 {
                     method: "POST",
                     headers: {

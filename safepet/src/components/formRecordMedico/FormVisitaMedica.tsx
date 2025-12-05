@@ -91,7 +91,7 @@ const FormVisitaMedica: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const res = await fetch(
-                `http://localhost:8080/gestioneCartellaClinica/creaVisitaMedica/${petId}`,
+                `/gestioneCartellaClinica/creaVisitaMedica/${petId}`,
                 {
                     method: "POST",
                     headers: {

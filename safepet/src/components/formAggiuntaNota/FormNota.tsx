@@ -49,7 +49,7 @@ const FormNota: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const response = await fetch(
-                `http://localhost:8080/gestionePet/creaNota/${petId}`,
+                `/gestionePet/creaNota/${petId}`,
                 {
                     method: "POST",
                     headers: {

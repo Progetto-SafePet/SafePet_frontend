@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.git/
+.github/
+.gitignore
+*.log
+*.md
+.env
+.env.local
+safepet/node_modules/
+safepet/.env

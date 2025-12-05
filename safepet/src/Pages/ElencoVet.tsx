@@ -33,7 +33,7 @@ const ElencoVet = () => {
     useEffect(() => {
         const fetchVet = async () => {
             try {
-                const response = await fetch("http://localhost:8080/reportCliniche/elencoVeterinari", {
+                const response = await fetch("/reportCliniche/elencoVeterinari", {
                     method: "GET",
                 });
 
