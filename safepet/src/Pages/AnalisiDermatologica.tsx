@@ -1,4 +1,3 @@
-
 import React, {useState, useRef, useEffect} from "react";
 import "../css/AnalisiDermatologica.scss";
 import Title from "../components/Title/Title";
@@ -112,9 +111,6 @@ function AnalisiDermatologica() {
         }
     };
 
-    /**
-     * Mappa etichette italiane e descrizioni per le classi del modello.
-     */
     const diseaseInfo: Record<
         string,
         { labelIT: string; descrizione: string }
@@ -236,8 +232,6 @@ function AnalisiDermatologica() {
                             </span>
                         </div>
                     </div>
-
-                    {/* 🔎 Box descrittivo con titolo e testo in italiano */}
                     {info && (
                         <div className="ad-disease-description">
                             <p className="ad-desc-text">{info.descrizione}</p>
