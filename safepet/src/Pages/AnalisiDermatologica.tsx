@@ -1,8 +1,7 @@
+
 import React, {useState, useRef, useEffect} from "react";
 import "../css/AnalisiDermatologica.scss";
 import Title from "../components/Title/Title";
-
-
 
 type RisultatoDiagnosiDTO = {
     classe: string;
@@ -63,7 +62,7 @@ function AnalisiDermatologica() {
             return;
         }
 
-        // Controllo lato client sulla dimensione (10 MB) per anticipare l'errore del backend
+        // Controllo lato client sulla dimensione (10 MB)
         const MAX_SIZE_BYTES = 10 * 1024 * 1024;
         if (file.size > MAX_SIZE_BYTES) {
             setError("L'immagine supera la dimensione massima consentita (10 MB).");
@@ -77,7 +76,6 @@ function AnalisiDermatologica() {
         const formData = new FormData();
         formData.append("image", file);
 
-        // Recupera il token
         const token = localStorage.getItem("token");
 
         try {
@@ -114,12 +112,68 @@ function AnalisiDermatologica() {
         }
     };
 
+    /**
+     * Mappa etichette italiane e descrizioni per le classi del modello.
+     */
+    const diseaseInfo: Record<
+        string,
+        { labelIT: string; descrizione: string }
+    > = {
+        "dermatitis": {
+            labelIT: "Dermatite",
+            descrizione:
+                "Infiammazione della pelle che può causare prurito, arrossamento, desquamazione e lesioni. Le cause includono allergie, irritanti, parassiti e infezioni secondarie. È consigliata una valutazione veterinaria per identificare la causa e impostare la terapia."
+        },
+        "fungal_infections": {
+            labelIT: "Infezioni fungine",
+            descrizione:
+                "Le micosi cutanee provocano chiazze alopeciche, desquamazione e prurito. La diagnosi si conferma con esami specifici (citologia, coltura). Il trattamento prevede antifungini topici/sistemici e misure igieniche per prevenire la diffusione."
+        },
+        "healthy": {
+            labelIT: "Cute sana",
+            descrizione:
+                "L’analisi indica condizioni cutanee nella norma. Se non ci sono sintomi (prurito, arrossamento, cattivo odore), continua con l’igiene abituale e monitoraggio. In caso di dubbi o sintomi, contatta il veterinario."
+        },
+        "hypersensitivity": {
+            labelIT: "Ipersensibilità (allergie)",
+            descrizione:
+                "Reazioni allergiche a fattori ambientali, alimentari o parassiti (es. pulci). Si manifesta con prurito e arrossamento; la gestione include controllo dei trigger, terapie antinfiammatorie/antipruriginose e talvolta diete di eliminazione."
+        },
+        "demodicosis": {
+            labelIT: "Demodicosi (rogna demodettica)",
+            descrizione:
+                "Causata da acari Demodex nei follicoli piliferi. Può dare chiazze alopeciche e cute arrossata; frequenti infezioni batteriche secondarie. Terapia con acaricidi specifici e gestione delle complicazioni; necessario follow‑up veterinario."
+        },
+        "ringworm": {
+            labelIT: "Tigna (dermatofitosi)",
+            descrizione:
+                "Infezione micotica contagiosa che colpisce pelle e pelo, con chiazze circolari alopeciche e desquamazione. Diagnosi con test specifici (es. coltura, lampada di Wood). Trattamento con antifungini e igiene ambientale per ridurre la trasmissione."
+        }
+    };
+
+    /**
+     * Normalizza la chiave della classe (lowercase, underscore) e restituisce
+     * l’oggetto info (label italiana + descrizione). Ritorna null se non mappata.
+     */
+    const getDiseaseInfo = (classeRaw: string | undefined) => {
+        if (!classeRaw) return null;
+        const key = classeRaw.trim().toLowerCase();
+        if (diseaseInfo[key]) return diseaseInfo[key];
+
+        const keyNoUnderscore = key.replace(/_/g, "");
+        const altKey = Object.keys(diseaseInfo).find(k => k.replace(/_/g, "") === keyNoUnderscore);
+        return altKey ? diseaseInfo[altKey] : null;
+    };
+
+    const info = getDiseaseInfo(result?.classe);
+
     return (
         <div className="analisi-dermatologica-page">
             <Title text="Analisi Dermatologica"></Title>
             <div className="ad-header">
                 <p className="ad-subtitle">
-                    SkinDetector analizza le foto della cute del tuo animale, individua eventuali problemi dermatologici e fornisce un primo riscontro diagnostico rapido e intuitivo, per un controllo semplice e immediato.                </p>
+                    SkinDetector analizza le foto della cute del tuo animale, individua eventuali problemi dermatologici e fornisce un primo riscontro diagnostico rapido e intuitivo, per un controllo semplice e immediato.
+                </p>
             </div>
 
             <div className="ad-upload">
@@ -170,15 +224,29 @@ function AnalisiDermatologica() {
                     <div className="ad-result-grid">
                         <div className="ad-result-item">
                             <span className="ad-result-label">Classe:</span>
-                            <span className="ad-result-value">{result.classe}</span>
+                            {/* 🏷️ Etichetta italiana formattata */}
+                            <span className="ad-result-value">
+                                {info ? info.labelIT : result.classe.replace(/_/g, " ")}
+                            </span>
                         </div>
                         <div className="ad-result-item">
                             <span className="ad-result-label">Confidence:</span>
                             <span className="ad-result-value">
-                {(result.confidence * 100).toFixed(2)}%
-              </span>
+                                {(result.confidence * 100).toFixed(2)}%
+                            </span>
                         </div>
                     </div>
+
+                    {/* 🔎 Box descrittivo con titolo e testo in italiano */}
+                    {info && (
+                        <div className="ad-disease-description">
+                            <p className="ad-desc-text">{info.descrizione}</p>
+                            <p className="ad-desc-note">
+                                <strong>Nota:</strong> il risultato è indicativo e non sostituisce una valutazione veterinaria.
+                                In presenza di sintomi persistenti o in peggioramento, contatta il tuo veterinario.
+                            </p>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
