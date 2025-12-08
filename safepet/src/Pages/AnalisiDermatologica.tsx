@@ -63,6 +63,13 @@ function AnalisiDermatologica() {
             return;
         }
 
+        // Controllo lato client sulla dimensione (10 MB) per anticipare l'errore del backend
+        const MAX_SIZE_BYTES = 10 * 1024 * 1024;
+        if (file.size > MAX_SIZE_BYTES) {
+            setError("L'immagine supera la dimensione massima consentita (10 MB).");
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setResult(null);
@@ -70,14 +77,27 @@ function AnalisiDermatologica() {
         const formData = new FormData();
         formData.append("image", file);
 
+        // Recupera il token
+        const token = localStorage.getItem("token");
+
         try {
             const res = await fetch(BACKEND_URL, {
                 method: "POST",
                 body: formData,
+                headers: token
+                    ? { Authorization: `Bearer ${token}` }
+                    : undefined,
             });
 
+            if (res.status === 401) {
+                throw new Error("Non sei autenticato. Effettua il login per continuare.");
+            }
+            if (res.status === 403) {
+                throw new Error("Accesso non autorizzato. Questo servizio è riservato ai proprietari.");
+            }
             if (!res.ok) {
-                throw new Error("Errore durante l'analisi. Riprova più tardi.");
+                const text = await res.text();
+                throw new Error(text || "Errore durante l'analisi. Riprova più tardi.");
             }
 
             const data = (await res.json()) as RisultatoDiagnosiDTO;
