@@ -63,62 +63,6 @@ const MappaRealTime = () => {
         setExpandedHoursId(expandedHoursId === id ? null : id);
     };
 
-    /**
-     * Restituisce minuti dall'inizio del giorno (0..1439).
-     * Se la stringa non è valida, ritorna null.
-     */
-    const parseTimeToMinutes = (timeStr: string): number | null => {
-        if (!timeStr) return null;
-        const t = timeStr.trim();
-        const m = t.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
-        if (!m) return null;
-        const hh = Number(m[1]);
-        const mm = Number(m[2]);
-        const ss = m[3] ? Number(m[3]) : 0;
-        if (hh < 0 || hh > 23 || mm < 0 || mm > 59 || ss < 0 || ss > 59) return null;
-        return hh * 60 + mm + Math.floor(ss / 60);
-    };
-
-    /**
-     * Verifica se la clinica è aperta ora.
-     */
-    const isClinicOpen = (orari: OrariDiAperturaDTO[]): boolean => {
-        if (!orari || orari.length === 0) {
-            return false;
-        }
-
-        const now = new Date();
-        const days = ['Domenica', 'Lunedi', 'Martedi', 'Mercoledi', 'Giovedi', 'Venerdi', 'Sabato'];
-        const currentDay = days[now.getDay()];
-        const nowMinutes = now.getHours() * 60 + now.getMinutes();
-
-        const todaySchedule = orari.find(o => o.giorno?.trim().toLowerCase() === currentDay.toLowerCase());
-
-        if (!todaySchedule) {
-            return false;
-        }
-
-        if (todaySchedule.aperto24h) {
-            return true;
-        }
-
-        const openMin = parseTimeToMinutes(todaySchedule.orarioApertura);
-        const closeMin = parseTimeToMinutes(todaySchedule.orarioChiusura);
-
-        if (openMin === null || closeMin === null || openMin === closeMin) {
-            return false;
-        }
-
-        // caso normale: apertura < chiusura (es. 08:00 - 18:00)
-        if (openMin < closeMin) {
-            return nowMinutes >= openMin && nowMinutes < closeMin;
-        }
-
-        // caso notturno: apertura > chiusura (es. 22:00 - 06:00)
-        // in questo caso è aperto se ora >= open OR ora < close (attraverso mezzanotte)
-        return nowMinutes >= openMin || nowMinutes < closeMin;
-    };
-
     const getTodayHours = (orari: OrariDiAperturaDTO[]): string => {
         if (!orari || orari.length === 0) return "Orari non disponibili";
 
@@ -127,10 +71,6 @@ const MappaRealTime = () => {
         const currentDay = days[now.getDay()];
 
         const todaySchedule = orari.find(o => o.giorno.toLowerCase() === currentDay.toLowerCase());
-
-        if (!todaySchedule) {
-            return "Chiuso oggi";
-        }
 
         if (todaySchedule.aperto24h) {
             return "Aperto 24h";
@@ -333,9 +273,7 @@ const MappaRealTime = () => {
                                             <p className="clinic-address">{clinica.indirizzo}</p>
 
                                             <div className="clinic-status-row">
-                                                <span className={`status-badge ${isClinicOpen(clinica.orariDiApertura) ? 'open' : 'closed'}`}>
-                                                    {isClinicOpen(clinica.orariDiApertura) ? 'Aperto' : 'Chiuso'}
-                                                </span>
+                                                <span className="clinic-open-badge"> Aperto </span>
                                                 <span className="today-hours">{getTodayHours(clinica.orariDiApertura)}</span>
                                             </div>
 

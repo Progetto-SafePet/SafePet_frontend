@@ -202,21 +202,13 @@
         gap: 1rem;
         margin-bottom: 0.75rem;
 
-        .status-badge {
+        .clinic-open-badge {
           padding: 0.25rem 0.75rem;
           border-radius: 20px;
           font-size: 0.85rem;
           font-weight: 600;
-          
-          &.open {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-          }
-          
-          &.closed {
-            background-color: #ffebee;
-            color: #c62828;
-          }
+          background-color: #e8f5e9;
+          color: #2e7d32;
         }
 
         .today-hours {
