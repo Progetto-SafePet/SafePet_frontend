@@ -97,7 +97,7 @@ const MappaRealTime = () => {
                     console.error("Coordinate non valide: ", lat, lon);
                     return;
                 }
-                const url = `http://localhost:8080/reportCliniche/mostraMappa/${lat}/${lon}`;
+                const url = `/reportCliniche/mostraMappa/${lat}/${lon}`;
 
                 const response = await fetch(url, {
                     method: "GET",

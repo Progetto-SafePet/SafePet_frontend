@@ -13,6 +13,7 @@ export default defineConfig({
       "/gestioneCondivisioneDati": "http://localhost:8080",
       "/gestioneRecensioni": "http://localhost:8080",
       "/reportCliniche": "http://localhost:8080",
+      "/analisiDermatologica": "http://localhost:8080",
     }
   }
 })
