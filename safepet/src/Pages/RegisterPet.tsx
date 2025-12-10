@@ -38,7 +38,7 @@ function RegisterPet() {
     const [specie, setSpecie] = useState("");
     const [razza, setRazza] = useState("");
     const [microchip, setMicrochip] = useState("");
-    const [sesso, setSesso] = useState("F");
+    const [sesso, setSesso] = useState("M");
     const [foto, setFoto] = useState(null);
     const [coloreMantello, setColoreMantello] = useState("");
     const [dataNascita, setDataNascita] = useState("");
@@ -61,7 +61,11 @@ function RegisterPet() {
             newErrors.sesso = "Il sesso deve essere 'MASCHIO' o 'FEMMINA'";
 
 
-        if (!specie.trim()) newErrors.specie = "La specie del pet è obbligatoria";
+        if (!specie.trim()) {
+            newErrors.specie = "La specie del pet è obbligatoria";
+        } else if (!["cane", "gatto", "altro"].includes(specie)) {
+            newErrors.specie = "La specie deve essere 'cane', 'gatto' o 'altro'";
+        }
 
         if (razza && (razza.length < 3 || razza.length > 30))
             newErrors.razza = "La razza deve contenere dai 3 caratteri ai 30 caratteri";
@@ -94,6 +98,13 @@ function RegisterPet() {
                 newErrors.microchip = "Il microchip deve contenere esattamente 15 cifre numeriche";
             }
         }
+        if (foto) {
+            const allowedTypes = ["image/png", "image/jpg"];
+            if (!allowedTypes.includes(foto.type)) {
+                newErrors.foto = "La foto deve essere in formato PNG o JPG";
+            }
+        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -192,11 +203,15 @@ function RegisterPet() {
 
                         <div className="form-group">
                             <label>Specie</label>
-                            <input
-                                type="text"
+                            <select
                                 value={specie}
                                 onChange={(e) => setSpecie(e.target.value)}
-                            />
+                            >
+                                <option value="">Seleziona specie</option>
+                                <option value="cane">Cane</option>
+                                <option value="gatto">Gatto</option>
+                                <option value="altro">Altro</option>
+                            </select>
                             {errors.specie && <div className="msg-error">{errors.specie}</div>}
                         </div>
 
@@ -215,7 +230,7 @@ function RegisterPet() {
                             <input
                                 type="number"
                                 value={peso}
-                                min="0"
+                                min="0.1"
                                 max="100"
                                 step="0.1"
                                 onChange={e => setPeso(e.target.value)}
@@ -266,9 +281,10 @@ function RegisterPet() {
                             <label>Foto</label>
                             <input
                                 type="file"
-                                accept="image/*"
+                                accept=".png, .jpg"
                                 onChange={(e) => setFoto(e.target.files[0])}
                             />
+                            {errors.foto && <div className="msg-error">{errors.foto}</div>}
                         </div>
 
                         <button type="submit" className="button-primary">

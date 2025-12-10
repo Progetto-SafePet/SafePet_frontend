@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import {PromoCardProps} from "./PromoCard/PromoCard";
 import PromoCard from "./PromoCard/PromoCard";
 import "./Carousel.scss"
+import Title from '../Title/Title';
 
 type CarouselProps = {
     cardsData : PromoCardProps[];
@@ -65,7 +66,7 @@ const Carousel = ({
 
     return (
         <div style={{padding: "40px" }}>
-            <h2>Le nostre promozioni</h2>
+            <Title text = {"I nostri servizi"} />
             <Slider {...settings}>
                 {cardsData.map((card : PromoCardProps, index: number) => (
                     <div key={index} style={{ padding: "0 8px", height: "100%" }}>

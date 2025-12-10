@@ -1,8 +1,4 @@
 .navbar {
-    position: fixed;
-    height: auto;
-    top: 0;
-    right: 0;
     display: flex;
     flex-direction: row;
     gap: 40px;
@@ -93,6 +89,9 @@
 
 header {
     max-width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100000000;
 }
 
 html {
@@ -144,6 +143,9 @@ html {
 }
 
 .login-box .msg-error {
+    color: red;
+    font-size: 10px;
+    text-align: center;
     margin-bottom: 20px;
 }
 

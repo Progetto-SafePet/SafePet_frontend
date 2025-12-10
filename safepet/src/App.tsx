@@ -18,7 +18,10 @@ import ProfiloProprietario from './Pages/ProfiloProprietario';
 import DettagliPaziente from "./Pages/DettagliPaziente";
 import DettagliPet from './Pages/DettagliPet';
 import FAQ from './Pages/FAQ';
+import ChiSiamo from './Pages/ChiSiamo';
 import Contatti from './Pages/Contatti';
+import MappaRealTime from './Pages/MappaRealTime';
+import AnalisiDermatologica from './Pages/AnalisiDermatologica';
 
 function App() {
 
@@ -39,6 +42,9 @@ function App() {
           />
 
           <Route path="/contact" element={<Contatti />} />
+
+          <Route path="/about" element={<ChiSiamo />} />
+          <Route path="/mappa" element={<MappaRealTime />} />
 
           <Route
             path="/pet"
@@ -78,6 +84,15 @@ function App() {
             }
           />
 
+            <Route
+                path="/analisiDermatologica"
+                element={
+                    <ProtectedRoute allowedRoles={[CONSTANTS.ROLE.PROPRIETARIO]}>
+                        <AnalisiDermatologica />
+                    </ProtectedRoute>
+                }
+            />
+
           <Route
             path="/aggiuntaPaziente"
             element={
@@ -115,10 +130,10 @@ function App() {
           />
 
           <Route path="/ElencoVet" element={<ElencoVet />} />
-            <Route path="/veterinario/:id" element={<DettagliVeterinario />} />
+          <Route path="/veterinario/:id" element={<DettagliVeterinario />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Page404 />} />
-          
+
           <Route
             path="/ElencoVet"
             element={<ElencoVet />}

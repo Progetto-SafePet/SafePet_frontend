@@ -17,6 +17,7 @@ function Navbar() {
   const [errorsSignUp, setErrorsSignUp] = useState({});
 
   // LOGIN
+  const[serverErrorLogin, setServerErrorLogin] = useState<string | null>(null);
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
 
@@ -95,11 +96,15 @@ function Navbar() {
 
         updateUser(data.email, data.role);
         setIsVisibleLogin(false);
+      } else if (response.status === 401) {
+           const errorText = await response.text();
+           setServerErrorLogin(errorText || 'Credenziali non valide.');
       } else {
-        console.log('Credenziali errate.');
+           setServerErrorLogin('Errore HTTP: ${response.status}. Impossibile completare il login.');
       }
     } catch (error) {
-      console.log('Errore di connessione.');
+      console.error('Errore di connessione durante il login.', error);
+      setServerErrorLogin('Errore di connessione al server durante il login, controlla che il backend sia attivo');
     }
   };
 
@@ -184,8 +189,19 @@ function Navbar() {
       newErrors.cognomeSignup = "Il cognome deve essere tra 2 e 50 caratteri";
 
     // Data di nascita
-    if (!dataNascitaSignup.trim())
+    if (!dataNascitaSignup.trim()) {
       newErrors.dataNascitaSignup = "La data di nascita è obbligatoria";
+    } else {
+        const today = new Date();
+        const birthDate = new Date(dataNascitaSignup);
+
+        today.setHours(0, 0, 0, 0);
+        birthDate.setHours(0, 0, 0, 0);
+
+        if (birthDate >= today) {
+          newErrors.dataNascitaSignup = "La data di nascita deve essere nel passato";
+        }
+    }
 
     // Genere
     if (!genereSignup.trim())
@@ -330,6 +346,7 @@ function Navbar() {
       {isVisibleLogin && (
         <div id="login-box" className="login-box">
           <h2>Login</h2>
+          <div className = "msg-error">{serverErrorLogin}</div>
           <form onSubmit={(e) => { e.preventDefault(); if (validateLogin()) login(); }}>
 
             <div className="user-box">
