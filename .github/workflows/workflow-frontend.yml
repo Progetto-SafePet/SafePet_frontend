@@ -76,11 +76,10 @@ jobs:
         if: success()
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ..
+          file: ../Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:sha-${{ github.sha }}
-        working-directory: .
