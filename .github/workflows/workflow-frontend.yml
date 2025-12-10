@@ -53,3 +53,39 @@ jobs:
           name: safepet-build
           path: safepet/dist
 
+      # Setup QEMU (emulazione CPU ARM)
+      - name: Set up QEMU
+        if: success()
+        uses: docker/setup-qemu-action@v3
+
+      # Setup Buildx
+      - name: Set up Docker Buildx
+        if: success()
+        uses: docker/setup-buildx-action@v3
+
+      # Login DockerHub
+      - name: Log in to DockerHub
+        if: success()
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Multi-arch Build & Push (stable method)
+      - name: Build & Push Multi-arch Docker Image
+        if: success()
+        run: |
+          # Torna nella root del repository (Dockerfile Ã¨ qui)
+          cd ..
+
+          # Assicura che esista un builder multi-arch
+          docker buildx create --use --name safepet-builder || docker buildx use safepet-builder
+
+          # Multi-arch build + push
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -f Dockerfile \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:latest \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:sha-${{ github.sha }} \
+            --push \
+            .
