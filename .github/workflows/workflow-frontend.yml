@@ -71,15 +71,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Multi-arch Build & Push
+      # Multi-arch Build & Push (stable method)
       - name: Build & Push Multi-arch Docker Image
         if: success()
-        uses: docker/build-push-action@v5
-        with:
-          context: ..
-          file: ../Dockerfile
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:sha-${{ github.sha }}
+        run: |
+          # Torna nella root del repository (Dockerfile Ã¨ qui)
+          cd ..
+
+          # Assicura che esista un builder multi-arch
+          docker buildx create --use --name safepet-builder || docker buildx use safepet-builder
+
+          # Multi-arch build + push
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -f Dockerfile \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:latest \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/safepet-frontend:sha-${{ github.sha }} \
+            --push \
+            .
