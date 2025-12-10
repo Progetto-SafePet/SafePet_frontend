@@ -67,7 +67,7 @@ const ListaPazienti = () => {
                     return;
                 }
 
-                const response = await fetch("http://localhost:8080/gestionePaziente/listaPazienti", {
+                const response = await fetch("/gestionePaziente/listaPazienti", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

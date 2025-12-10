@@ -134,7 +134,7 @@ function RegisterPet() {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/gestionePet/creaPet", {
+            const response = await fetch("/gestionePet/creaPet", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${TOKEN}`,

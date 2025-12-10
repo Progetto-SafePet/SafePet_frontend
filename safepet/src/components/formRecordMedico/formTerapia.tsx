@@ -95,7 +95,7 @@ const FormTerapia: React.FC<Props> = ({ petId, onSuccess, onClose }) => {
 
         try {
             const res = await fetch(
-                `http://localhost:8080/gestioneCartellaClinica/aggiungiTerapia/${petId}`,
+                `/gestioneCartellaClinica/aggiungiTerapia/${petId}`,
                 {
                     method: "POST",
                     headers: {

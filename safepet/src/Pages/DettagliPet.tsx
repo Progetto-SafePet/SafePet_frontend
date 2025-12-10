@@ -121,7 +121,7 @@ const DettagliPet: React.FC = () => {
 
         const fetchDettagliPet = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/gestionePet/dettaglioPet/${id}`, {
+                const response = await fetch(`/gestionePet/dettaglioPet/${id}`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -234,7 +234,7 @@ const DettagliPet: React.FC = () => {
     const generaLinkingCode = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:8080/gestionePaziente/generaLinkingCode`, {
+            const response = await fetch(`/gestionePaziente/generaLinkingCode`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -284,7 +284,7 @@ const DettagliPet: React.FC = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:8080/gestioneCondivisioneDati/pdf/${id}`,
+                `/gestioneCondivisioneDati/pdf/${id}`,
                 {
                     method: "GET",
                     headers: {

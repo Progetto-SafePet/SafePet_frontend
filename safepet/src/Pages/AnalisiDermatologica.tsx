@@ -15,7 +15,7 @@ function AnalisiDermatologica() {
     const [loading, setLoading] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const BACKEND_URL = "http://localhost:8080/analisiDermatologica/analizza";
+    const BACKEND_URL = "/analisiDermatologica/analizza";
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });

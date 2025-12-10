@@ -11,7 +11,7 @@ const YourPets = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await fetch("http://localhost:8080/gestionePet/visualizzaElencoPet", {
+        const response = await fetch("/gestionePet/visualizzaElencoPet", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${TOKEN}`,
